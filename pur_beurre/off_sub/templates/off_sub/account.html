@@ -1,0 +1,26 @@
+{% extends 'off_sub/base.html' %}
+{% load static %}
+
+{% block jumbotron_text %}
+  <h1 class="text-white display-4 text-center">Ahoy [Prénom utilisateur] !</h1>
+{% endblock %}
+
+
+{% block section_2 %}
+
+  <div class="col-12 text-center">
+
+    <form action="/">
+      <div class="form-group py-4">
+        <div class="col-12 col-sm-3 text-left">
+          <label>Courriel :</label>
+        </div>
+        <div class="col-12 col-sm-6">
+          <input type="email" class="form-control" placeholder="mon_mail@mail.com" disabled>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+{% endblock %}

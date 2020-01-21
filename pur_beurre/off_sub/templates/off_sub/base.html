@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+  
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/cb0486a1cf.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>{% block title %}Pur Beurre - Du gras, oui, mais de qualité !{% endblock %}</title>
+  </head>
+
+  <body class="d-flex flex-column">
+
+    <!-- Header Section -->
+    <div style="background-color: #FEA;">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <nav class="col navbar navbar-expand-sm navbar-light">
+              <div class="mr-auto">
+                <a class="navbar-brand" href="/" title="Accueil">
+                  <div class="d-flex">
+                    <div class="m-n2"><img src="{% static 'img/navbar/logo_pur_beurre-32.png' %}" alt="Logo" /></div>
+                    <div class="ml-3"><p>Pur Beurre</p></div>
+                  </div>
+                </a>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="navbarContent" class="collapse navbar-collapse">
+                  <ul class="navbar-nav">
+                    {% block search %}
+                      <form class="form-inline" action="/results/"><input class="form-control" type="search" placeholder="Chercher"/></form>
+                    {% endblock %}
+                    {% block not_signed_in %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="/sign/" title="Connexion"><i class="fas fa-sign-in-alt"></i></a>
+                      </li>
+                    {% endblock %}
+                    {% block signed_in %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="/account/" title="Mon compte"><i class="far fa-user"></i></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/favorites/" title="Mes aliments"><i class="fas fa-carrot"></i></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a>
+                      </li>
+                    {% endblock %}
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Section part 1 -->
+    <div class="container">
+      {% block jumbotron_img %}
+        <div class="jumbotron jumbotron-repeat jumbotron-fluid px-0 mb-0 d-flex align-items-center" style="background: url({% static 'img/theme/back.jpg' %}) center;">
+      {% endblock %}
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col">
+              {% block jumbotron_text %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Section part 2 -->
+    <div class="container pt-4">
+      <div class="row">
+        {% block section_2 %}{% endblock %}
+      </div>
+    </div>
+
+    <!-- Main Section part 3 -->
+    <div class="container pb-4">
+      <div class="row">
+        {% block section_3 %}{% endblock %}
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div id="footer" style="background-color: #FEA;" class="mt-auto">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <ul class="list-inline text-center">
+              <li class="list-inline-item">
+                <a href="/legal/" title="Mentions légales">Mentions légales</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="/#contact" title="Contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+
+</html>

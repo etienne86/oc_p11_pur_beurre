@@ -1,0 +1,52 @@
+{% extends 'off_sub/base.html' %}
+{% load static %}
+
+{% block jumbotron_text %}
+
+  <h1 class="text-white display-4 text-center">Du gras, oui, mais de qualité !</h1>
+  <h2 class="text-white lead text-center">Trouvez un produit de substitution pour ceux que vous consommez tous les jours.</h2>
+  <div class="text-center">
+    <form action="/food">
+      <input type="text" placeholder="Produit"/>
+      <input type="submit" value="Chercher" class="btn btn-warning" />
+    </form>
+  </div>
+
+{% endblock %}
+
+{% block section_2 %}
+
+  <div class="col-12">
+
+    <h2 class="text-center">Colette et Rémy</h2>
+    <h3 class="text-center">De la ratatouille aux croissants</h3>
+
+    <p class="text-justify">Pur Beurre est l'initiative de deux amoureux de la gastronomie française, Colette Tatou et Rémy, que vous avez déjà certainement rencontrés dans notre excellent restaurant Ratatouille.</p>
+
+    <p class="text-justify">
+      <strong>Colette Tatou</strong> : "Nous aimons tous manger, surtout en France ! Personnellement, une baguette fraîche, du bon fromage de chèvre et un bon vin rouge me suffisent amplement. Comme beaucoup, je fais mes courses au supermarché. Mais petit à petit je me suis rendue compte, surtout lorsque nous avons ouvert le restaurant, que je pouvais remplacer les produits aseptisés que j'avais l'habitude d'acheter par de bons produits du terroir. Et souvent pour le même prix !"
+    </p>
+
+    <p class="text-justify">
+      <strong>Rémy</strong> : "Pour ma part je me rendais déjà dans bien des magasins car j'aime beaucoup me balader, surtout dans les caves et les cuisines. Je connaissais par coeur le contenu des boutiques bio (dont je raffole) ainsi que les ingrédients de tous les aliments vendus. Lorsque Colette m'a demandé si elle pouvait remplacer sa pâte à tartiner matinale par un aliment plus sain, je savais tout de suite où le trouver. L'idée de Pur Beurre était née !"
+    </p>
+
+  </div>
+
+  <div class="col-sm-6 text-center"><figure><img src="{% static 'img/theme/colette-tatou-full.png' %}" alt="Colette"><figcaption>Colette</figcaption></figure></div>
+  <div class="col-sm-6 text-center"><figure><img src="{% static 'img/theme/ratatouille-portrait.jpg' %}" alt="Rémy"><figcaption>Rémy</figcaption></figure></div>
+
+{% endblock %}
+
+{% block section_3 %}
+
+  <div class="col-12" id="contact">
+    <hr class="mt-4">
+    <h2 class="text-center">Contactez-nous !</h2>
+    <p class="text-center">N'hésitez pas à nous contacter par téléphone ou par courriel, nous nous ferons un plaisir de vous répondre !</p>
+  </div>
+
+  <div class="col-sm-6 text-center"><i class="fas fa-phone"></i><br><p>0000000000</p></div>
+  <div class="col-sm-6 text-center"><i class="far fa-envelope"></i><br><p><a href="mailto:mail@mail.com">mail@mail.com</a></p></div>
+
+{% endblock %}

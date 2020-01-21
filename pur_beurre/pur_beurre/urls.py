@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url, include
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('orgadmin/', admin.site.urls),
+    path('', include('off_sub.urls')),
 ]

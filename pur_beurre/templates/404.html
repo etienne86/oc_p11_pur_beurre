@@ -1,0 +1,23 @@
+{% extends 'off_sub/base.html' %}
+{% load static %}
+
+{% block jumbotron_text %}
+  <h1 class="text-white display-4 text-center">Oups...</h1>
+{% endblock %}
+
+
+{% block section_2 %}
+
+  <div class="col-12">
+    <p class="text-center">Vous venez d'ouvrir la porte du réfrigérateur, mais celui-ci est vide, désolé !</p>
+  </div>
+
+  <div class="col-xs-6 col-xs-offset-3">
+    <img src="{% static 'img/404/refrigerator-158634.svg' %}">
+  </div>
+
+  <div class="col-12 py-4">
+    <div class="text-center"><a href="/"><button type="button" class="btn btn-warning">Retour à l'accueil</button></a></div>
+  </div>
+
+{% endblock %}

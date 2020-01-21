@@ -1,0 +1,137 @@
+{% extends 'off_sub/food_list.html' %}
+{% load static %}
+
+{% block jumbotron_img %}
+  <div class="jumbotron jumbotron-fluid px-0 mb-0 d-flex align-items-center jumbotron-opacity jumbotron-no-repeat" style="background: url(https://static.openfoodfacts.org/images/products/301/762/042/5035/front_fr.223.full.jpg) top center;">
+{% endblock %}
+
+{% block jumbotron_text %}
+  <p class="h2 text-black display-4 text-center bg-white">Nutella 1kg mais alors bonjour les calories mon pauvre vieux</p>
+{% endblock %}
+
+{% block section_2 %}
+
+  <div class="col-12">
+    <p class="h3 text-center">Vous pouvez remplacer cet aliment par :</p>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/a.png' %}" alt="(A)" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="https://static.openfoodfacts.org/images/products/339/039/000/0078/front_fr.32.full.jpg" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">Purée noisette</p></a>
+              <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/a.png' %}" alt="(A)" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="https://static.openfoodfacts.org/images/products/339/039/000/0122/front_fr.16.full.jpg" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">Purée amande complète</p></a>
+              <div class="d-flex justify-content-center">
+                <p class="text-success py-custom-6px px-2">Enregistré !</p>
+                <a href="" class="text-warning py-custom-6px px-2">Retirer</a>
+                <!-- <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Retirer</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/a.png' %}" alt="(A)" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="https://static.openfoodfacts.org/images/products/339/039/000/0108/front_fr.34.full.jpg" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">Purée amande blanche</p></a>
+              <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/a.png' %}" alt="(A)" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="https://static.openfoodfacts.org/images/products/841/497/999/1030/front_fr.7.full.jpg" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">Huile d'olive Vierge Extra biologique il manque une "fruit" - Echinac - 1 l</p></a>
+              <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/e.png' %}" alt="(E)" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="https://static.openfoodfacts.org/images/products/326/385/267/0211/front_fr.13.full.jpg" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">Gâteau Breton Fourré à la Crème de Pruneaux - Leader Price - 400 g</p></a>
+              <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/c.png' %}" alt="(C)" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="https://static.openfoodfacts.org/images/products/400/223/938/0003/front_de.8.full.jpg" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">Kapern - Feinkost Dittmann - 60 g</p></a>
+              <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

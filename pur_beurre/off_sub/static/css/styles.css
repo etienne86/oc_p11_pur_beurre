@@ -1,0 +1,106 @@
+html, body
+{
+  height: 100%;
+}
+
+.jumbotron-repeat
+{
+  background-size: contain !important; /* répété par défaut */
+  border-radius: 0 !important;
+  min-height: 350px;
+}
+
+.jumbotron-stretch
+{
+  background-size: 100% 100% !important; /* étiré */
+  background-repeat: no-repeat !important; /* non répété */
+  border-radius: 0 !important;
+  min-height: 350px;
+}
+
+.jumbotron-opacity
+{
+  filter: opacity(30%);
+  /*opacity: 0.5;*/
+  /*filter: brightness(50%);*/
+}
+
+.jumbotron-no-repeat
+{
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  border-radius: 0 !important;
+}
+
+.corner-top-right
+{
+  margin-bottom: -100%;
+  margin-left: -50%;
+}
+
+.z-index-0
+{
+  z-index: 0;
+}
+
+.z-index-1
+{
+  z-index: 1;
+}
+
+.card
+{
+  border-style: none;
+}
+
+.py-custom-6px
+{
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
+
+.img-s-square
+{
+  width: 100%;
+  overflow: hidden;
+  object-fit: cover;
+  height: 316.667px; /* default height for xl screens*/
+}
+
+@media all and (max-width: 1199px) /*for l screens*/
+{
+  .img-s-square
+  {
+    height: 266.667px;
+  }
+}
+
+@media all and (max-width: 991px) /*for m screens*/
+{
+  .img-s-square
+  {
+    height: 200px;
+  }
+}
+
+@media all and (max-width: 767px) /*for s screens*/
+{
+  .img-s-square
+  {
+    height: 150px;
+  }
+}
+
+@media all and (max-width: 575px) /*for xs screens*/
+{
+  .img-s-square
+  {
+    height: auto;
+  }
+}
+
+.img-nutri
+{
+  width: 100%;
+  object-fit: cover;
+}

@@ -1,0 +1,42 @@
+{% extends 'off_sub/base.html' %}
+{% load static %}
+
+{% block jumbotron_img %}
+  <div class="jumbotron jumbotron-fluid px-0 mb-0 d-flex align-items-center jumbotron-opacity jumbotron-no-repeat" style="background: url(https://static.openfoodfacts.org/images/products/301/762/042/5035/front_fr.223.full.jpg) center;">
+{% endblock %}
+
+{% block jumbotron_text %}
+  <p class="h2 text-black  display-4 text-center bg-white font-weight-bolder">Nutella - Ferrero - 1 kg</p>
+{% endblock %}
+
+{% block section_2 %}
+
+
+
+
+
+
+  <div class="col-12 col-sm-6 text-center">
+    <img class="img-nutri" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />
+  </div>
+  <div class="col-12 col-sm-6 d-flex justify-content-center">
+    <div>
+      <p class="h3 text-left">Repères nutritionnels pour 100g :</p>
+      <p class="text-left">
+        <ul>
+          <li>Matières grasses / Lipides : 3.5g</li>
+          <li>Acides gras saturés : 30.0g</li>
+          <li>Sucres : 5.7g</li>
+          <li>Sel : 5.7g</li>
+        </ul>
+      </p>
+    </div>
+  </div>
+  <div class="col-12 text-center">
+    <form action="https://fr.openfoodfacts.org/produit/3017620425035">
+      <input type="submit" value="Voir la fiche d'OpenFoodFacts" class="btn btn-warning my-3"></submit>
+    </form>
+  </div>
+
+
+{% endblock %}
