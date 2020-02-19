@@ -44,15 +44,3 @@ def sign(request):
         request, 
         'off_sub/sign.html', 
     )
-
-def sign_in(request):
-    return render(
-        request, 
-        'off_sub/sign_in.html', 
-    )
-
-def sign_up(request):
-    return render(
-        request, 
-        'off_sub/sign_up.html', 
-    )

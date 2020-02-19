@@ -1,10 +1,127 @@
 {% extends 'off_sub/base.html' %}
 {% load static %}
 
-{% block top_picture %}{% endblock %}
 
-{% block top_text %}{% endblock %}
+{% block section_2 %}
 
-{% block section_2 %}{% endblock %}
+  <div class="col-12">
+    <p class="h3 text-center">{% block section_2_intro %}{% endblock %}</p>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/{{ product_1.nutriscore_grade }}.png' %}" alt="{{ product_1.nutriscore_grade }}" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="{{ product_1.image_url }}" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ product.id }}"><p class="card-text">{% block product_name_1 %}{% endblock %}</p></a>
+              {% block product_save_unsave_1 %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/{{ product_2.nutriscore_grade }}.png' %}" alt="{{ product_2.nutriscore_grade }}" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="{{ product_2.image_url }}" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">{% block product_name_2 %}{% endblock %}</p></a>
+              {% block product_save_unsave_2 %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/{{ product_3.nutriscore_grade }}.png' %}" alt="{{ product_3.nutriscore_grade }}" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="{{ product_3.image_url }}" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">{% block product_name_3 %}{% endblock %}</p></a>
+              {% block product_save_unsave_3 %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/{{ product_4.nutriscore_grade }}.png' %}" alt="{{ product_4.nutriscore_grade }}" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="{{ product_4.image_url }}" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">{% block product_name_4 %}{% endblock %}</p></a>
+              {% block product_save_unsave_4 %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/{{ product_5.nutriscore_grade }}.png' %}" alt="{{ product_5.nutriscore_grade }}" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="{{ product_5.image_url }}" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">{% block product_name_5 %}{% endblock %}</p></a>
+              {% block product_save_unsave_5 %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/{{ product_6.nutriscore_grade }}.png' %}" alt="{{ product_6.nutriscore_grade }}" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="{{ product_6.image_url }}" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ food.id }}"><p class="card-text">{% block product_name_6 %}{% endblock %}</p></a>
+              {% block product_save_unsave_6 %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
 
 {% block section_3 %}{% endblock %}

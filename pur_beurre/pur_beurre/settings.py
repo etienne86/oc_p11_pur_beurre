@@ -89,6 +89,9 @@ DATABASES = {
     }
 }
 
+# User substitution
+# AUTH_USER_MODEL = 'my_auth.MyUser'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

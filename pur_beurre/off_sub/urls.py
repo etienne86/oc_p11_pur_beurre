@@ -7,12 +7,10 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('account/', views.account, name="account"),
+    path('account/', views.account, name="account"), ### wrong app
     path('favorites/', views.favorites, name="favorites"),
     path('food/', views.food, name="food"),
     path('legal/', views.legal, name="legal"),
     path('results/', views.results, name="results"),
-    path('sign/', views.sign, name="sign"),
-    path('sign_in/', views.sign_in, name="sign_in"),
-    path('sign_up/', views.sign_up, name="sign_up"),
+    path('sign/', views.sign, name="sign"), ### wrong app
 ]
