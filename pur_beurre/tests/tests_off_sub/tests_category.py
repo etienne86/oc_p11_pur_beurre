@@ -72,4 +72,4 @@ class CategoryTestCase(TestCase):
             "riz",
             "viandes",
         ]
-        self.assertEqual(Category.CATEGORIES_LIST, result)
+        self.assertEqual(Category.get_categories_list(), result)

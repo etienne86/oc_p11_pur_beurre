@@ -7,10 +7,12 @@ Pre-requisite: the database 'pur_beurre_db' has to be created.
 
 import re
 
+import django
+django.setup()
+
 import requests
 
-from models import Category, Product, Store
-
+from off_sub.models import Category, Product, Store
 
 
 def main():
