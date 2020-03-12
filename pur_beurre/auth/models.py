@@ -31,7 +31,7 @@ class MyUserManager(BaseUserManager):
         first name and password.
         """
         user = self.create_user(
-            email,
+            email=email,
             password=password,
             first_name=first_name,
         )
@@ -42,11 +42,11 @@ class MyUserManager(BaseUserManager):
 
 class MyUser(AbstractBaseUser):
     email = models.EmailField(
-        verbose_name='courriel',
+        verbose_name='Courriel',
         max_length=255,
         unique=True,
     )
-    first_name = models.CharField(max_length=30)
+    first_name = models.CharField(max_length=30, verbose_name='Prénom')
     # create association table my_auth_myuser_favorites in database
     favorites = models.ManyToManyField(
         Product,
@@ -59,10 +59,10 @@ class MyUser(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name']
+    # REQUIRED_FIELDS = ['first_name']
 
     def __str__(self):
-        return self.email
+        return f"{self.first_name} ({self.email})"
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

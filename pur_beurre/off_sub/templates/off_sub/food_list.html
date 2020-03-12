@@ -8,6 +8,27 @@
     <p class="h3 text-center">{% block section_2_intro %}{% endblock %}</p>
   </div>
 
+{% for product in products_list %}
+  <div class="col-12 col-sm-4 p-4">
+    <div class="card h-100">
+      <div class="row">
+        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
+          <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/{{ product_i.nutriscore_grade }}.png' %}" alt="{{ product_i.nutriscore_grade }}" />
+        </div>
+        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
+          <img class="card-img-top p-0 img-s-square" src="{{ product_i.image_url }}" alt="product picture" />
+          <div class="card-body">
+            <div class="text-center">
+              <a href="/food/{{ product_i.id }}"><p class="card-text">{% block product_name_i %}{% endblock %}</p></a>
+              {% block product_save_unsave_i %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
   <div class="col-12 col-sm-4 p-4">
     <div class="card h-100">
       <div class="row">
@@ -125,3 +146,4 @@
 {% endblock %}
 
 {% block section_3 %}{% endblock %}
+

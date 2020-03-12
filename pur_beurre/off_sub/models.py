@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.utils import IntegrityError
+from django.db import transaction
 
 
 class Category(models.Model):
@@ -16,6 +17,18 @@ class Category(models.Model):
         "riz",
         "viandes",
     ]
+
+    def add_category_to_db(self):
+        """
+        If necessary, add a category in the database.
+        """
+        try:
+            with transaction.atomic():
+                self.save()
+                category_id = self.id
+        except IntegrityError:
+            category_id = Category.objects.get(name=self.name).id
+        return category_id
     
     @classmethod
     def get_categories_list(cls):
@@ -24,7 +37,7 @@ class Category(models.Model):
         """
         return cls.CATEGORIES_LIST
 
-    def get_url_1k_products(self):
+    def get_url_250_products(self):
         """
         Supply the search url, which displays 1000 products,
         based on the category name.
@@ -33,16 +46,10 @@ class Category(models.Model):
             res = "https://fr.openfoodfacts.org/cgi/search.pl?" \
                 + "action=process&tagtype_0=categories" \
                 + "&tag_contains_0=contains&tag_0=" \
-                + self.name + "&page_size=1000&json=1"
+                + self.name + "&page_size=250&json=1"
         else:
             res = ""
         return res
-
-    def add_category_to_db(self):
-        """
-        If necessary, add a category in the database.
-        """
-        category = Category.objects.get_or_create(name=self.name)
 
 
 class Store(models.Model):
@@ -52,22 +59,25 @@ class Store(models.Model):
         """
         If necessary, add a store in the database.
         """
-        store = Store.objects.get_or_create(name=self.name)
+        try:
+            with transaction.atomic():
+                self.save()
+                store_id = self.id
+        except IntegrityError:
+            store_id = Store.objects.get(name=self.name).id
+        return store_id
 
 
 class Product(models.Model):
+    # id = models.AutoField(auto_created=True, primary_key=True)
     code = models.CharField(max_length=20, unique=True)
-    product_name = models.CharField(max_length=200)
+    product_name = models.CharField(max_length=500)
     nutriscore_grade = models.CharField(max_length=1)
     nutriscore_score = models.IntegerField()
-    url = models.CharField(max_length=200)
-    image_url = models.CharField(max_length=200)
+    url = models.CharField(max_length=1000)
+    image_url = models.CharField(max_length=1000, null=True)
     # create association table off_sub_product_categories in database
-    categories = models.ManyToManyField(
-        Category,
-        related_name='products',
-        blank=True
-    )
+    categories = models.ManyToManyField(Category, related_name='products')
     # create association table off_sub_product_stores in database
     stores = models.ManyToManyField(Store, related_name='products', blank=True)
 
@@ -90,13 +100,32 @@ class Product(models.Model):
         If necessary, add a product in the database.
         """
         try:
-            product = Product.objects.get_or_create(
-                code=self.code,
-                product_name=self.product_name,
-                nutriscore_grade=self.nutriscore_grade,
-                nutriscore_score=self.nutriscore_score,
-                url=self.url,
-                image_url=self.image_url,
-            )
+            with transaction.atomic():
+                self.save()
+                product_id = self.id
         except IntegrityError:
-            pass
+            product_id = Product.objects.get(code=self.code).id
+        return product_id
+
+    def get_best_subs(self, nb_sub):
+        """
+        Return a queryset with 'nb_sub' products
+        which can be substitutes of the selected product.
+        If the selected product is among the best products,
+        it will be also returned to show that this is a "good" product.
+        """
+        # get the product category/ies linked to the product
+        prod_categories = [categ for categ in self.categories.all()]
+        # list all the products in database for the product category/ies
+        prods_id = []
+        for categ in prod_categories:
+            for prod in Product.objects.filter(categories=categ):
+                prods_id += [prod.id]
+        # remove duplicates
+        prods_id = list(set(prods_id))
+        # get back to the Product Queryset
+        prods_qs = Product.objects.filter(id__in=prods_id)
+        # sort the products based on the nutriscore
+        prods_qs = prods_qs.order_by('nutriscore_score')
+        # get the 'nb_sub' best subs
+        return prods_qs[:nb_sub]

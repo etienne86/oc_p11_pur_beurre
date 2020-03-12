@@ -1,0 +1,69 @@
+{% extends 'off_sub/base.html' %}
+{% load static %}
+
+{% block not_signed_in %}{% endblock %}
+
+{% block jumbotron_text %}
+
+  <h1 class="text-white display-4 text-center">Connexion</h1>
+
+{% endblock %}
+
+{% block section_2 %}
+
+  <div class="col-12 col-sm-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="text-center">
+          <h2 class="card-title">J'ai déjà un compte !</h2>
+          <form method="post">
+            {% csrf_token %}
+            {% for field in authentication_form %}
+              <div class="form-group py-4">
+                <div class="col-12 col-md-4 text-left">
+                  <label>{{ field.label_tag }}</label>
+                </div>
+                <div class="col-12 col-md-8">
+                  {{ field }}
+                  {% for error in field.errors %}
+                  <p>{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+            <div class="form-group py-4 mt-auto">
+              <input type="submit" name="sign_in_form" value="Se connecter" class="btn btn-warning" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-sm-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="text-center">
+          <h2 class="card-title">Pas encore inscrit ?</h2>
+          <form method="post">
+            {% csrf_token %}
+            {% for field in user_creation_form %}
+              <div class="form-group py-4">
+                <div class="col-12 col-md-4 text-left">
+                  <label>{{ field.label_tag }}</label>
+                </div>
+                <div class="col-12 col-md-8">
+                  {{ field }}
+                </div>
+              </div>
+            {% endfor %}
+            <div class="form-group py-4 mt-auto">
+              <input type="submit" name="sign_up_form" value="Créer un compte et se connecter" class="btn btn-warning" />
+            </div>
+          </form>
+        </div>
+      </div> 
+    </div>
+  </div>
+
+{% endblock %}

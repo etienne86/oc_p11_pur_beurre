@@ -6,10 +6,8 @@
   <h1 class="text-white display-4 text-center">Favoris</h1>
 {% endblock %}
 
-
-
 {% block section_2_intro %}
-  Voici la liste de vos produits enregistrés :
+  {{ user.first_name }}, voici la liste de vos produits enregistrés :
 {% endblock %}
 
 
@@ -46,7 +44,6 @@
 
 {% block product_save_unsave_4 %}
   <button type="button" class="btn btn-outline-warning">Retirer des favoris</button>
-
 {% endblock %}
 
 
@@ -59,10 +56,10 @@
 {% endblock %}
 
 
-{% block product_name_6 %}
+<!-- {% block product_name_6 %}
   Kapern - Feinkost Dittmann - 60 g
 {% endblock %}
 
 {% block product_save_unsave_6 %}
   <button type="button" class="btn btn-outline-warning">Retirer des favoris</button>
-{% endblock %}
+{% endblock %} -->

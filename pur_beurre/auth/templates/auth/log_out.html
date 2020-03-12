@@ -1,0 +1,30 @@
+{% extends 'off_sub/base.html' %}
+{% load static %}
+
+{% block jumbotron_text %}
+  <h1 class="text-white display-4 text-center">Déconnexion</h1>
+{% endblock %}
+
+
+{% block section_2 %}
+
+  <div class="col-12">
+    <p class="text-center">
+      Vous êtes maintenant déconnecté(e) !
+    </p>
+  </div>
+
+{% endblock %}
+
+
+{% block section_3 %}
+
+  <div class="col-12 p-4 text-center">
+
+    <form action="/">
+      <input type="submit" value="Retour à l'accueil" class="btn btn-warning" />
+    </form>
+
+  </div>
+
+{% endblock %}

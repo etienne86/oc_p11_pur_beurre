@@ -22,4 +22,5 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     path('orgadmin/', admin.site.urls),
     path('', include('off_sub.urls')),
+    path('auth/', include('auth.urls')),
 ]

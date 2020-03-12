@@ -5,9 +5,10 @@ Pre-requisite: the database 'pur_beurre_db' has to be created.
 """
 
 
-import re
+import os, re
 
 import django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pur_beurre.settings")
 django.setup()
 
 import requests
@@ -25,14 +26,14 @@ def main():
     # iterate on each pre-selected category
     for categ_name in Category.get_categories_list():
         # initialize the category
-        categ = Category.objects.create(name=categ_name)
+        categ = Category.objects.get_or_create(name=categ_name)[0]
         # add the category to the database
         categ.add_category_to_db()
         # execute the HTTP request to get products with API
-        categ_1k = requests.get(categ.get_url_1k_products())
-        categ_1k_dict = categ_1k.json()
-        if (categ_1k.status_code == 200) and (categ_1k_dict["count"]):
-            api_return = categ_1k.json() # type is dict
+        categ_250 = requests.get(categ.get_url_250_products())
+        categ_250_dict = categ_250.json()
+        if (categ_250.status_code == 200) and (categ_250_dict["count"]):
+            api_return = categ_250.json() # type is dict
             products_list = api_return["products"] # type is list of dict
             # iterate on each product
             for item in products_list: # type is dict
@@ -47,14 +48,25 @@ def main():
                         and ("nutrition_grade_fr" in item.keys()):
                     # set the product attributes
                     prod.code = item["code"]
-                    prod.product_name = item["product_name"]
+                    try:
+                        prod.product_name = item["product_name"]
+                    except KeyError:
+                        prod.product_name = "[Produit sans nom]"    
                     prod.nutriscore_grade = item["nutrition_grade_fr"]
                     prod.nutriscore_score = \
                         int(item["nutriments"]["nutrition-score-fr_100g"])
-                    prod.url = item["url"]
-                    prod.image_url = item["image_url"]
+                    try:
+                        prod.url = item["url"]
+                    except KeyError:
+                        prod.url = ""
+                    try:
+                        prod.image_url = item["image_url"]
+                    except KeyError:
+                        prod.image_url = ""
                     # add the product to the database, if necessary
-                    prod.add_product_to_db()
+                    prod_id = prod.add_product_to_db()
+                    # cover the case where the product already exists
+                    prod = Product.objects.get(id=prod_id)
                     # update the database (table ProductCategory), if necessary
                     prod.add_product_category_to_db(categ)
                     # if applicable, link the stores and the product
@@ -68,7 +80,7 @@ def main():
                         continue
                     for shop_name in shop_names:
                         # create a new instance of store
-                        shop = Store(name=shop_name)
+                        shop = Store.objects.get_or_create(name=shop_name)[0]
                         # add the store to the database, if necessary
                         shop.add_store_to_db()
                         # update the database (table ProductStore)

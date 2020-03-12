@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block jumbotron_text %}
-  <h1 class="text-white display-4 text-center">Ahoy [Prénom utilisateur] !</h1>
+  <h1 class="text-white display-4 text-center">Ahoy {{ user.first_name }} !</h1>
 {% endblock %}
 
 
@@ -16,9 +16,21 @@
           <label>Courriel :</label>
         </div>
         <div class="col-12 col-sm-6">
-          <input type="email" class="form-control" placeholder="mon_mail@mail.com" disabled>
+          <input type="email" class="form-control" placeholder="{{ user.email }}" disabled>
         </div>
       </div>
+    </form>
+
+  </div>
+
+{% endblock %}
+
+{% block section_3 %}
+
+  <div class="col-12 p-4 text-center">
+
+    <form action="/">
+      <input type="submit" value="Retour à l'accueil" class="btn btn-warning" />
     </form>
 
   </div>

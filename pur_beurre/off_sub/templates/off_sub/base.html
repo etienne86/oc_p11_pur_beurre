@@ -36,25 +36,33 @@
                 </button>
                 <div id="navbarContent" class="collapse navbar-collapse">
                   <ul class="navbar-nav">
+                    {% if user_authenticated %}
+                      <div class="d-flex">
+                        <div class="mr-3 mt-4"><p>Bonjour {{ user.first_name }} !</p></div>
+                      </div>
+                    {% endif %}
                     {% block search %}
-                      <form class="form-inline" action="/results/"><input class="form-control" type="search" placeholder="Chercher"/></form>
+                      <form class="form-inline" action="{% url 'off_sub:results' product %}"><input class="form-control" type="search" placeholder="Chercher" name="searched_product"/></form>
                     {% endblock %}
-                    {% block not_signed_in %}
-                      <li class="nav-item">
-                        <a class="nav-link" href="/sign/" title="Connexion"><i class="fas fa-sign-in-alt"></i></a>
-                      </li>
-                    {% endblock %}
-                    {% block signed_in %}
-                      <li class="nav-item">
-                        <a class="nav-link" href="/account/" title="Mon compte"><i class="far fa-user"></i></a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/favorites/" title="Mes aliments"><i class="fas fa-carrot"></i></a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a>
-                      </li>
-                    {% endblock %}
+                    {% if user_authenticated %}
+                      {% block signed_in %}
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'auth:account' %}" title="Mon compte"><i class="far fa-user"></i></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'off_sub:favorites' %}" title="Mes aliments"><i class="fas fa-carrot"></i></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'auth:log_out' %}" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a>
+                        </li>
+                      {% endblock %}
+                    {% else %}
+                      {% block not_signed_in %}
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'auth:sign' %}" title="Connexion"><i class="fas fa-sign-in-alt"></i></a>
+                        </li>
+                      {% endblock %}
+                    {% endif %}
                   </ul>
                 </div>
               </div>

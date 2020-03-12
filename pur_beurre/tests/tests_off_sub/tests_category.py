@@ -11,22 +11,22 @@ class CategoryTestCase(TestCase):
         # one category already recorded
         self.category_1 = Category.objects.create(name="desserts")
             
-    def test_get_url_1k_products_right_category(self):
+    def test_get_url_250_products_right_category(self):
         """
         Test if the returned URL is well as expected.
         """
         url = "https://fr.openfoodfacts.org/cgi/search.pl?" \
                 + "action=process&tagtype_0=categories" \
                 + "&tag_contains_0=contains&tag_0=desserts" \
-                + "&page_size=1000&json=1"
-        self.assertEqual(self.category_1.get_url_1k_products(), url)
+                + "&page_size=250&json=1"
+        self.assertEqual(self.category_1.get_url_250_products(), url)
 
-    def test_get_url_1k_products_wrong_category(self):
+    def test_get_url_250_products_wrong_category(self):
         """
         Test if the returned URL is an empty string.
         """
         category_0 = Category.objects.create(name="alcool")
-        self.assertEqual(category_0.get_url_1k_products(), "")
+        self.assertEqual(category_0.get_url_250_products(), "")
 
     def test_add_category_to_db_one_new_record(self):
         """
