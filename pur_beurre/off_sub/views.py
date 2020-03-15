@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 # from django.views.generic import ListView, TemplateView, DetailView
 
 from auth.views import authenticated, sign
+from .models import Product, Category
 
 # @login_required(login_url=reverse_lazy(sign))
 @login_required
@@ -16,8 +17,10 @@ def favorites(request):
         context,
     )
 
-def food(request):
+def food(request, product_id):
     context = authenticated(request)
+    product = get_object_or_404(Product, id=product_id)
+    context['product'] = product
     return render(
         request, 
         'off_sub/food.html',
@@ -26,6 +29,10 @@ def food(request):
 
 def index(request):
     context = authenticated(request)
+    prod_list = list(Product.objects.all())
+    context['all_products'] = [
+        f"{prod.code} - {prod.product_name}" for prod in prod_list
+    ]
     return render(
         request, 
         'off_sub/index.html',
@@ -42,6 +49,11 @@ def legal(request):
 
 def results(request):
     context = authenticated(request)
+    product = Product.objects.get(id=100)
+    # number of substitutes: 6
+    subs = product.get_best_subs(6)
+    context['products_list'] = subs # type is queryset
+    context['initial_product'] = product
     return render(
         request, 
         'off_sub/results.html',

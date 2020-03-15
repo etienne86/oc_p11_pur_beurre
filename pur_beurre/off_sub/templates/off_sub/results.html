@@ -1,12 +1,13 @@
 {% extends 'off_sub/food_list.html' %}
 {% load static %}
 
+
 {% block jumbotron_img %}
-  <div class="jumbotron jumbotron-fluid px-0 mb-0 d-flex align-items-center jumbotron-opacity jumbotron-no-repeat" style="background: url(https://static.openfoodfacts.org/images/products/301/762/042/5035/front_fr.223.full.jpg) top center;">
+  <div class="jumbotron jumbotron-fluid px-0 mb-0 d-flex align-items-center jumbotron-opacity jumbotron-no-repeat" style="background: url({{ initial_product.image_url }}) top center;">
 {% endblock %}
 
 {% block jumbotron_text %}
-  <p class="h2 text-black display-4 text-center bg-white">Nutella 1kg mais alors bonjour les calories mon pauvre vieux</p>
+  <p class="h2 text-black display-4 text-center bg-white">{{ initial_product.product_name }}</p>
 {% endblock %}
 
 
@@ -15,61 +16,13 @@
 {% endblock %}
 
 
-{% block product_name_1 %}
-  Purée noisette
-{% endblock %}
-
-{% block product_save_unsave_1 %}
-  <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
-{% endblock %}
-
-
-{% block product_name_2 %}
-  Purée amande complète
-{% endblock %}
-
-{% block product_save_unsave_2 %}
-  <div class="d-flex justify-content-center">
-    <p class="text-success py-custom-6px px-2">Enregistré !</p>
-    <a href="" class="text-warning py-custom-6px px-2">Retirer</a>
-  </div>
-{% endblock %}
-
-
-{% block product_name_3 %}
-  Purée amande blanche
-{% endblock %}
-
-{% block product_save_unsave_3 %}
+{% block product_save_unsave %}
+  {% if user_authenticated %} <!-- changer la condition -->
     <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
-{% endblock %}
-
-
-{% block product_name_4 %}
-  Huile d'olive Vierge Extra biologique il manque une "fruit" - Echinac - 1 l
-{% endblock %}
-
-{% block product_save_unsave_4 %}
-  <div class="d-flex justify-content-center">
-    <p class="text-success py-custom-6px px-2">Enregistré !</p>
-    <a href="" class="text-warning py-custom-6px px-2">Retirer</a>
-  </div>
-{% endblock %}
-
-
-{% block product_name_5 %}
-  Gâteau Breton Fourré à la Crème de Pruneaux - Leader Price - 400 g
-{% endblock %}
-
-{% block product_save_unsave_5 %}
-  <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
-{% endblock %}
-
-
-{% block product_name_6 %}
-  Kapern - Feinkost Dittmann - 60 g
-{% endblock %}
-
-{% block product_save_unsave_6 %}
-  <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
+  {% else %}
+    <div class="d-flex justify-content-center">
+      <p class="text-success py-custom-6px px-2">Enregistré !</p>
+      <a href="" class="text-warning py-custom-6px px-2">Retirer</a>
+    </div>
+  {% endif %}
 {% endblock %}
