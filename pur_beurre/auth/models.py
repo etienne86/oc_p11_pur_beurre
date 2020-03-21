@@ -25,7 +25,7 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, password):
+    def create_superuser(self, email, password, first_name="superuser"):
         """
         Creates and saves a superuser with the given email,
         first name and password.
@@ -46,7 +46,10 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    first_name = models.CharField(max_length=30, verbose_name='Prénom')
+    first_name = models.CharField(
+        max_length=30,
+        verbose_name='Prénom'
+    )
     # create association table my_auth_myuser_favorites in database
     favorites = models.ManyToManyField(
         Product,
