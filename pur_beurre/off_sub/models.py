@@ -74,6 +74,10 @@ class Product(models.Model):
     product_name = models.CharField(max_length=500)
     nutriscore_grade = models.CharField(max_length=1)
     nutriscore_score = models.IntegerField()
+    fat = models.CharField(max_length=100, null=True)
+    saturated_fat = models.CharField(max_length=100, null=True)
+    sugars = models.CharField(max_length=100, null=True)
+    salt = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=1000)
     image_url = models.CharField(max_length=1000, null=True)
     # create association table off_sub_product_categories in database

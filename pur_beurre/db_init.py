@@ -55,6 +55,8 @@ def main():
                     prod.nutriscore_grade = item["nutrition_grade_fr"]
                     prod.nutriscore_score = \
                         int(item["nutriments"]["nutrition-score-fr_100g"])
+                    # extract some key nutriments data as fat, sugars and salt
+                    extract_nutriments_data(item, prod)
                     try:
                         prod.url = item["url"]
                     except KeyError:
@@ -86,6 +88,33 @@ def main():
                         # update the database (table ProductStore)
                         prod.add_product_store_to_db(shop)
     print("Installation terminée !")
+
+
+def extract_nutriments_data(item, prod):
+    """
+    This sub-function extracts some nutriments data from Open Food Facts.
+    """
+    try:
+        prod.fat = f"{item["nutriments"]["fat"]}" + \
+                        item["nutriments"]["fat_unit"]
+    except KeyError:
+        prod.fat = "donnée inconnue"
+    try:
+        prod.saturated_fat = f"{item["nutriments"]["saturated-fat"]}" + \
+                        item["nutriments"]["saturated-fat_unit"]
+    except KeyError:
+        prod.saturated_fat = "donnée inconnue"
+    try:
+        prod.sugars = f"{item["nutriments"]["sugars"]}" + \
+                        item["nutriments"]["sugars_unit"]
+    except KeyError:
+        prod.sugars = "donnée inconnue"
+    try:
+        prod.salt = f"{item["nutriments"]["salt"]}" + \
+                        item["nutriments"]["salt_unit"]
+    except KeyError:
+        prod.salt = "donnée inconnue"
+
 
 if __name__ == "__main__":
     main()
