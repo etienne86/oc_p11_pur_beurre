@@ -1,23 +1,24 @@
 {% extends 'off_sub/base.html' %}
 {% load static %}
 
-{% block jumbotron_text %}
-  <h1 class="text-white display-4 text-center">Oups...</h1>
+{% block masthead_title %}
+  Oups...
 {% endblock %}
 
+{% block masthead_subtitle %}
+  Vous venez d'ouvrir la porte du réfrigérateur, mais il est vide, désolé !
+{% endblock %}
 
-{% block section_2 %}
-
-  <div class="col-12">
-    <p class="text-center">Vous venez d'ouvrir la porte du réfrigérateur, mais celui-ci est vide, désolé !</p>
+{% block masthead_form %}
+  <div class="text-center">
+    <form action="/">
+      <input type="submit" value="Retour à l'accueil" class="btn btn-primary" />
+    </form>
   </div>
+{% endblock %}
 
-  <div class="col-xs-6 col-xs-offset-3">
-    <img src="{% static 'img/404/refrigerator-158634.svg' %}">
-  </div>
+{% block section_one_divider %}{% endblock %}
 
-  <div class="col-12 py-4">
-    <div class="text-center"><a href="/"><button type="button" class="btn btn-warning">Retour à l'accueil</button></a></div>
-  </div>
-
+{% block section_one_pictures %}
+  <img src="{% static 'img/404/refrigerator-158634.svg' %}">
 {% endblock %}

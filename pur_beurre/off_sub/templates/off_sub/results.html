@@ -2,27 +2,48 @@
 {% load static %}
 
 
-{% block jumbotron_img %}
-  <div class="jumbotron jumbotron-fluid px-0 mb-0 d-flex align-items-center jumbotron-opacity jumbotron-no-repeat" style="background: url({{ initial_product.image_url }}) top center;">
+{% block masthead_style %}
+  background: #343a40;
 {% endblock %}
 
-{% block jumbotron_text %}
-  <p class="h2 text-black display-4 text-center bg-white">{{ initial_product.product_name }}</p>
+{% block masthead_picture %}
+  <a href="/food/{{ initial_product.id }}"><img class="img-fluid" src={{ initial_product.image_url }} alt="product_picture" style="max-width: 100%; max-height: 40vh;"/></a>
 {% endblock %}
 
+{% block masthead_divider %}{% endblock %}
 
-{% block section_2_intro %}
+{% block masthead_subtitle %}
+  <a href="/food/{{ initial_product.id }}">{{ initial_product.product_name }}</a>
+{% endblock %}
+
+{% block section_one_title %}
+  <div class="col-xs-6 offset-xs-3 col-sm-4 offset-sm-4 img-fluid">
+    {% if pinitial_roduct.nutriscore_grade == "a" %}
+      <img class="img-fluid" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />
+    {% elif initial_product.nutriscore_grade == "b" %}  
+      <img class="img-fluid" src="{% static 'img/nutriscores/nutri_b.png' %}" alt="A(B)CDE" />
+    {% elif initial_product.nutriscore_grade == "c" %}  
+      <img class="img-fluid" src="{% static 'img/nutriscores/nutri_c.png' %}" alt="AB(C)DE" />
+    {% elif initial_product.nutriscore_grade == "d" %}  
+      <img class="img-fluid" src="{% static 'img/nutriscores/nutri_d.png' %}" alt="ABC(D)E" />
+    {% elif initial_product.nutriscore_grade == "e" %}  
+      <img class="img-fluid" src="{% static 'img/nutriscores/nutri_e.png' %}" alt="ABCD(E)" />
+    {% endif %}
+  </div>
+  <br />
   Vous pouvez remplacer cet aliment par :
 {% endblock %}
+
+{% block section_one_divider %}{% endblock %}
 
 
 {% block product_save_unsave %}
   {% if user_authenticated %} <!-- changer la condition -->
-    <button type="button" class="btn btn-outline-warning"><i class="far fa-save"></i> Sauvegarder</button>
+    <button type="button" class="btn btn-outline-primary"><i class="far fa-save"></i> Sauvegarder</button>
   {% else %}
     <div class="d-flex justify-content-center">
       <p class="text-success py-custom-6px px-2">Enregistré !</p>
-      <a href="" class="text-warning py-custom-6px px-2">Retirer</a>
+      <a href="" class="text-primary py-custom-6px px-2">Retirer</a>
     </div>
   {% endif %}
 {% endblock %}

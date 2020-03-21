@@ -1,148 +1,158 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
-  
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/cb0486a1cf.js" crossorigin="anonymous"></script>
-    <title>{% block title %}Pur Beurre - Du gras, oui, mais de qualité !{% endblock %}</title>
-    {{ all_products|json_script:"python-products" }}
-    <script>
-      $( function() {
-        var allProducts = JSON.parse(document.getElementById('python-products').textContent);
-        var fewProducts = ["product_1", "another_product"];
-        $( "#tags" ).autocomplete({
-          source: fewProducts
-        });
-      } );
-    </script>
-  </head>
+<html lang="en">
 
-  <body class="d-flex flex-column">
+<head>
 
-    <!-- Header Section -->
-    <div style="background-color: #FEA;">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <nav class="col navbar navbar-expand-sm navbar-light">
-              <div class="mr-auto">
-                <a class="navbar-brand" href="/" title="Accueil">
-                  <div class="d-flex">
-                    <div class="m-n2"><img src="{% static 'img/navbar/logo_pur_beurre-32.png' %}" alt="Logo" /></div>
-                    <div class="ml-3"><p>Pur Beurre</p></div>
-                  </div>
-                </a>
-              </div>
-              <div class="d-flex justify-content-end">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div id="navbarContent" class="collapse navbar-collapse">
-                  <ul class="navbar-nav">
-                    {% if user_authenticated %}
-                      <div class="d-flex">
-                        <div class="mr-3 mt-4"><p>Bonjour {{ user.first_name }} !</p></div>
-                      </div>
-                    {% endif %}
-                    {% block search %}
-                      <form class="form-inline" action="{% url 'off_sub:results' %}"><div class="ui-widget"><label for="products_autocomplete"></label><input class="form-control" type="search" placeholder="Chercher" id="products_autocomplete" /></div></form>
-                    {% endblock %}
-                    {% if user_authenticated %}
-                      {% block signed_in %}
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'auth:account' %}" title="Mon compte"><i class="far fa-user"></i></a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'off_sub:favorites' %}" title="Mes aliments"><i class="fas fa-carrot"></i></a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'auth:log_out' %}" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a>
-                        </li>
-                      {% endblock %}
-                    {% else %}
-                      {% block not_signed_in %}
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'auth:sign' %}" title="Connexion"><i class="fas fa-sign-in-alt"></i></a>
-                        </li>
-                      {% endblock %}
-                    {% endif %}
-                  </ul>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-<div class="ui-widget">
-  <label for="tags">Tags: </label>
-  <input id="tags">
-</div>
+  <title>Pur Beurre - Du gras, oui, mais de qualité !</title>
 
+  <!-- Font Awesome Icons -->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
-    <!-- Main Section part 1 -->
+  <!-- Plugin CSS -->
+  <link href="{% static 'vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="{% static 'css/creative.min.css' %}" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet">  
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-      {% block jumbotron_img %}
-        <div class="jumbotron jumbotron-repeat jumbotron-fluid px-0 mb-0 d-flex align-items-center" style="background: url({% static 'img/theme/back.jpg' %}) center;">
-      {% endblock %}
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col">
-              {% block jumbotron_text %}{% endblock %}
-            </div>
-          </div>
+      <a class="navbar-brand" href="/">
+        <div class="d-flex">
+          <div><img src="{% static 'img/navbar/logo_pur_beurre-32.png' %}" alt="Logo" /></div>
+          <div class="ml-3"><p>Pur Beurre</p></div>
+        </div>
+      </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-sm-0">
+          {% if user_authenticated %}
+            <li class="nav-item">
+              <p  class="nav-link disabled">Bonjour {{ user.first_name }} !</p>
+            </li>
+          {% endif %}
+          {% block search %}
+            <li class="nav-item mt-n2">
+              <form class="form-inline" action="{% url 'off_sub:results' %}">
+                <div class="ui-widget">
+                  <label for="products_autocomplete"></label>
+                  <input class="form-control" type="search" placeholder="Chercher" id="products_autocomplete" />
+                </div>
+              </form>
+            </li>
+          {% endblock %}
+          {% if user_authenticated %}
+            {% block signed_in %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'auth:account' %}" title="Mon compte"><i class="far fa-user"></i></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'off_sub:favorites' %}" title="Mes aliments"><i class="fas fa-carrot"></i></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'auth:log_out' %}" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a>
+              </li>
+            {% endblock %}
+          {% else %}
+            {% block not_signed_in %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'auth:sign' %}" title="Connexion"><i class="fas fa-sign-in-alt"></i></a>
+              </li>
+            {% endblock %}
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Masthead -->
+  <header class="masthead h-75" style="{% block masthead_style %}{% endblock %}">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center justify-content-center text-center">
+        <div class="col-10 align-self-end">
+          {% block masthead_picture %}{% endblock %}
+          <h1 class="text-uppercase text-white font-weight-bold">{% block masthead_title %}{% endblock %}</h1>
+          {% block masthead_divider %}<hr class="divider my-4">{% endblock %}
+        </div>
+        <div class="col-sm-8 align-self-baseline">
+          <p class="text-white-75 font-weight-light mb-5">{% block masthead_subtitle %}{% endblock %}</p>
+          {% block masthead_form %}{% endblock %}
         </div>
       </div>
     </div>
+  </header>
 
-    <!-- Main Section part 2 -->
-    <div class="container pt-4">
-      <div class="row">
-        {% block section_2 %}{% endblock %}
-      </div>
-    </div>
-
-    <!-- Main Section part 3 -->
-    <div class="container pb-4">
-      <div class="row">
-        {% block section_3 %}{% endblock %}
-      </div>
-    </div>
-
-    <!-- Footer Section -->
-    <div id="footer" style="background-color: #FEA;" class="mt-auto">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <ul class="list-inline text-center">
-              <li class="list-inline-item">
-                <a href="/legal/" title="Mentions légales">Mentions légales</a>
-              </li>
-              <li class="list-inline-item">
-                <a href="/#contact" title="Contact">Contact</a>
-              </li>
-            </ul>
-          </div>
+  <!-- Section one -->
+  {% block section_one %}
+  <section class="page-section" id="section-one">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-sm-12 text-center">
+          <h2 class="mt-0">{% block section_one_title %}{% endblock %}</h2>
+          {% block section_one_divider %}<hr class="divider my-4">{% endblock %}
+          <h5 class="mb-4">{% block section_one_subtitle %}{% endblock %}</h5>
+          <div class="text-justify text-muted mb-4">{% block section_one_text %}{% endblock %}</div>
+          {% block section_one_pictures %}{% endblock %}
         </div>
       </div>
+    </div>
+  </section>
+  {% endblock %}
+
+  <!-- Section two -->
+  {% block section_two %}{% endblock %}
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!-- Footer -->
+  <footer class="bg-light py-5">
+    <div class="container">
+      <div class="small text-center text-muted">
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <a href="/legal/" title="Mentions légales">Mentions légales</a>
+          </li>
+          <li class="list-inline-item">
+            <a href="/#contact" title="Contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 
-  </body>
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="{% static 'js/creative.min.js' %}"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
 
 </html>

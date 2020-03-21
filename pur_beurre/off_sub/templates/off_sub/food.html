@@ -1,47 +1,62 @@
 {% extends 'off_sub/base.html' %}
 {% load static %}
 
-{% block jumbotron_img %}
-  <div class="jumbotron jumbotron-fluid px-0 mb-0 d-flex align-items-center jumbotron-opacity jumbotron-no-repeat" style="background: url({{ product.image_url }}) center;">
+{% block masthead_style %}
+  background: #343a40;
 {% endblock %}
 
-{% block jumbotron_text %}
-  <p class="h2 text-black  display-4 text-center bg-white font-weight-bolder">{{ product.product_name }}</p>
+{% block masthead_picture %}
+  <a href="/food/{{ product.id }}"><img class="img-fluid" src={{ product.image_url }} alt="product_picture" style="max-width: 100%; max-height: 40vh;"/></a>
 {% endblock %}
 
-{% block section_2 %}
+{% block masthead_divider %}{% endblock %}
 
-  <div class="col-12 col-sm-6 text-center">
-    {% if product.nutriscore_grade == "a" %}
-      <img class="img-responsive" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />
-    {% elif product.nutriscore_grade == "b" %}  
-      <img class="img-responsive" src="{% static 'img/nutriscores/nutri_b.png' %}" alt="A(B)CDE" />
-    {% elif product.nutriscore_grade == "c" %}  
-      <img class="img-responsive" src="{% static 'img/nutriscores/nutri_c.png' %}" alt="AB(C)DE" />
-    {% elif product.nutriscore_grade == "d" %}  
-      <img class="img-responsive" src="{% static 'img/nutriscores/nutri_d.png' %}" alt="ABC(D)E" />
-    {% elif product.nutriscore_grade == "e" %}  
-      <img class="img-responsive" src="{% static 'img/nutriscores/nutri_e.png' %}" alt="ABCD(E)" />
-    {% endif %}
-  </div>
-  <div class="col-12 col-sm-6 d-flex justify-content-center">
-    <div>
-      <p class="h3 text-left">Repères nutritionnels pour 100g :</p>
-      <p class="text-left">
-        <ul>
-          <li>Matières grasses / Lipides : FAKE g</li>
-          <li>Acides gras saturés : FAKE g</li>
-          <li>Sucres : FAKE g</li>
-          <li>Sel : FAKE g</li>
-        </ul>
-      </p>
+{% block masthead_subtitle %}
+  <a href="/food/{{ product.id }}">{{ product.product_name }}</a>
+{% endblock %}
+
+
+
+
+
+
+{% block section_one %}
+  <section class="page-section" id="section-one">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-6 text-center">
+          {% if product.nutriscore_grade == "a" %}
+            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />
+          {% elif product.nutriscore_grade == "b" %}  
+            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_b.png' %}" alt="A(B)CDE" />
+          {% elif product.nutriscore_grade == "c" %}  
+            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_c.png' %}" alt="AB(C)DE" />
+          {% elif product.nutriscore_grade == "d" %}  
+            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_d.png' %}" alt="ABC(D)E" />
+          {% elif product.nutriscore_grade == "e" %}  
+            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_e.png' %}" alt="ABCD(E)" />
+          {% endif %}
+        </div>
+        <div class="col-12 col-sm-6 d-flex justify-content-center">
+          <div>
+            <p class="h3 text-left">Repères nutritionnels pour 100 g :</p>
+            <p class="text-left">
+              <ul>
+                <li>Matières grasses / Lipides : FAKE g</li>
+                <li>Acides gras saturés : FAKE g</li>
+                <li>Sucres : FAKE g</li>
+                <li>Sel : FAKE g</li>
+              </ul>
+            </p>
+          </div>
+        </div>
+        <div class="col-12 text-center">
+          <form action="{{ product.url }}">
+            <input type="submit" value="Voir la fiche d'OpenFoodFacts" class="btn btn-outline-primary my-3"></submit>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="col-12 text-center">
-    <form action="{{ product.url }}">
-      <input type="submit" value="Voir la fiche d'OpenFoodFacts" class="btn btn-warning my-3"></submit>
-    </form>
-  </div>
-
+  </section>
 
 {% endblock %}

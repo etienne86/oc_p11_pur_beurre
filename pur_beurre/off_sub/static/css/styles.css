@@ -3,39 +3,10 @@ html, body
   height: 100%;
 }
 
-.jumbotron-repeat
-{
-  background-size: contain !important; /* répété par défaut */
-  border-radius: 0 !important;
-  min-height: 350px;
-}
-
-.jumbotron-stretch
-{
-  background-size: 100% 100% !important; /* étiré */
-  background-repeat: no-repeat !important; /* non répété */
-  border-radius: 0 !important;
-  min-height: 350px;
-}
-
-.jumbotron-opacity
-{
-  filter: opacity(30%);
-  /*opacity: 0.5;*/
-  /*filter: brightness(50%);*/
-}
-
-.jumbotron-no-repeat
-{
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  border-radius: 0 !important;
-}
-
 .corner-top-right
 {
   margin-bottom: -100%;
-  margin-left: -50%;
+  margin-left: -100%;
 }
 
 .z-index-0

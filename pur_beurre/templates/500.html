@@ -1,15 +1,23 @@
 {% extends 'off_sub/base.html' %}
 {% load static %}
 
-{% block jumbotron_text %}
-  <h1 class="text-white display-4 text-center">Erreur</h1>
+{% block masthead_title %}
+  Erreur
 {% endblock %}
 
+{% block masthead_subtitle %}
+  Une erreur s'est produite, veuillez réessayer ultérieurement SVP.<br />
+  Si le problème persiste, n'hésitez pas à contacter l'assistance technique.
+{% endblock %}
 
-{% block section_2 %}
-
-  <div class="col-12">
-    <p class="text-justify">Une erreur s'est produite, veuillez réessayer ultérieurement SVP. Si le problème persiste, n'hésitez pas à contacter l'assistance technique.</p>
+{% block masthead_form %}
+  <div class="text-center">
+    <form action="/">
+      <input type="submit" value="Retour à l'accueil" class="btn btn-primary" />
+    </form>
   </div>
-
 {% endblock %}
+
+{% block section_one_divider %}{% endblock %}
+
+{% block section_one %}{% endblock %}

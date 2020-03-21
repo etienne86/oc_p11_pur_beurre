@@ -2,45 +2,41 @@
 {% load static %}
 
 
-{% block section_2 %}
-
-  <div class="col-12">
-    <p class="h3 text-center">{% block section_2_intro %}{% endblock %}</p>
-  </div>
-
-{% for prod in products_list %}
-  <div class="col-12 col-sm-4 p-4">
-    <div class="card h-100">
-      <div class="row">
-        <div class="col-1 col-xs-offset-11 p-0 z-index-1">
-          {% if prod.nutriscore_grade == "a" %}
-            <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/a.png' %}" alt="{{ prod.nutriscore_grade }}" />
-          {% elif prod.nutriscore_grade == "b" %}  
-            <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/b.png' %}" alt="{{ prod.nutriscore_grade }}" />
-          {% elif prod.nutriscore_grade == "c" %}  
-            <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/c.png' %}" alt="{{ prod.nutriscore_grade }}" />
-          {% elif prod.nutriscore_grade == "d" %}  
-            <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/d.png' %}" alt="{{ prod.nutriscore_grade }}" />
-          {% elif prod.nutriscore_grade == "e" %}  
-            <img class="img-responsive corner-top-right" src="{% static 'img/nutriscores/e.png' %}" alt="{{ prod.nutriscore_grade }}" />
-          {% endif %}
-        </div>
-        <div class="col-10 col-xs-offset-1 p-0 z-index-0">
-          <a href="/food/{{ prod.id }}"><img class="card-img-top p-0 img-s-square" src="{{ prod.image_url }}" alt="product picture" /></a>
-          <div class="card-body">
-            <div class="text-center">
-              <a href="/food/{{ prod.id }}"><p class="card-text">{% block product_name %}{{ prod.product_name }}{% endblock %}</p></a>
-              {% if user_authenticated %}
-                {% block product_save_unsave %}Coucou{% endblock %}
+{% block section_one_pictures %}
+  <div class="container-fluid p-0">
+    <div class="row">
+    {% for prod in products_list %}
+      <div class="col-12 col-sm-4 p-4">
+        <div class="card h-100">
+          <div class="row">
+            <div class="col-1 offset-11 p-0 z-index-1">
+              {% if prod.nutriscore_grade == "a" %}
+                <img class="img-fluid corner-top-right" src="{% static 'img/nutriscores/a.png' %}" alt="{{ prod.nutriscore_grade }}" />
+              {% elif prod.nutriscore_grade == "b" %}  
+                <img class="img-fluid corner-top-right" src="{% static 'img/nutriscores/b.png' %}" alt="{{ prod.nutriscore_grade }}" />
+              {% elif prod.nutriscore_grade == "c" %}  
+                <img class="img-fluid corner-top-right" src="{% static 'img/nutriscores/c.png' %}" alt="{{ prod.nutriscore_grade }}" />
+              {% elif prod.nutriscore_grade == "d" %}  
+                <img class="img-fluid corner-top-right" src="{% static 'img/nutriscores/d.png' %}" alt="{{ prod.nutriscore_grade }}" />
+              {% elif prod.nutriscore_grade == "e" %}  
+                <img class="img-fluid corner-top-right" src="{% static 'img/nutriscores/e.png' %}" alt="{{ prod.nutriscore_grade }}" />
               {% endif %}
+            </div>
+            <div class="col-10 offset-1 p-0 z-index-0">
+              <a href="/food/{{ prod.id }}"><img class="card-img-top p-0 img-s-square" src="{{ prod.image_url }}" alt="product picture" /></a>
+              <div class="card-body">
+                <div class="text-center">
+                  <a href="/food/{{ prod.id }}"><p class="card-text text-muted">{% block product_name %}{{ prod.product_name }}{% endblock %}</p></a>
+                  {% block product_save_unsave %}Coucou{% endblock %}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    {% endfor %}
     </div>
   </div>
-{% endfor %}
-
 {% endblock %}
 
 {% block section_3 %}{% endblock %}
