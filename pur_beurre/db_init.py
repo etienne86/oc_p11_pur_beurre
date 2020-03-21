@@ -55,6 +55,14 @@ def main():
                     prod.nutriscore_grade = item["nutrition_grade_fr"]
                     prod.nutriscore_score = \
                         int(item["nutriments"]["nutrition-score-fr_100g"])
+                    try:
+                        prod.url = item["url"]
+                    except KeyError:
+                        prod.url = ""
+                    try:
+                        prod.image_url = item["image_url"]
+                    except KeyError:
+                        prod.image_url = ""
                     # extract some key nutriments data as fat, sugars and salt
                     extract_nutriments_data(item, prod)
                     # add the product to the database, if necessary
@@ -87,23 +95,23 @@ def extract_nutriments_data(item, prod):
     This sub-function extracts some nutriments data from Open Food Facts.
     """
     try:
-        prod.fat = str({item["nutriments"]["fat"]}) + \
-                        item["nutriments"]["fat_unit"]
+        prod.fat = str(item["nutriments"]["fat"]) + \
+                        max(item["nutriments"]["fat_unit"], "g")
     except KeyError:
         prod.fat = "donnée inconnue"
     try:
-        prod.saturated_fat = str({item["nutriments"]["saturated-fat"]}) + \
-                        item["nutriments"]["saturated-fat_unit"]
+        prod.saturated_fat = str(item["nutriments"]["saturated-fat"]) + \
+                        max(item["nutriments"]["saturated-fat_unit"], "g")
     except KeyError:
         prod.saturated_fat = "donnée inconnue"
     try:
-        prod.sugars = str({item["nutriments"]["sugars"]}) + \
-                        item["nutriments"]["sugars_unit"]
+        prod.sugars = str(item["nutriments"]["sugars"]) + \
+                        max(item["nutriments"]["sugars_unit"], "g")
     except KeyError:
         prod.sugars = "donnée inconnue"
     try:
         prod.salt = str({item["nutriments"]["salt"]}) + \
-                        item["nutriments"]["salt_unit"]
+                        max(item["nutriments"]["salt_unit"], "g")
     except KeyError:
         prod.salt = "donnée inconnue"
 
