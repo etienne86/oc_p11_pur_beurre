@@ -49,7 +49,7 @@ def legal(request):
 
 def results(request):
     context = authenticated(request)
-    product = Product.objects.get(id=100)
+    product = Product.objects.get(id=489)
     # number of substitutes: 6
     subs = product.get_best_subs(6)
     context['products_list'] = subs # type is queryset

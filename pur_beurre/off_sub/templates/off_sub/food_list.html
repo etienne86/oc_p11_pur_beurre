@@ -23,10 +23,22 @@
               {% endif %}
             </div>
             <div class="col-10 offset-1 p-0 z-index-0">
-              <a href="/food/{{ prod.id }}"><img class="card-img-top p-0 img-s-square" src="{{ prod.image_url }}" alt="product picture" /></a>
+              <a href="/food/{{ prod.id }}">
+                {% if prod.image_url %}
+                  <img class="card-img-top p-0 img-s-square" src="{{ prod.image_url }}" alt="photo du produit" />
+                {% else %}
+                  <p>(photo manquante)</p>
+                {% endif %}
+              </a>
               <div class="card-body">
                 <div class="text-center">
-                  <a href="/food/{{ prod.id }}"><p class="card-text text-muted">{% block product_name %}{{ prod.product_name }}{% endblock %}</p></a>
+                  <a href="/food/{{ prod.id }}">
+                    {% if prod.product_name %}
+                      <p class="card-text text-muted">{% block product_name %}{{ prod.product_name }}{% endblock %}</p>
+                    {% else %}
+                      <p>(nom manquant)</p>
+                    {% endif %}
+                  </a>
                   {% block product_save_unsave %}Coucou{% endblock %}
                 </div>
               </div>

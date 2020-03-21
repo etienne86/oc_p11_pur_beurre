@@ -110,7 +110,7 @@ def extract_nutriments_data(item, prod):
     except KeyError:
         prod.sugars = "donnée inconnue"
     try:
-        prod.salt = str({item["nutriments"]["salt"]}) + \
+        prod.salt = str(item["nutriments"]["salt"]) + \
                         max(item["nutriments"]["salt_unit"], "g")
     except KeyError:
         prod.salt = "donnée inconnue"

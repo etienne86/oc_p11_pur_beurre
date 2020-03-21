@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block masthead_picture %}
-  <a href="/food/{{ initial_product.id }}"><img class="img-fluid" src={{ initial_product.image_url }} alt="product_picture" style="max-width: 100%; max-height: 40vh;"/></a>
+  <a href="/food/{{ initial_product.id }}"><img class="img-fluid" src={{ initial_product.image_url }} alt="photo du produit" style="max-width: 100%; max-height: 40vh;"/></a>
 {% endblock %}
 
 {% block masthead_divider %}{% endblock %}
@@ -18,7 +18,7 @@
 
 {% block section_one_title %}
   <div class="col-xs-6 offset-xs-3 col-sm-4 offset-sm-4 img-fluid">
-    {% if pinitial_roduct.nutriscore_grade == "a" %}
+    {% if initial_product.nutriscore_grade == "a" %}
       <img class="img-fluid" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />
     {% elif initial_product.nutriscore_grade == "b" %}  
       <img class="img-fluid" src="{% static 'img/nutriscores/nutri_b.png' %}" alt="A(B)CDE" />

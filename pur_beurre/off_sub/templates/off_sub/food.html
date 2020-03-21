@@ -6,19 +6,26 @@
 {% endblock %}
 
 {% block masthead_picture %}
-  <a href="/food/{{ product.id }}"><img class="img-fluid" src={{ product.image_url }} alt="product_picture" style="max-width: 100%; max-height: 40vh;"/></a>
+  <a href="/food/{{ product.id }}">
+    {% if product.image_url %}
+      <img class="img-fluid" src={{ product.image_url }} alt="photo du produit" style="max-width: 100%; max-height: 40vh;"/>
+    {% else %}
+      <p>(photo manquante)</p>
+    {% endif %}
+  </a>
 {% endblock %}
 
 {% block masthead_divider %}{% endblock %}
 
 {% block masthead_subtitle %}
-  <a href="/food/{{ product.id }}">{{ product.product_name }}</a>
+  <a href="/food/{{ product.id }}">
+    {% if product.product_name %}
+      {{ product.product_name }}
+    {% else %}
+      <p>(nom manquant)</p>
+    {% endif %}
+  </a>
 {% endblock %}
-
-
-
-
-
 
 {% block section_one %}
   <section class="page-section" id="section-one">
@@ -42,10 +49,10 @@
             <p class="h3 text-left">Repères nutritionnels pour 100 g :</p>
             <p class="text-left">
               <ul>
-                <li>Matières grasses / Lipides : FAKE g</li>
-                <li>Acides gras saturés : FAKE g</li>
-                <li>Sucres : FAKE g</li>
-                <li>Sel : FAKE g</li>
+                <li>Matières grasses / Lipides : {{ product.fat }}</li>
+                <li>Acides gras saturés : {{ product.saturated_fat }}</li>
+                <li>Sucres : {{ product.sugars }}</li>
+                <li>Sel : {{ product.salt }}</li>
               </ul>
             </p>
           </div>
@@ -58,5 +65,4 @@
       </div>
     </div>
   </section>
-
 {% endblock %}
