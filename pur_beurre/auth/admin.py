@@ -1,10 +1,10 @@
 from django import forms
+from django.forms import ModelForm, TextInput, EmailInput, PasswordInput
 from django.contrib import admin
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.forms import ModelForm, TextInput, EmailInput, PasswordInput
 from django.utils.translation import gettext, gettext_lazy as _
 from django.utils.text import capfirst
 
@@ -27,8 +27,7 @@ class AuthenticationForm(forms.Form):
 
     error_messages = {
         'invalid_login': _(
-            "Please enter a correct %(email)s and password. Note that both "
-            "fields may be case-sensitive."
+            "Merci de saisir un email et un mot de passe valides SVP."
         ),
         'inactive': _("This account is inactive."),
     }

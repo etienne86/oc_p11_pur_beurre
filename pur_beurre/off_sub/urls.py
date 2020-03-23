@@ -12,4 +12,6 @@ urlpatterns = [
     path('food/<product_id>', views.food, name="food"),
     path('legal/', views.legal, name="legal"),
     path('results/', views.results, name="results"),
+    path('ajax/save_product/', views.save_product, name="save_product"),
+    path('ajax/unsave_product/', views.unsave_product, name="unsave_product"),
 ]

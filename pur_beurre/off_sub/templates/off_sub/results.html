@@ -4,17 +4,17 @@
 
 {% block masthead_style %}
   background: #343a40;
-{% endblock %}
+{% endblock masthead_style %}
 
 {% block masthead_picture %}
   <a href="/food/{{ initial_product.id }}"><img class="img-fluid" src={{ initial_product.image_url }} alt="photo du produit" style="max-width: 100%; max-height: 40vh;"/></a>
-{% endblock %}
+{% endblock masthead_picture %}
 
-{% block masthead_divider %}{% endblock %}
+{% block masthead_divider %}{% endblock masthead_divider %}
 
 {% block masthead_subtitle %}
   <a href="/food/{{ initial_product.id }}">{{ initial_product.product_name }}</a>
-{% endblock %}
+{% endblock masthead_subtitle %}
 
 {% block section_one_title %}
   <div class="col-xs-6 offset-xs-3 col-sm-4 offset-sm-4 img-fluid">
@@ -32,18 +32,6 @@
   </div>
   <br />
   Vous pouvez remplacer cet aliment par :
-{% endblock %}
+{% endblock section_one_title %}
 
-{% block section_one_divider %}{% endblock %}
-
-
-{% block product_save_unsave %}
-  {% if user_authenticated %} <!-- changer la condition -->
-    <button type="button" class="btn btn-outline-primary"><i class="far fa-save"></i> Sauvegarder</button>
-  {% else %}
-    <div class="d-flex justify-content-center">
-      <p class="text-success py-custom-6px px-2">Enregistré !</p>
-      <a href="" class="text-primary py-custom-6px px-2">Retirer</a>
-    </div>
-  {% endif %}
-{% endblock %}
+{% block section_one_divider %}{% endblock section_one_divider %}

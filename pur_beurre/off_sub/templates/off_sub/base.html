@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 
@@ -10,6 +10,12 @@
   <meta name="author" content="">
 
   <title>Pur Beurre - Du gras, oui, mais de qualité !</title>
+
+  <!-- CSS for jQuery UI (autocomplete) -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
 
   <!-- Font Awesome Icons -->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -25,11 +31,30 @@
   <link href="{% static 'css/creative.min.css' %}" rel="stylesheet">
 
   <!-- Custom CSS -->
-  <link href="{% static 'css/styles.css' %}" rel="stylesheet">  
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+  <!-- Scripts used by jQuery UI (autocomplete) -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+    $( function() {
+      var allProducts = JSON.parse(document.getElementById('python-products').textContent);
+      var availableProducts = ["product_1 très long à lire tout cela, vraiment extrêmement long !!!", "another_product", "product_2", "product-a", "product-ab", "1234 - product-abc"];
+      $( "#autocompletion-navbar" ).autocomplete({
+        source: allProducts
+      });
+      $( "#autocompletion-index" ).autocomplete({
+        source: allProducts
+      });
+    } );
+  </script>
 
 </head>
 
 <body id="page-top">
+
+  <!-- Not displayed data, from Python, for autocompletion in #autocompletion-navbar and #autocompletion-index -->
+  <div id="python-products" class="d-none">{{ all_products }}</div>
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
@@ -53,13 +78,14 @@
           {% block search %}
             <li class="nav-item mt-n2">
               <form class="form-inline" action="{% url 'off_sub:results' %}">
-                <div class="ui-widget">
-                  <label for="products_autocomplete"></label>
-                  <input class="form-control" type="search" placeholder="Chercher" id="products_autocomplete" />
+                <div class="ui-widget ui-front d-inline-flex">
+                  <label for="autocompletion-navbar"></label>
+                  <input id="autocompletion-navbar" class="form-control" type="search" placeholder="Chercher" />
+                  <input type="submit" value="?" class="btn btn-primary" />
                 </div>
               </form>
             </li>
-          {% endblock %}
+          {% endblock search %}
           {% if user_authenticated %}
             {% block signed_in %}
               <li class="nav-item">
@@ -71,13 +97,13 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'auth:log_out' %}" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a>
               </li>
-            {% endblock %}
+            {% endblock signed_in %}
           {% else %}
             {% block not_signed_in %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'auth:sign' %}" title="Connexion"><i class="fas fa-sign-in-alt"></i></a>
               </li>
-            {% endblock %}
+            {% endblock not_signed_in %}
           {% endif %}
         </ul>
       </div>
@@ -85,17 +111,17 @@
   </nav>
 
   <!-- Masthead -->
-  <header class="masthead h-75" style="{% block masthead_style %}{% endblock %}">
+  <header class="masthead h-75 overflow-auto" style="{% block masthead_style %}{% endblock masthead_style %}">
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">
-        <div class="col-10 align-self-end">
-          {% block masthead_picture %}{% endblock %}
-          <h1 class="text-uppercase text-white font-weight-bold">{% block masthead_title %}{% endblock %}</h1>
-          {% block masthead_divider %}<hr class="divider my-4">{% endblock %}
+        <div class="col-12 align-self-end">
+          {% block masthead_picture %}{% endblock masthead_picture %}
+          <h1 class="text-uppercase text-white font-weight-bold">{% block masthead_title %}{% endblock masthead_title %}</h1>
+          {% block masthead_divider %}<hr class="divider my-4">{% endblock masthead_divider %}
         </div>
         <div class="col-sm-8 align-self-baseline">
-          <p class="text-white-75 font-weight-light mb-5">{% block masthead_subtitle %}{% endblock %}</p>
-          {% block masthead_form %}{% endblock %}
+          <p class="text-white-75 font-weight-light mb-4">{% block masthead_subtitle %}{% endblock masthead_subtitle %}</p>
+          {% block masthead_form %}{% endblock masthead_form %}
         </div>
       </div>
     </div>
@@ -107,19 +133,19 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-sm-12 text-center">
-          <h2 class="mt-0">{% block section_one_title %}{% endblock %}</h2>
-          {% block section_one_divider %}<hr class="divider my-4">{% endblock %}
-          <h5 class="mb-4">{% block section_one_subtitle %}{% endblock %}</h5>
-          <div class="text-justify text-muted mb-4">{% block section_one_text %}{% endblock %}</div>
-          {% block section_one_pictures %}{% endblock %}
+          <h2 class="mt-0">{% block section_one_title %}{% endblock section_one_title %}</h2>
+          {% block section_one_divider %}<hr class="divider my-4">{% endblock section_one_divider %}
+          <h5 class="mb-4">{% block section_one_subtitle %}{% endblock section_one_subtitle %}</h5>
+          <div class="text-justify text-muted mb-4">{% block section_one_text %}{% endblock section_one_text %}</div>
+          {% block section_one_pictures %}{% endblock section_one_pictures %}
         </div>
       </div>
     </div>
   </section>
-  {% endblock %}
+  {% endblock section_one %}
 
   <!-- Section two -->
-  {% block section_two %}{% endblock %}
+  {% block section_two %}{% endblock section_two %}
 
 
   <!-- Footer -->
@@ -139,17 +165,26 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <!-- /!\ kills UI <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>-->
+  
+  <!-- OK UI -->
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Plugin JavaScript -->
+  <!-- OK UI -->
   <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <!-- OK UI -->
   <script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
 
   <!-- Custom scripts for this template -->
+  <!-- OK UI -->
   <script src="{% static 'js/creative.min.js' %}"></script>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- Custom scripts for other templates -->
+  {% block scripts %}{% endblock scripts %}
+
+  <!-- /!\ kills UI <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 

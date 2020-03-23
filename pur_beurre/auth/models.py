@@ -45,6 +45,7 @@ class MyUser(AbstractBaseUser):
         verbose_name='Courriel',
         max_length=255,
         unique=True,
+        error_messages={'unique': "Un compte est déjà créé avec cet email.",}
     )
     first_name = models.CharField(
         max_length=30,
@@ -62,7 +63,6 @@ class MyUser(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = ['first_name']
 
     def __str__(self):
         return f"{self.first_name} ({self.email})"
@@ -82,3 +82,29 @@ class MyUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+    def add_favorite(self, product):
+        """
+        Add a product to the list of favorites for the user.
+        """
+        self.favorites.add(product)
+
+    # def is_favorite(self, product):
+    #     """
+    #     Returns True if the product is among the favorites for the user,
+    #     False if not.
+    #     """
+    #     return (product in self.favorites.all())
+
+    # def my_favorites(self):
+    #     """
+    #     Returns the QuerySet containing the favorites for the user.
+    #     The QuerySet is empty if the user has not registered any favorite yet.
+    #     """
+    #     return self.favorites.all()
+
+    def remove_favorite(self, product):
+        """
+        Remove a product from the list of favorites for the user.
+        """
+        self.favorites.remove(product)

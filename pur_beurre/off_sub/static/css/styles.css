@@ -76,9 +76,11 @@ html, body
   object-fit: cover;
 }
 
-.ui-autocomplete {
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: default;
+.ui-autocomplete
+{
+    max-height: 150px;
+    max-width: 200px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
 }

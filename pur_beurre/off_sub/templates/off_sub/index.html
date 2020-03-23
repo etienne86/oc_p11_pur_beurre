@@ -4,28 +4,31 @@
 
 {% block masthead_title %}
   Du gras, oui, mais de qualité !
-{% endblock %}
+{% endblock masthead_title %}
 
 {% block masthead_subtitle %}
   Trouvez un produit de substitution pour ceux que vous consommez tous les jours.
-{% endblock %}
+{% endblock masthead_subtitle %}
 
 {% block masthead_form %}
   <div class="text-center">
     <form action="{% url 'off_sub:results' %}">
-      <input type="text" placeholder="Produit" />
-      <input type="submit" value="Chercher" class="btn btn-primary" />
+      <div class="ui-widget d-inline-flex">
+        <label for="autocompletion-index"></label>
+        <input id="autocompletion-index" class="form-control" type="text" placeholder="Produit" />
+        <input type="submit" value="Chercher" class="btn btn-primary" />
+      </div>
     </form>
   </div>
-{% endblock %}
+{% endblock masthead_form %}
 
 {% block section_one_title %}
   Colette et Rémy
-{% endblock %}
+{% endblock section_one_title %}
 
 {% block section_one_subtitle %}
   De la ratatouille aux croissants
-{% endblock %}
+{% endblock section_one_subtitle %}
 
 {% block section_one_text %}
   <p>Pur Beurre est l'initiative de deux amoureux de la gastronomie française, Colette Tatou et Rémy, que vous avez déjà certainement rencontrés dans notre excellent restaurant Ratatouille.</p>
@@ -40,7 +43,7 @@
     <div class="col-sm-6 text-center"><figure><img src="{% static 'img/theme/colette-tatou-full.png' %}" alt="Colette"><figcaption>Colette</figcaption></figure></div>
     <div class="col-sm-6 text-center"><figure><img src="{% static 'img/theme/ratatouille-portrait.jpg' %}" alt="Rémy"><figcaption>Rémy</figcaption></figure></div>
   </div>
-{% endblock %}
+{% endblock section_one_pictures %}
 
 {% block section_two %}
   <section class="page-section bg-dark text-white" id="contact">
@@ -65,4 +68,4 @@
       </div>
     </div>
   </section>
-{% endblock %}
+{% endblock section_two %}

@@ -86,6 +86,7 @@ class Product(models.Model):
     stores = models.ManyToManyField(Store, related_name='products', blank=True)
 
     def __str__(self):
+        # return f"{self.code} - {self.product_name}".replace("'", r"\'")
         return f"{self.code} - {self.product_name}"
 
     def add_product_category_to_db(self, category):

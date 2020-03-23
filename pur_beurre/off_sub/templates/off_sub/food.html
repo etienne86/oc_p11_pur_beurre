@@ -32,21 +32,23 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-sm-6 text-center">
-          {% if product.nutriscore_grade == "a" %}
-            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />
-          {% elif product.nutriscore_grade == "b" %}  
-            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_b.png' %}" alt="A(B)CDE" />
-          {% elif product.nutriscore_grade == "c" %}  
-            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_c.png' %}" alt="AB(C)DE" />
-          {% elif product.nutriscore_grade == "d" %}  
-            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_d.png' %}" alt="ABC(D)E" />
-          {% elif product.nutriscore_grade == "e" %}  
-            <img class="img-fluid" src="{% static 'img/nutriscores/nutri_e.png' %}" alt="ABCD(E)" />
-          {% endif %}
+          <a href="https://fr.openfoodfacts.org/nutriscore" title="Informations concernant le nutriscore" target="_blank">
+            {% if product.nutriscore_grade == "a" %}
+              <img class="img-fluid" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />
+            {% elif product.nutriscore_grade == "b" %}  
+              <img class="img-fluid" src="{% static 'img/nutriscores/nutri_b.png' %}" alt="A(B)CDE" />
+            {% elif product.nutriscore_grade == "c" %}  
+              <img class="img-fluid" src="{% static 'img/nutriscores/nutri_c.png' %}" alt="AB(C)DE" />
+            {% elif product.nutriscore_grade == "d" %}  
+              <img class="img-fluid" src="{% static 'img/nutriscores/nutri_d.png' %}" alt="ABC(D)E" />
+            {% elif product.nutriscore_grade == "e" %}  
+              <img class="img-fluid" src="{% static 'img/nutriscores/nutri_e.png' %}" alt="ABCD(E)" />
+            {% endif %}
+          </a>
         </div>
         <div class="col-12 col-sm-6 d-flex justify-content-center">
           <div>
-            <p class="h3 text-left">Repères nutritionnels pour 100 g :</p>
+            <p class="h3 text-left"><a href="https://fr.openfoodfacts.org/reperes-nutritionnels" title="Informations concernant les repères nutritionnels" target="_blank">Repères nutritionnels pour 100g :</a></p>
             <p class="text-left">
               <ul>
                 <li>Matières grasses / Lipides : {{ product.fat }}</li>
@@ -58,7 +60,7 @@
           </div>
         </div>
         <div class="col-12 text-center">
-          <form action="{{ product.url }}">
+          <form action="{{ product.url }}" target="_blank">
             <input type="submit" value="Voir la fiche d'OpenFoodFacts" class="btn btn-outline-primary my-3"></submit>
           </form>
         </div>

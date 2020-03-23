@@ -2,68 +2,25 @@
 {% load static %}
 
 
-{% block jumbotron_text %}
-  <h1 class="text-white display-4 text-center">Favoris</h1>
-{% endblock %}
+{% block masthead_divider %}{% endblock masthead_divider %}
 
-{% block section_2_intro %}
-  {% if user.has_favorites %}
+{% block masthead_title %}
+  Favoris
+{% endblock masthead_title %}
+
+
+
+{% block section_one_title %}
+  {% if user_favorites %}
     {{ user.first_name }}, voici la liste de vos produits enregistrés :
   {% else %}
     {{ user.first_name }}, vous n'avez aucun produit enregistré.
   {% endif %} 
-{% endblock %}
+{% endblock section_one_title %}
 
+{% block section_one_divider %}{% endblock section_one_divider %}
 
-{% block product_name_1 %}
-  Purée noisette
-{% endblock %}
+{% if user_has_favorites %}
 
-{% block product_save_unsave_1 %}
-  <button type="button" class="btn btn-outline-warning">Retirer des favoris</button>
-{% endblock %}
+{% endif %}
 
-
-{% block product_name_2 %}
-  Purée amande complète
-{% endblock %}
-
-{% block product_save_unsave_2 %}
-  <button type="button" class="btn btn-outline-warning">Retirer des favoris</button>
-{% endblock %}
-
-
-{% block product_name_3 %}
-  Purée amande blanche
-{% endblock %}
-
-{% block product_save_unsave_3 %}
-  <button type="button" class="btn btn-outline-warning">Retirer des favoris</button>
-{% endblock %}
-
-
-{% block product_name_4 %}
-  Huile d'olive Vierge Extra biologique il manque une "fruit" - Echinac - 1 l
-{% endblock %}
-
-{% block product_save_unsave_4 %}
-  <button type="button" class="btn btn-outline-warning">Retirer des favoris</button>
-{% endblock %}
-
-
-{% block product_name_5 %}
-  Gâteau Breton Fourré à la Crème de Pruneaux - Leader Price - 400 g
-{% endblock %}
-
-{% block product_save_unsave_5 %}
-  <button type="button" class="btn btn-outline-warning">Retirer des favoris</button>
-{% endblock %}
-
-
-<!-- {% block product_name_6 %}
-  Kapern - Feinkost Dittmann - 60 g
-{% endblock %}
-
-{% block product_save_unsave_6 %}
-  <button type="button" class="btn btn-outline-warning">Retirer des favoris</button>
-{% endblock %} -->

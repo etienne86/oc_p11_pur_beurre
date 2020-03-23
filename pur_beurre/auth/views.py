@@ -11,19 +11,10 @@ from .forms import UserCreationForm, AuthenticationForm
 from .models import MyUser
 
 
-# a function used in many views (apps 'auth' and 'off_sub')
-def authenticated(request):
-    context = {
-        'user_authenticated': request.user.is_authenticated, # value is boolean
-    }
-    return context
-
-# the views themselves
-
-# @login_required(login_url=reverse_lazy(sign))
 @login_required
 def account(request):
-    context = authenticated(request)
+    context = {}
+    context['user_authenticated'] = request.user.is_authenticated # bool
     context['user'] = request.user
     return render(
         request, 
@@ -31,7 +22,6 @@ def account(request):
         context,
     )
 
-# @login_required(login_url=reverse_lazy(sign))
 @login_required
 def log_out(request):
     logout(request)
@@ -41,7 +31,8 @@ def log_out(request):
     )
 
 def sign(request):
-    context = authenticated(request)
+    context = {}
+    context['user_authenticated'] = request.user.is_authenticated # bool
     if request.method == 'POST':
         user_creation_form = UserCreationForm(request.POST)
         authentication_form = AuthenticationForm(request, request.POST)
@@ -53,6 +44,7 @@ def sign(request):
         if authentication_form.is_valid():
             email = authentication_form.cleaned_data['email']
             password = authentication_form.cleaned_data['password']
+        print(authentication_form.errors)
         if user_creation_form.is_valid() or authentication_form.is_valid():
             # try to log in the user
             try:
