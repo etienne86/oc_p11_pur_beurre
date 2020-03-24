@@ -11,7 +11,8 @@ from .models import Product, Category
 
 @login_required
 def favorites(request):
-    context = {}
+    prod_list = list(Product.objects.all())
+    context = {'all_products': json.dumps([str(prod) for prod in prod_list])}
     context['user_authenticated'] = request.user.is_authenticated # bool
     context['user_favorites'] = request.user.favorites.all() # QuerySet
     return render(
@@ -21,7 +22,8 @@ def favorites(request):
     )
 
 def food(request, product_id):
-    context = {}
+    prod_list = list(Product.objects.all())
+    context = {'all_products': json.dumps([str(prod) for prod in prod_list])}
     context['user_authenticated'] = request.user.is_authenticated # bool
     product = get_object_or_404(Product, id=product_id)
     context['product'] = product
@@ -32,10 +34,9 @@ def food(request, product_id):
     )
 
 def index(request):
-    context = {}
-    context['user_authenticated'] = request.user.is_authenticated # bool
     prod_list = list(Product.objects.all())
-    context['all_products'] = json.dumps([str(prod) for prod in prod_list])
+    context = {'all_products': json.dumps([str(prod) for prod in prod_list])}
+    context['user_authenticated'] = request.user.is_authenticated # bool
     return render(
         request, 
         'off_sub/index.html',
@@ -44,7 +45,8 @@ def index(request):
     '"coucou c\'est moi c\'est pas moi"'
 
 def legal(request):
-    context = {}
+    prod_list = list(Product.objects.all())
+    context = {'all_products': json.dumps([str(prod) for prod in prod_list])}
     context['user_authenticated'] = request.user.is_authenticated # bool
     return render(
         request, 
@@ -53,11 +55,12 @@ def legal(request):
     )
 
 def results(request):
-    context = {}
+    prod_list = list(Product.objects.all())
+    context = {'all_products': json.dumps([str(prod) for prod in prod_list])}
     context['user_authenticated'] = request.user.is_authenticated # bool
     if context['user_authenticated']:
         context['user_favorites'] = request.user.favorites.all() # QuerySet
-    product = Product.objects.get(id=50)
+    product = Product.objects.get(id=300)
     # number of substitutes: 6
     subs = product.get_best_subs(6)
     context['products_list'] = subs # type is queryset

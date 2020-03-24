@@ -2,19 +2,16 @@
 {% load static %}
 
 
-{% block not_signed_in %}{% endblock %}
-
 {% block masthead_title %}
   Connexion
-{% endblock %}
+{% endblock masthead_title %}
 
 {% block masthead_subtitle %}
   Vous avez déjà un compte ? Connectez-vous !<br />
   Pas encore inscrit ? N'attendez plus, rejoignez-nous !
-{% endblock %}
+{% endblock masthead_subtitle %}
 
-
-{% block section_one_divider %}{% endblock %}
+{% block section_one_divider %}{% endblock section_one_divider %}
 
 {% block section_one_text %}
   <div class="row">
@@ -29,7 +26,7 @@
                   <p class="text-danger">{{ error }}</p>
               {% endfor %}
               {% for field in authentication_form %}
-                <div class="form-group py-4">
+                <div class="row form-group">
                   <div class="col-12 col-md-4 text-left">
                     <label>{{ field.label_tag }}</label>
                   </div>
@@ -41,7 +38,7 @@
                   </div>
                 </div>
               {% endfor %}
-              <div class="form-group py-4 mt-auto">
+              <div class="form-group mt-auto">
                 <input type="submit" name="sign_in_form" value="Se connecter" class="btn btn-primary" />
               </div>
             </form>
@@ -60,7 +57,7 @@
                   <p class="text-danger">{{ error }}</p>
               {% endfor %}
               {% for field in user_creation_form %}
-                <div class="form-group py-4">
+                <div class="row form-group">
                   <div class="col-12 col-md-4 text-left">
                     <label>{{ field.label_tag }}</label>
                   </div>
@@ -72,7 +69,7 @@
                   </div>
                 </div>
               {% endfor %}
-              <div class="form-group py-4 mt-auto">
+              <div class="form-group mt-auto">
                 <input type="submit" name="sign_up_form" value="Créer un compte et se connecter" class="btn btn-primary" />
               </div>
             </form>
@@ -81,4 +78,4 @@
       </div>
     </div>
   </div>
-{% endblock %}
+{% endblock section_one_text %}

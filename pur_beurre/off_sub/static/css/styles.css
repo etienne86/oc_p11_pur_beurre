@@ -84,3 +84,8 @@ html, body
     /* prevent horizontal scrollbar */
     overflow-x: hidden;
 }
+
+.text-transparent
+{
+  opacity: 0;
+}

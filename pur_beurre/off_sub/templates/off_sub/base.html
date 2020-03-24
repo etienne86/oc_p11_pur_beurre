@@ -39,7 +39,6 @@
   <script>
     $( function() {
       var allProducts = JSON.parse(document.getElementById('python-products').textContent);
-      var availableProducts = ["product_1 très long à lire tout cela, vraiment extrêmement long !!!", "another_product", "product_2", "product-a", "product-ab", "1234 - product-abc"];
       $( "#autocompletion-navbar" ).autocomplete({
         source: allProducts
       });
@@ -69,10 +68,14 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto my-2 my-sm-0">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
           {% if user_authenticated %}
             <li class="nav-item">
               <p  class="nav-link disabled">Bonjour {{ user.first_name }} !</p>
+            </li>
+          {% else %}
+            <li class="nav-item text-transparent d-none d-lg-block">
+              <p  class="nav-link disabled">Bonjour Anonyme !</p>
             </li>
           {% endif %}
           {% block search %}
@@ -81,7 +84,7 @@
                 <div class="ui-widget ui-front d-inline-flex">
                   <label for="autocompletion-navbar"></label>
                   <input id="autocompletion-navbar" class="form-control" type="search" placeholder="Chercher" />
-                  <input type="submit" value="?" class="btn btn-primary" />
+                  <input type="submit" value="?" class="btn btn-primary d-lg-none" />
                 </div>
               </form>
             </li>
@@ -102,6 +105,12 @@
             {% block not_signed_in %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'auth:sign' %}" title="Connexion"><i class="fas fa-sign-in-alt"></i></a>
+              </li>
+              <li class="nav-item text-transparent d-none d-lg-block">
+                <a class="nav-link disabled" href="{% url 'auth:sign' %}" title="Connexion"><i class="far fa-user"></i></a>
+              </li>
+              <li class="nav-item text-transparent d-none d-lg-block">
+                <a class="nav-link disabled" href="{% url 'auth:sign' %}" title="Connexion"><i class="fas fa-carrot"></i></a>
               </li>
             {% endblock not_signed_in %}
           {% endif %}
@@ -149,10 +158,10 @@
 
 
   <!-- Footer -->
-  <footer class="bg-light py-5">
+  <footer class="bg-light py-3">
     <div class="container">
       <div class="small text-center text-muted">
-        <ul class="list-inline">
+        <ul class="list-inline mb-0">
           <li class="list-inline-item">
             <a href="/legal/" title="Mentions légales">Mentions légales</a>
           </li>
