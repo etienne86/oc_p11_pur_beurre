@@ -14,67 +14,69 @@
 {% block section_one_divider %}{% endblock section_one_divider %}
 
 {% block section_one_text %}
-  <div class="row">
-    <div class="col-12 col-sm-6">
-      <div class="card h-100">
-        <div class="card-body">
-          <div class="text-center">
-            <h2 class="card-title">J'ai déjà un compte !</h2>
-            <form method="post">
-              {% csrf_token %}
-              {% for error in authentication_form.non_field_errors %}
-                  <p class="text-danger">{{ error }}</p>
-              {% endfor %}
-              {% for field in authentication_form %}
-                <div class="row form-group">
-                  <div class="col-12 col-md-4 text-left">
-                    <label>{{ field.label_tag }}</label>
-                  </div>
-                  <div class="col-12 col-md-8">
-                    {{ field }}
-                    {% for error in field.errors %}
-                    <p class="text-danger">{{ error }}</p>
-                    {% endfor %}
-                  </div>
-                </div>
-              {% endfor %}
-              <div class="form-group mt-auto">
-                <input type="submit" name="sign_in_form" value="Se connecter" class="btn btn-primary" />
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+  {% if authentication_form.non_field_errors %}
+    {% for error in authentication_form.non_field_errors %}
+      <p class="text-danger text-center">{{ error }}</p>
+    {% endfor %}
+  {% else %}
+    {% for error in user_creation_form.email.errors %}
+      <p class="text-danger text-center">{{ error }}</p>
+    {% endfor %}
+    {% for error in user_creation_form.password2.errors %}
+      <p class="text-danger text-center">{{ error }}</p>
+    {% endfor %}
+  {% endif %}
+  <div class="card text-center border-solid">
+    <div class="card-header">
+      <ul id="signTab" role="tablist" class="nav nav-tabs card-header-tabs nav-fill">
+        <li class="nav-item">
+          <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Se connecter</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="signup-tab" data-toggle="tab" href="#signup" role="tab" aria-controls="signup" aria-selected="true">Nous rejoindre</a>
+        </li>
+      </ul>
     </div>
-    <div class="col-12 col-sm-6">
-      <div class="card h-100">
-        <div class="card-body">
-          <div class="text-center">
-            <h2 class="card-title">Pas encore inscrit ?</h2>
-            <form method="post">
-              {% csrf_token %}
-              {% for error in user_creation_form.non_field_errors %}
-                  <p class="text-danger">{{ error }}</p>
-              {% endfor %}
-              {% for field in user_creation_form %}
-                <div class="row form-group">
-                  <div class="col-12 col-md-4 text-left">
-                    <label>{{ field.label_tag }}</label>
-                  </div>
-                  <div class="col-12 col-md-8">
-                    {{ field }}
-                    {% for error in field.errors %}
-                    <p class="text-danger">{{ error }}</p>
-                    {% endfor %}
+    <div class="card-body">
+      <div class="tab-content" id="signTabContent">
+        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+          <form method="post">
+            {% csrf_token %}
+            {% for field in authentication_form %}
+              <div class="row form-group">
+                <div class="col-12 col-md-4 text-left">
+                  <label>{{ field.label_tag }}</label>
+                </div>
+                <div class="col-12 col-md-8">
+                  <div class="is-invalid">
+                  {{ field }}
                   </div>
                 </div>
-              {% endfor %}
-              <div class="form-group mt-auto">
-                <input type="submit" name="sign_up_form" value="Créer un compte et se connecter" class="btn btn-primary" />
               </div>
-            </form>
-          </div>
-        </div> 
+            {% endfor %}
+            <div class="form-group mt-auto">
+              <input type="submit" name="sign_in_form" value="Se connecter" class="btn btn-primary" />
+            </div>
+          </form>
+        </div>
+        <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">
+          <form method="post">
+            {% csrf_token %}
+            {% for field in user_creation_form %}
+              <div class="row form-group">
+                <div class="col-12 col-md-4 text-left">
+                  <label>{{ field.label_tag }}</label>
+                </div>
+                <div class="col-12 col-md-8">
+                  {{ field }}
+                </div>
+              </div>
+            {% endfor %}
+            <div class="form-group mt-auto">
+              <input type="submit" name="sign_up_form" value="Créer un compte" class="btn btn-primary" />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

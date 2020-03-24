@@ -24,12 +24,6 @@ html, body
   border-style: none;
 }
 
-.py-custom-6px
-{
-  padding-bottom: 6px;
-  padding-top: 6px;
-}
-
 .img-s-square
 {
   width: 100%;
@@ -88,4 +82,9 @@ html, body
 .text-transparent
 {
   opacity: 0;
+}
+
+.border-solid
+{
+  border-style: solid;
 }
