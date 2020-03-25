@@ -5,15 +5,18 @@ from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+import json
 # from django.views.generic import ListView, TemplateView, DetailView
 
 from .forms import UserCreationForm, AuthenticationForm
 from .models import MyUser
+from off_sub.models import Product
 
 
 @login_required
 def account(request):
-    context = {}
+    prod_list = list(Product.objects.all())
+    context = {'all_products': json.dumps([str(prod) for prod in prod_list])}
     context['user_authenticated'] = request.user.is_authenticated # bool
     context['user'] = request.user
     return render(
@@ -24,14 +27,18 @@ def account(request):
 
 @login_required
 def log_out(request):
+    prod_list = list(Product.objects.all())
+    context = {'all_products': json.dumps([str(prod) for prod in prod_list])}
     logout(request)
     return render(
         request, 
         'auth/log_out.html',
+        context,
     )
 
 def sign(request):
-    context = {}
+    prod_list = list(Product.objects.all())
+    context = {'all_products': json.dumps([str(prod) for prod in prod_list])}
     context['user_authenticated'] = request.user.is_authenticated # bool
     if request.method == 'POST':
         user_creation_form = UserCreationForm(request.POST)

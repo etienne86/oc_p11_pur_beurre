@@ -11,7 +11,20 @@ urlpatterns = [
     path('favorites/', views.favorites, name="favorites"),
     path('food/<product_id>', views.food, name="food"),
     path('legal/', views.legal, name="legal"),
-    path('results/', views.results, name="results"),
-    path('ajax/save_product/', views.save_product, name="save_product"),
-    path('ajax/unsave_product/', views.unsave_product, name="unsave_product"),
+    path('results/<product_id>', views.results, name="results"),
+    path(
+        'ajax_find_product',
+        views.ajax_find_product,
+        name="ajax_find_product"
+    ),
+    path(
+        'ajax_save_product',
+        views.ajax_save_product,
+        name="ajax_save_product"
+    ),
+    path(
+        'ajax_unsave_product',
+        views.ajax_unsave_product,
+        name="ajax_unsave_product"
+    ),
 ]

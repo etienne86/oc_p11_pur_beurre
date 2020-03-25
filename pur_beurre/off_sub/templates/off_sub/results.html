@@ -17,7 +17,7 @@
 {% endblock masthead_subtitle %}
 
 {% block section_one_title %}
-  <div class="col-xs-6 offset-xs-3 col-sm-4 offset-sm-4 img-fluid">
+  <div class="col-xs-6 offset-xs-3 col-sm-4 offset-sm-4 img-fluid d-none">
     {% if initial_product.nutriscore_grade == "a" %}
       <img class="img-fluid" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />
     {% elif initial_product.nutriscore_grade == "b" %}  

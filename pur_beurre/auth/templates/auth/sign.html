@@ -44,10 +44,10 @@
             {% csrf_token %}
             {% for field in authentication_form %}
               <div class="row form-group">
-                <div class="col-12 col-md-4 text-left">
+                <div class="col-12 col-md-3 text-left">
                   <label>{{ field.label_tag }}</label>
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-9">
                   <div class="is-invalid">
                   {{ field }}
                   </div>
@@ -64,10 +64,10 @@
             {% csrf_token %}
             {% for field in user_creation_form %}
               <div class="row form-group">
-                <div class="col-12 col-md-4 text-left">
+                <div class="col-12 col-md-3 text-left">
                   <label>{{ field.label_tag }}</label>
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-9">
                   {{ field }}
                 </div>
               </div>

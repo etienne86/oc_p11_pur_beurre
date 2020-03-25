@@ -36,24 +36,15 @@
   <!-- Scripts used by jQuery UI (autocomplete) -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-    $( function() {
-      var allProducts = JSON.parse(document.getElementById('python-products').textContent);
-      $( "#autocompletion-navbar" ).autocomplete({
-        source: allProducts
-      });
-      $( "#autocompletion-index" ).autocomplete({
-        source: allProducts
-      });
-    } );
-  </script>
+
+
 
 </head>
 
 <body id="page-top">
 
-  <!-- Not displayed data, from Python, for autocompletion in #autocompletion-navbar and #autocompletion-index -->
-  <div id="python-products" class="d-none">{{ all_products }}</div>
+  <!-- Not displayed data, sent by Python, for autocompletion in #autocompletion-navbar and #autocompletion-index -->
+  <div id="pythonProducts" class="d-none">{{ all_products }}</div>
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
@@ -80,10 +71,11 @@
           {% endif %}
           {% block search %}
             <li class="nav-item mt-n2">
-              <form class="form-inline" action="{% url 'off_sub:results' %}">
+              <form id="productSubmitFormNavbar" method="post" class="productSubmitForm form-inline" action="{% url 'off_sub:results' 0 %}" ajax-find-product-url="{% url 'off_sub:ajax_find_product' %}">
+                {% csrf_token %}
                 <div class="ui-widget ui-front d-inline-flex">
-                  <label for="autocompletion-navbar"></label>
-                  <input id="autocompletion-navbar" class="form-control" type="search" placeholder="Chercher" />
+                  <label for="autocompletion-0"></label>
+                  <input id="autocompletion-0" class="form-control" type="search" placeholder="Chercher" />
                   <input type="submit" value="?" class="btn btn-primary d-lg-none" />
                 </div>
               </form>
@@ -138,11 +130,11 @@
 
   <!-- Section one -->
   {% block section_one %}
-  <section class="page-section" id="section-one">
+  <section class="page-section py-4" id="section-one">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-center">
-          <h2 class="mt-0">{% block section_one_title %}{% endblock section_one_title %}</h2>
+          <h2 class="">{% block section_one_title %}{% endblock section_one_title %}</h2>
           {% block section_one_divider %}<hr class="divider my-4">{% endblock section_one_divider %}
           <h5 class="mb-4">{% block section_one_subtitle %}{% endblock section_one_subtitle %}</h5>
           <div class="text-justify text-muted mb-4">{% block section_one_text %}{% endblock section_one_text %}</div>
@@ -189,11 +181,14 @@
   <!-- OK UI -->
   <script src="{% static 'js/creative.min.js' %}"></script>
 
+  <!-- /!\ kills UI <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+
   <!-- Custom scripts for other templates -->
   {% block scripts %}{% endblock scripts %}
 
-  <!-- /!\ kills UI <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
-  
+  <!-- Custom script regarding data autocompletion and sending -->
+  <script src="{% static 'js/autocomplete.js' %}"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 

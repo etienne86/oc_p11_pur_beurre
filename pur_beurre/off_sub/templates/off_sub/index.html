@@ -12,10 +12,11 @@
 
 {% block masthead_form %}
   <div class="text-center">
-    <form action="{% url 'off_sub:results' %}">
+    <form id="productSubmitFormIndex" method="post" class="productSubmitForm" action="{% url 'off_sub:results' 0 %}" ajax-find-product-url="{% url 'off_sub:ajax_find_product' %}">
+      {% csrf_token %}
       <div class="ui-widget d-inline-flex">
-        <label for="autocompletion-index"></label>
-        <input id="autocompletion-index" class="form-control" type="text" placeholder="Produit" />
+        <label for="autocompletion-1"></label>
+        <input id="autocompletion-1" class="form-control" type="text" placeholder="Produit" />
         <input type="submit" value="Chercher" class="btn btn-primary" />
       </div>
     </form>
@@ -46,7 +47,7 @@
 {% endblock section_one_pictures %}
 
 {% block section_two %}
-  <section class="page-section bg-dark text-white" id="contact">
+  <section class="page-section bg-dark text-white py-4" id="contact">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-sm-12 text-center">
