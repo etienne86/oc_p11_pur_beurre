@@ -31,14 +31,30 @@ def ajax_save_product(request):
     This view is used to save a product as a user's favorite.
     This is not linked to a template.
     """
-    pass
+    data = {}
+    # get data from Javascript
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id', 0)
+        product = get_object_or_404(Product, id=product_id)
+        # add the product to the list of favorites for the user
+        request.user.favorites.add(product)
+        data['product_id'] = product_id
+    return JsonResponse(data)
 
 def ajax_unsave_product(request):
     """
     This view is used to unsave a product from the user's favorites.
     This is not linked to a template.
     """
-    pass
+    data = {}
+    # get data from Javascript
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id', 0)
+        product = get_object_or_404(Product, id=product_id)
+        # add the product to the list of favorites for the user
+        request.user.favorites.remove(product)
+        data['product_id'] = product_id
+    return JsonResponse(data)
 
 @login_required
 def favorites(request):
@@ -46,6 +62,7 @@ def favorites(request):
     context = {'all_products': json.dumps([str(prod) for prod in prod_list])}
     context['user_authenticated'] = request.user.is_authenticated # bool
     context['user_favorites'] = request.user.favorites.all() # QuerySet
+    context['products_list'] = context['user_favorites']
     return render(
         request, 
         'off_sub/favorites.html',

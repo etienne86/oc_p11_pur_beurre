@@ -82,29 +82,3 @@ class MyUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
-
-    def add_favorite(self, product):
-        """
-        Add a product to the list of favorites for the user.
-        """
-        self.favorites.add(product)
-
-    # def is_favorite(self, product):
-    #     """
-    #     Returns True if the product is among the favorites for the user,
-    #     False if not.
-    #     """
-    #     return (product in self.favorites.all())
-
-    # def my_favorites(self):
-    #     """
-    #     Returns the QuerySet containing the favorites for the user.
-    #     The QuerySet is empty if the user has not registered any favorite yet.
-    #     """
-    #     return self.favorites.all()
-
-    def remove_favorite(self, product):
-        """
-        Remove a product from the list of favorites for the user.
-        """
-        self.favorites.remove(product)

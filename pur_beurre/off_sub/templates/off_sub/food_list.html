@@ -41,11 +41,22 @@
                   </a>
                   {% if user_authenticated %}
                     {% block product_save_unsave %}
-                      <form id="save_unsave_{{ prod.id }}" method="post">
+                      <form id="{{ prod.id }}" method="post">
+                        <!-- Displayed button depends on user's favorites -->
                         {% if prod in user_favorites %}
-                          <button id="unsave_{{ prod.id }}" method="post" type="button" class="btn btn-outline-primary">Retirer des favoris</button>
+                          <div class="d-block">
+                            <button class="btn btn-outline-primary unsaveProduct" method="post" type="button" property="{{ prod.id }}" ajax-unsave-product-url="{% url 'off_sub:ajax_unsave_product' %}">Retirer des favoris</button>
+                          </div>
+                          <div class="d-none">
+                            <button class="btn btn-outline-success saveProduct" method="post" type="button" property="{{ prod.id }}" ajax-save-product-url="{% url 'off_sub:ajax_save_product' %}"><i class="far fa-save"></i> Sauvegarder</button>
+                          </div>
                         {% else %}
-                          <button id="save_{{ prod.id }}" method="post" type="button" class="btn btn-outline-success"><i class="far fa-save"></i> Sauvegarder</button>
+                          <div class="d-block">
+                            <button class="btn btn-outline-success saveProduct" method="post" type="button" property="{{ prod.id }}" ajax-save-product-url="{% url 'off_sub:ajax_save_product' %}"><i class="far fa-save"></i> Sauvegarder</button>
+                          </div>
+                          <div class="d-none">
+                            <button class="btn btn-outline-primary unsaveProduct" method="post" type="button" property="{{ prod.id }}" ajax-unsave-product-url="{% url 'off_sub:ajax_unsave_product' %}">Retirer des favoris</button>
+                          </div>
                         {% endif %}
                       </form>
                     {% endblock %}
@@ -62,21 +73,5 @@
 {% endblock section_one_pictures %}
 
 {% block scripts %}
-<script type="text/javascript">
-    var save_form = $('#save');
-    save_form.submit(function () {
-        $.ajax({
-            type: save_form.attr('method'),
-            url: save_form.attr('action'),
-            data: save_form.serialize(),
-            success: function (data) {
-                $("#SOME-DIV").html(data);
-            },
-            error: function(data) {
-                $("#MESSAGE-DIV").html("Something went wrong!");
-            }
-        });
-        return false;
-    });
-</script>
+  <script src="{% static 'js/save_unsave_favorites.js' %}"></script>
 {% endblock scripts %}

@@ -43,7 +43,7 @@
 
 <body id="page-top">
 
-  <!-- Not displayed data, sent by Python, for autocompletion in #autocompletion-navbar and #autocompletion-index -->
+  <!-- Not displayed data, sent by Python, for autocompletion in #autocompletion-0 (navbar) and #autocompletion-1 (index) -->
   <div id="pythonProducts" class="d-none">{{ all_products }}</div>
 
   <!-- Navigation -->
@@ -139,6 +139,7 @@
           <h5 class="mb-4">{% block section_one_subtitle %}{% endblock section_one_subtitle %}</h5>
           <div class="text-justify text-muted mb-4">{% block section_one_text %}{% endblock section_one_text %}</div>
           {% block section_one_pictures %}{% endblock section_one_pictures %}
+          {% block section_one_bottom %}{% endblock section_one_bottom %}
         </div>
       </div>
     </div>

@@ -5,13 +5,17 @@
 {% block masthead_divider %}{% endblock masthead_divider %}
 
 {% block masthead_title %}
-  Favoris
+  Mes aliments favoris
 {% endblock masthead_title %}
-
 
 
 {% block section_one_title %}
   {% if user_favorites %}
+    <div class="text-center py-3">
+      <form action="{% url 'off_sub:favorites' %}">
+        <button class="btn btn-outline-secondary">Actualiser mes favoris</button>
+      </form>
+    </div>
     {{ user.first_name }}, voici la liste de vos produits enregistrés :
   {% else %}
     {{ user.first_name }}, vous n'avez aucun produit enregistré.
@@ -20,7 +24,10 @@
 
 {% block section_one_divider %}{% endblock section_one_divider %}
 
-{% if user_has_favorites %}
-
-{% endif %}
-
+{% block section_one_bottom %}
+  <div class="text-center py-3">
+    <form action="{% url 'off_sub:favorites' %}">
+      <button class="btn btn-outline-secondary">Actualiser mes favoris</button>
+    </form>
+  </div>
+{% endblock section_one_bottom %}
