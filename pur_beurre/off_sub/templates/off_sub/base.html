@@ -65,8 +65,8 @@
               <p  class="nav-link disabled">Bonjour {{ user.first_name }} !</p>
             </li>
           {% else %}
-            <li class="nav-item text-transparent d-none d-lg-block">
-              <p  class="nav-link disabled">Bonjour Anonyme !</p>
+            <li class="nav-item">
+              <p  class="nav-link disabled">Vous n'êtes pas connecté(e)</p>
             </li>
           {% endif %}
           {% block search %}

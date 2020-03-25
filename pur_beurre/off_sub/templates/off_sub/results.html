@@ -35,3 +35,14 @@
 {% endblock section_one_title %}
 
 {% block section_one_divider %}{% endblock section_one_divider %}
+
+{% block section_one_bottom %}
+  {% if not user_authenticated %}
+  <div class="text-center py-3">
+    <p class="h5">Connectez-vous pour pouvoir enregistrer des produits !</p>
+    <form action="{% url 'auth:sign' %}">
+      <button class="btn btn-outline-primary">Se connecter</button>
+    </form>
+  </div>
+  {% endif %}
+{% endblock section_one_bottom %}
