@@ -1,11 +1,11 @@
 from django import forms
-from django.forms import ModelForm, TextInput, EmailInput, PasswordInput
+from django.forms import TextInput, EmailInput, PasswordInput
 from django.contrib import admin
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils.text import capfirst
 
 from .models import MyUser
@@ -47,14 +47,20 @@ class AuthenticationForm(forms.Form):
         self.fields['email'].max_length = email_max_length
         self.fields['email'].widget.attrs['maxlength'] = email_max_length
         if self.fields['email'].label is None:
-            self.fields['email'].label = capfirst(self.email_field.verbose_name)
+            self.fields['email'].label = capfirst(
+                self.email_field.verbose_name
+            )
 
     def clean(self):
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
 
         if email is not None and password:
-            self.user_cache = authenticate(self.request, email=email, password=password)
+            self.user_cache = authenticate(
+                self.request,
+                email=email,
+                password=password
+            )
             if self.user_cache is None:
                 raise self.get_invalid_login_error()
             else:
@@ -168,14 +174,17 @@ class UserAdmin(BaseUserAdmin):
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'first_name', 'password1', 'password2')}
+        (
+            None, {
+                'classes': ('wide',),
+                'fields': ('email', 'first_name', 'password1', 'password2')
+            }
         ),
     )
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
+
 
 # Now register the new UserAdmin...
 admin.site.register(MyUser, UserAdmin)

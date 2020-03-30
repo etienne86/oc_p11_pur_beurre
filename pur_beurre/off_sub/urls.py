@@ -1,8 +1,6 @@
 from django.urls import path
-from django.conf.urls import url, include
-# from django.views.generic import TemplateView
 
-from . import views
+from . import ajax_views, views
 
 
 app_name = 'off_sub'
@@ -14,17 +12,17 @@ urlpatterns = [
     path('results/<product_id>', views.results, name="results"),
     path(
         'ajax_find_product',
-        views.ajax_find_product,
+        ajax_views.ajax_find_product,
         name="ajax_find_product"
     ),
     path(
         'ajax_save_product',
-        views.ajax_save_product,
+        ajax_views.ajax_save_product,
         name="ajax_save_product"
     ),
     path(
         'ajax_unsave_product',
-        views.ajax_unsave_product,
+        ajax_views.ajax_unsave_product,
         name="ajax_unsave_product"
     ),
 ]

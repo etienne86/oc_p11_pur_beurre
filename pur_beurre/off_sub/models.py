@@ -29,7 +29,7 @@ class Category(models.Model):
         except IntegrityError:
             category_id = Category.objects.get(name=self.name).id
         return category_id
-    
+
     @classmethod
     def get_categories_list(cls):
         """

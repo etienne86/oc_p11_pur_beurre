@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+
 from off_sub.models import Product
 
 # The classes MyUserManager and MyUser are issued from django documentation:
@@ -45,7 +46,9 @@ class MyUser(AbstractBaseUser):
         verbose_name='Courriel',
         max_length=255,
         unique=True,
-        error_messages={'unique': "Un compte est déjà créé avec cet email.",}
+        error_messages={
+            'unique': "Un compte est déjà créé avec ce courriel.",
+        }
     )
     first_name = models.CharField(
         max_length=30,

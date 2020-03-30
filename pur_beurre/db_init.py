@@ -5,10 +5,10 @@ Pre-requisite: the database 'pur_beurre_db' has to be created.
 """
 
 
-import os, re
+import os
+import re
 
 import django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pur_beurre.settings")
 django.setup()
 
 import requests
@@ -33,10 +33,10 @@ def main():
         categ_250 = requests.get(categ.get_url_250_products())
         categ_250_dict = categ_250.json()
         if (categ_250.status_code == 200) and (categ_250_dict["count"]):
-            api_return = categ_250.json() # type is dict
-            products_list = api_return["products"] # type is list of dict
+            api_return = categ_250.json()  # type is dict
+            products_list = api_return["products"]  # type is list of dict
             # iterate on each product
-            for item in products_list: # type is dict
+            for item in products_list:  # type is dict
                 # initiate a new instance of product
                 prod = Product()
                 # filter on:
@@ -51,7 +51,7 @@ def main():
                     try:
                         prod.product_name = item["product_name"]
                     except KeyError:
-                        prod.product_name = "[Produit sans nom]"    
+                        prod.product_name = "[Produit sans nom]"
                     prod.nutriscore_grade = item["nutrition_grade_fr"]
                     prod.nutriscore_score = \
                         int(item["nutriments"]["nutrition-score-fr_100g"])
@@ -77,7 +77,7 @@ def main():
                         shop_names = [
                             shop.strip() for shop in item["stores"].split(",")
                         ]
-                    except KeyError: # if no store mentioned here...
+                    except KeyError:  # if no store mentioned here...
                         # ... then skip this step
                         continue
                     for shop_name in shop_names:
