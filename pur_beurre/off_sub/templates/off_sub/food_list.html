@@ -45,7 +45,7 @@
                         <!-- Displayed button depends on user's favorites -->
                         {% if prod in user_favorites %}
                           <div class="d-block">
-                            <button class="btn btn-outline-primary unsaveProduct" method="post" type="button" property="{{ prod.id }}" ajax-unsave-product-url="{% url 'off_sub:ajax_unsave_product' %}">Retirer des favoris</button>
+                            <button class="btn btn-outline-danger unsaveProduct" method="post" type="button" property="{{ prod.id }}" ajax-unsave-product-url="{% url 'off_sub:ajax_unsave_product' %}">Retirer des favoris</button>
                           </div>
                           <div class="d-none">
                             <button class="btn btn-outline-success saveProduct" method="post" type="button" property="{{ prod.id }}" ajax-save-product-url="{% url 'off_sub:ajax_save_product' %}"><i class="far fa-save"></i> Sauvegarder</button>
@@ -55,7 +55,7 @@
                             <button class="btn btn-outline-success saveProduct" method="post" type="button" property="{{ prod.id }}" ajax-save-product-url="{% url 'off_sub:ajax_save_product' %}"><i class="far fa-save"></i> Sauvegarder</button>
                           </div>
                           <div class="d-none">
-                            <button class="btn btn-outline-primary unsaveProduct" method="post" type="button" property="{{ prod.id }}" ajax-unsave-product-url="{% url 'off_sub:ajax_unsave_product' %}">Retirer des favoris</button>
+                            <button class="btn btn-outline-danger unsaveProduct" method="post" type="button" property="{{ prod.id }}" ajax-unsave-product-url="{% url 'off_sub:ajax_unsave_product' %}">Retirer des favoris</button>
                           </div>
                         {% endif %}
                       </form>

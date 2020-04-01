@@ -13,7 +13,7 @@
   {% if user_favorites %}
     <div class="text-center py-3">
       <form action="{% url 'off_sub:favorites' %}">
-        <button class="btn btn-outline-secondary">Actualiser mes favoris</button>
+        <button class="btn btn-primary">Actualiser mes favoris</button>
       </form>
     </div>
     {{ user.first_name }}, voici la liste de vos produits enregistrés :
@@ -27,7 +27,7 @@
 {% block section_one_bottom %}
   <div class="text-center py-3">
     <form action="{% url 'off_sub:favorites' %}">
-      <button class="btn btn-outline-secondary">Actualiser mes favoris</button>
+      <button class="btn btn-primary">Actualiser mes favoris</button>
     </form>
   </div>
 {% endblock section_one_bottom %}

@@ -30,16 +30,16 @@
     <div class="card-header">
       <ul id="signTab" role="tablist" class="nav nav-tabs card-header-tabs nav-fill">
         <li class="nav-item">
-          <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Se connecter</a>
+          <a class="nav-link active" id="se-connecter" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Se connecter</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="signup-tab" data-toggle="tab" href="#signup" role="tab" aria-controls="signup" aria-selected="true">Nous rejoindre</a>
+          <a class="nav-link" id="nous-rejoindre" data-toggle="tab" href="#signup" role="tab" aria-controls="signup" aria-selected="true">Nous rejoindre</a>
         </li>
       </ul>
     </div>
     <div class="card-body">
       <div class="tab-content" id="signTabContent">
-        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="se-connecter">
           <form method="post">
             {% csrf_token %}
             {% for field in authentication_form %}
@@ -59,7 +59,7 @@
             </div>
           </form>
         </div>
-        <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">
+        <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="nous-rejoindre">
           <form method="post">
             {% csrf_token %}
             {% for field in user_creation_form %}

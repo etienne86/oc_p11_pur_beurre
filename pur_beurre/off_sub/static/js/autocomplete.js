@@ -9,7 +9,7 @@ $( function() {
   $( "#autocompletion-0" ).autocomplete({
     source: allProducts
   });
-  // autocomplete search field in welcome page (masthead section)
+  // autocomplete search field in home page (masthead section)
   $( "#autocompletion-1" ).autocomplete({
     source: allProducts
   });
@@ -21,7 +21,7 @@ $( function() {
 // - to deal with the feedback from Python
 
 var formElts = document.getElementsByClassName('productSubmitForm');
-var formEltsCounter = formElts.length; // expect 2 (welcome page) or 1
+var formEltsCounter = formElts.length; // expect 2 (home page) or 1
 
 const elts = []
 
