@@ -25,7 +25,7 @@ from pur_beurre.settings import BASE_DIR
 class TestWithAnonymousUser(StaticLiveServerTestCase):
     """
     This class contains functional tests with anonymous user.
-    User Firefox as web browser.
+    Use Firefox as web browser.
     """
 
     @classmethod
@@ -39,12 +39,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         )
         # set home_url
         cls.home_url = f"{cls.live_server_url}/"
-        # # set window_rect (i.e. window_position and window_size)
-        # cls.selenium.set_window_rect(0, 0, 1200, 800)
 
     @classmethod
     def tearDownClass(cls):
-        # cls.driver.quit()
         cls.selenium.quit()
         super().tearDownClass()
 
@@ -105,7 +102,8 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # a user in database
         self.user_a = MyUser.objects.create_user(
             email="toto@mail.com",
-            first_name="Toto"
+            first_name="Toto",
+            password="TopSecret"
         )
 
     # basic scenarii
@@ -179,6 +177,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
     # scenarii with chained actions
 
     def test_look_for_a_product_from_home_with_masthead_form_enter(self):
+        """
+        Test for User Story US02: scenario #1.
+        """
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
@@ -204,6 +205,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_look_for_a_product_from_home_with_masthead_form_click_btn(self):
+        """
+        Test for User Story US02: scenario #2.
+        """
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
@@ -232,6 +236,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_look_for_a_product_from_home_navbar_form_enter(self):
+        """
+        Test for User Story US02: scenario #3.
+        """
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
@@ -258,6 +265,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
 
     def test_look_for_a_product_from_home_navbar_form_click_btn(self):
         """
+        Test for User Story US02: scenario #4.
         Available on XS, S and M screens only (L and XL screens excluded).
         """
         # save window_rect
@@ -299,6 +307,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
 
     def test_click_on_product_picture_to_consult_details_results_page(self):
         """
+        Test for User Story US03: scenario #1.
         Click on the searched product, i.e. in the masthead section.
         """
         # start from results page
@@ -323,6 +332,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
 
     def test_click_on_product_name_to_consult_details_results_page(self):
         """
+        Test for User Story US03: scenario #2.
         Click on the searched product, i.e. in the masthead section.
         """
         # start from results page
@@ -346,6 +356,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_create_user_account_success(self):
+        """
+        Test for User Story US04: scenario #1.
+        """
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
@@ -414,8 +427,10 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
             authenticated = True
         self.assertTrue(home_sweet_home and authenticated)
  
-
     def test_create_user_account_failure(self):
+        """
+        Test for User Story US04: scenario #2.
+        """
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
@@ -471,89 +486,357 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         actions.perform()
         # get an error message: True or False?
         error_message = self.selenium.find_element_by_class_name("text-danger")
-        expected_error = (
-            error_message.text == "Un compte est déjà créé avec ce courriel."
-        ) 
+        message = "Un compte est déjà créé avec ce courriel."
+        expected_error = (error_message.text == message) 
+        # stay on current page: True or False?
+        current_page = (self.selenium.current_url == f"{start_url}auth/sign/")
+        self.assertTrue(error_message and current_page)
+
+    def test_login_success(self):
+        """
+        Test for User Story US05: scenario #1.
+        """
+        # start from index (home) page
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # click on "sign" icon
+        sign_icon = self.selenium.find_element_by_id("sign-icon")
+        actions.click(sign_icon)
+        # compile chained actions
+        actions.perform()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(f"{self.live_server_url}/"))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # select the tab "Nous rejoindre"
+        login_tab = self.selenium.find_element_by_id("se-connecter")
+        actions.click(login_tab)
+        # compile chained actions
+        actions.perform()
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        submit_button = self.selenium.find_element_by_name("login_form")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(submit_button))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # fill the "create account" form
+        email_field = self.selenium.find_elements_by_id("id_email")[0]
+        actions.click(email_field)
+        actions.send_keys("toto@mail.com")
+        password_field = self.selenium.find_element_by_id("id_password")
+        actions.click(password_field)
+        actions.send_keys("TopSecret")
+        # click on the "Se connecter" button
+        actions.click(submit_button)
+        # compile chained actions
+        actions.perform()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(f"{self.live_server_url}/auth/sign/"))
+        # redirect to home page: True or False?
+        home_sweet_home = (self.selenium.current_url == start_url)
+        # user authenticated: True or False?
+        authenticated = False
+        try:
+            logout_icon = self.selenium.find_element_by_id("logout-icon")
+        except selenium.common.exceptions.NoSuchElementException:
+            pass
+        else:
+            authenticated = True
+        self.assertTrue(home_sweet_home and authenticated)
+
+    def test_login_failure_wrong_email(self):
+        """
+        Test for User Story US05: scenario #2.
+        """
+        # start from index (home) page
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # click on "sign" icon
+        sign_icon = self.selenium.find_element_by_id("sign-icon")
+        actions.click(sign_icon)
+        # compile chained actions
+        actions.perform()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(f"{self.live_server_url}/"))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # select the tab "Nous rejoindre"
+        login_tab = self.selenium.find_element_by_id("se-connecter")
+        actions.click(login_tab)
+        # compile chained actions
+        actions.perform()
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        submit_button = self.selenium.find_element_by_name("login_form")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(submit_button))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # fill the "create account" form
+        email_field = self.selenium.find_elements_by_id("id_email")[0]
+        actions.click(email_field)
+        actions.send_keys("oops@mail.com")
+        password_field = self.selenium.find_element_by_id("id_password")
+        actions.click(password_field)
+        actions.send_keys("TopSecret")
+        # click on the "Se connecter" button
+        actions.click(submit_button)
+        # wait for seeing the error message
+        actions.pause(1)
+        # compile chained actions
+        actions.perform()
+        # get an error message: True or False?
+        error_message = self.selenium.find_element_by_class_name("text-danger")
+        message = "Merci de saisir un email et un mot de passe valides SVP."
+        expected_error = (error_message.text == message) 
+        # stay on current page: True or False?
+        current_page = (self.selenium.current_url == f"{start_url}auth/sign/")
+        self.assertTrue(error_message and current_page)
+
+    def test_login_failure_wrong_password(self):
+        """
+        Test for User Story US05: scenario #3.
+        """
+        # start from index (home) page
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # click on "sign" icon
+        sign_icon = self.selenium.find_element_by_id("sign-icon")
+        actions.click(sign_icon)
+        # compile chained actions
+        actions.perform()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(f"{self.live_server_url}/"))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # select the tab "Nous rejoindre"
+        login_tab = self.selenium.find_element_by_id("se-connecter")
+        actions.click(login_tab)
+        # compile chained actions
+        actions.perform()
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        submit_button = self.selenium.find_element_by_name("login_form")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(submit_button))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # fill the "create account" form
+        email_field = self.selenium.find_elements_by_id("id_email")[0]
+        actions.click(email_field)
+        actions.send_keys("toto@mail.com")
+        password_field = self.selenium.find_element_by_id("id_password")
+        actions.click(password_field)
+        actions.send_keys("Oops")
+        # click on the "Se connecter" button
+        actions.click(submit_button)
+        # wait for seeing the error message
+        actions.pause(1)
+        # compile chained actions
+        actions.perform()
+        # get an error message: True or False?
+        error_message = self.selenium.find_element_by_class_name("text-danger")
+        message = "Merci de saisir un email et un mot de passe valides SVP."
+        expected_error = (error_message.text == message) 
         # stay on current page: True or False?
         current_page = (self.selenium.current_url == f"{start_url}auth/sign/")
         self.assertTrue(error_message and current_page)
 
 
-# class TestWithAuthenticatedUser(LiveServerTestCase):
-#     """
-#     This class contains functional tests with a user.
-#     User Firefox as web browser.
-#     """
+class TestWithAuthenticatedUser(StaticLiveServerTestCase):
+    """
+    This class contains functional tests with a user.
+    Use Firefox as web browser.
+    """
 
-#     @classmethod
-#     def setUpClass(cls):
-#         super().setUpClass()
-#         cls.selenium = WebDriver(
-#             executable_path=os.path.join(
-#                 BASE_DIR, 'drivers/geckodriver'
-#             )
-#         )
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # initialize a webdriver
+        cls.selenium = WebDriver(
+            executable_path=os.path.join(
+                BASE_DIR, 'drivers/geckodriver'
+            )
+        )
+        # set home_url
+        cls.home_url = f"{cls.live_server_url}/"
 
-#     @classmethod
-#     def tearDownClass(cls):
-#         cls.selenium.quit()
-#         super().tearDownClass()
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
 
-#     def setUp(self):
-#         """
-#         Create a test user.
-#         """
-#         self.user =  MyUser.objects.create_user(
-#             email="toto@mail.com",
-#             first_name="Toto"
-#         )
+    def setUp(self):
+        super().setUp()
+        # a test user
+        self.user =  MyUser.objects.create_user(
+            email="toto@mail.com",
+            first_name="Toto",
+            password="TopSecret"
+        )
+        # force login for this test user
+        force_login(self.user, self.selenium, self.live_server_url)
+        # some products in database
+        self.product_a = Product.objects.create(
+            code='1234567890123',
+            product_name="a superb product",
+            nutriscore_grade='a',
+            nutriscore_score=-1,
+        )
+        self.product_b = Product.objects.create(
+            code='2222222222222',
+            product_name="product_b",
+            nutriscore_grade='b',
+            nutriscore_score=1,
+        )
+        self.product_c = Product.objects.create(
+            code='3333333333333',
+            product_name="product c",
+            nutriscore_grade='c',
+            nutriscore_score=6,
+        )
+        self.product_d = Product.objects.create(
+            code='4444444444444',
+            product_name="product d",
+            nutriscore_grade='d',
+            nutriscore_score=14,
+        )
+        self.product_e = Product.objects.create(
+            code='5555555555555',
+            product_name="product e",
+            nutriscore_grade='e',
+            nutriscore_score=25,
+        )
+        # add these product as favorites for the test user
+        self.user.favorites.add(self.product_a)
+        self.user.favorites.add(self.product_b)
+        self.user.favorites.add(self.product_c)
+        self.user.favorites.add(self.product_d)
+        self.user.favorites.add(self.product_e)
 
-#     def test_display_account(self):
-#         force_login(self.user, self.selenium, self.live_server_url)
-#         self.selenium.get(f"{self.live_server_url}/auth/account")
-#         expected_url = f"{self.live_server_url}/auth/account/"
-#         self.assertEqual(self.selenium.current_url, expected_url)
+    # basic scenarii
 
-#     def test_display_favorites(self):
-#         force_login(self.user, self.selenium, self.live_server_url)
-#         self.selenium.get(f"{self.live_server_url}/favorites")
-#         expected_url = f"{self.live_server_url}/favorites/"
-#         self.assertEqual(self.selenium.current_url, expected_url)
+    def test_display_account(self):
+        """
+        Display account page.
+        """
+        self.selenium.get(f"{self.live_server_url}/auth/account")
+        expected_url = f"{self.live_server_url}/auth/account/"
+        self.assertEqual(self.selenium.current_url, expected_url)
 
-#     def test_display_food(self):
-#         force_login(self.user, self.selenium, self.live_server_url)
-#         product_id = 17
-#         self.selenium.get(f"{self.live_server_url}/food/{product_id}")
-#         expected_url = f"{self.live_server_url}/food/{product_id}"
-#         self.assertEqual(self.selenium.current_url, expected_url)
+    def test_display_favorites(self):
+        """
+        Display favorites page.
+        """
+        self.selenium.get(f"{self.live_server_url}/favorites")
+        expected_url = f"{self.live_server_url}/favorites/"
+        self.assertEqual(self.selenium.current_url, expected_url)
 
-#     def test_display_index(self):
-#         force_login(self.user, self.selenium, self.live_server_url)
-#         self.selenium.get(f"{self.live_server_url}")
-#         expected_url = f"{self.live_server_url}/"
-#         self.assertEqual(self.selenium.current_url, expected_url)
+    def test_display_food(self):
+        """
+        Display food page.
+        """
+        product_id = 17
+        self.selenium.get(f"{self.live_server_url}/food/{product_id}")
+        expected_url = f"{self.live_server_url}/food/{product_id}"
+        self.assertEqual(self.selenium.current_url, expected_url)
 
-#     def test_display_legal(self):
-#         force_login(self.user, self.selenium, self.live_server_url)
-#         self.selenium.get(f"{self.live_server_url}/legal")
-#         expected_url = f"{self.live_server_url}/legal/"
-#         self.assertEqual(self.selenium.current_url, expected_url)
+    def test_display_index(self):
+        """
+        Display home page.
+        """
+        self.selenium.get(f"{self.live_server_url}")
+        expected_url = f"{self.live_server_url}/"
+        self.assertEqual(self.selenium.current_url, expected_url)
 
-#     def test_display_log_out(self):
-#         force_login(self.user, self.selenium, self.live_server_url)
-#         self.selenium.get(f"{self.live_server_url}/auth/log_out")
-#         expected_url = f"{self.live_server_url}/auth/log_out/"
-#         self.assertEqual(self.selenium.current_url, expected_url)
+    def test_display_legal(self):
+        """
+        Display legal page.
+        """
+        self.selenium.get(f"{self.live_server_url}/legal")
+        expected_url = f"{self.live_server_url}/legal/"
+        self.assertEqual(self.selenium.current_url, expected_url)
 
-#     def test_display_results(self):
-#         force_login(self.user, self.selenium, self.live_server_url)
-#         product_id = 17
-#         self.selenium.get(f"{self.live_server_url}/results/{product_id}")
-#         expected_url = f"{self.live_server_url}/results/{product_id}"
-#         self.assertEqual(self.selenium.current_url, expected_url)
+    def test_display_log_out(self):
+        """
+        Display logout page.
+        """
+        self.selenium.get(f"{self.live_server_url}/auth/log_out")
+        expected_url = f"{self.live_server_url}/auth/log_out/"
+        self.assertEqual(self.selenium.current_url, expected_url)
 
-#     def test_display_sign(self):
-#         force_login(self.user, self.selenium, self.live_server_url)
-#         self.selenium.get(f"{self.live_server_url}/auth/sign")
-#         expected_url = f"{self.live_server_url}/auth/sign/"
-#         self.assertEqual(self.selenium.current_url, expected_url)
+    def test_display_results(self):
+        """
+        Display results page.
+        """
+        product_id = 17
+        self.selenium.get(f"{self.live_server_url}/results/{product_id}")
+        expected_url = f"{self.live_server_url}/results/{product_id}"
+        self.assertEqual(self.selenium.current_url, expected_url)
+
+    def test_display_sign(self):
+        """
+        Display sign page.
+        """
+        self.selenium.get(f"{self.live_server_url}/auth/sign")
+        expected_url = f"{self.live_server_url}/auth/sign/"
+        self.assertEqual(self.selenium.current_url, expected_url)
+
+    # scenarii with chained actions
+
+    def test_logout_success(self):
+        """
+        Test for User Story US06: unique scenario.
+        """
+        # start from index (home) page
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # click on "sign" icon
+        logout_icon = self.selenium.find_element_by_id("logout-icon")
+        actions.click(logout_icon)
+        # compile chained actions
+        actions.perform()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(start_url))
+        # see "logout" page
+        expected_url = f"{self.live_server_url}/auth/log_out/"
+        self.assertEqual(self.selenium.current_url, expected_url)
