@@ -5,21 +5,21 @@ This module contains the functional tests for the project.
 import os
 import random
 
-# import django
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth.models import AnonymousUser
+import selenium
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.expected_conditions import url_changes
+from selenium.webdriver.support.expected_conditions import (
+    url_changes, visibility_of
+)
 from seleniumlogin import force_login
 
 from auth.models import MyUser
 from off_sub.models import Product, Category
 from pur_beurre.settings import BASE_DIR
-
-# django.setup()
 
 
 class TestWithAnonymousUser(StaticLiveServerTestCase):
@@ -180,7 +180,8 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
 
     def test_look_for_a_product_from_home_with_masthead_form_enter(self):
         # start from index (home) page
-        self.selenium.get(f"{self.live_server_url}")
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
         # start chained actions
         actions = ActionChains(self.selenium)
         # click on field "Produit" (select field)
@@ -204,7 +205,8 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
 
     def test_look_for_a_product_from_home_with_masthead_form_click_btn(self):
         # start from index (home) page
-        self.selenium.get(f"{self.live_server_url}")
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
         # start chained actions
         actions = ActionChains(self.selenium)
         # click on field "Produit" (select field)
@@ -231,7 +233,8 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
 
     def test_look_for_a_product_from_home_navbar_form_enter(self):
         # start from index (home) page
-        self.selenium.get(f"{self.live_server_url}")
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
         # start chained actions
         actions = ActionChains(self.selenium)
         # click on field "Produit" (select field)
@@ -262,7 +265,8 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # adjust window_position and window_size
         self.selenium.set_window_rect(0, 0, 800, 600)
         # start from index (home) page
-        self.selenium.get(f"{self.live_server_url}")
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
         # start chained actions
         actions = ActionChains(self.selenium)
         # click on field "Produit" (select field)
@@ -341,20 +345,138 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         expected_url = f"{self.live_server_url}/food/{product_id}"
         self.assertEqual(self.selenium.current_url, expected_url)
 
-    # def test_create_user_account_success(self):
-    #     # start from index (home) page
-    #     start_url = f"{self.live_server_url}"
-    #     self.selenium.get(start_url)
-    #     # start chained actions
-    #     actions = ActionChains(self.selenium)
+    def test_create_user_account_success(self):
+        # start from index (home) page
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # click on "sign" icon
+        sign_icon = self.selenium.find_element_by_id("sign-icon")
+        actions.click(sign_icon)
+        # compile chained actions
+        actions.perform()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(f"{self.live_server_url}/"))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # select the tab "Nous rejoindre"
+        signup_tab = self.selenium.find_element_by_id("nous-rejoindre")
+        actions.click(signup_tab)
+        # compile chained actions
+        actions.perform()
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        submit_button = self.selenium.find_element_by_name("sign_up_form")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(submit_button))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # fill the "create account" form
+        first_name_field = self.selenium.find_element_by_id("id_first_name")
+        actions.click(first_name_field)
+        actions.send_keys("Titi")
+        email_field = self.selenium.find_elements_by_id("id_email")[1]
+        actions.click(email_field)
+        actions.send_keys("titi@mail.com")
+        password1_field = self.selenium.find_element_by_id("id_password1")
+        actions.click(password1_field)
+        actions.send_keys("Password123")
+        password2_field = self.selenium.find_element_by_id("id_password2")
+        actions.click(password2_field)
+        actions.send_keys("Password123")
+        # click on the "Créer un compte" button
+        actions.click(submit_button)
+        # compile chained actions
+        actions.perform()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(f"{self.live_server_url}/auth/sign/"))
+        # redirect to home page: True or False?
+        home_sweet_home = (self.selenium.current_url == start_url)
+        # user authenticated: True or False?
+        authenticated = False
+        try:
+            logout_icon = self.selenium.find_element_by_id("logout-icon")
+        except selenium.common.exceptions.NoSuchElementException:
+            pass
+        else:
+            authenticated = True
+        self.assertTrue(home_sweet_home and authenticated)
+ 
 
-    #     # compile chained actions
-    #     actions.perform()
-    #     # wait for page loading
-    #     WebDriverWait(
-    #         self.selenium,
-    #         timeout=2
-    #     ).until(url_changes(start_url))
+    def test_create_user_account_failure(self):
+        # start from index (home) page
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # click on "sign" icon
+        sign_icon = self.selenium.find_element_by_id("sign-icon")
+        actions.click(sign_icon)
+        # compile chained actions
+        actions.perform()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(f"{self.live_server_url}/"))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # select the tab "Nous rejoindre"
+        signup_tab = self.selenium.find_element_by_id("nous-rejoindre")
+        actions.click(signup_tab)
+        # compile chained actions
+        actions.perform()
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        submit_button = self.selenium.find_element_by_name("sign_up_form")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(submit_button))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # fill the "create account" form
+        first_name_field = self.selenium.find_element_by_id("id_first_name")
+        actions.click(first_name_field)
+        actions.send_keys("Toto")
+        email_field = self.selenium.find_elements_by_id("id_email")[1]
+        actions.click(email_field)
+        actions.send_keys("toto@mail.com") #  already used email
+        password1_field = self.selenium.find_element_by_id("id_password1")
+        actions.click(password1_field)
+        actions.send_keys("Password123")
+        password2_field = self.selenium.find_element_by_id("id_password2")
+        actions.click(password2_field)
+        actions.send_keys("Password123")
+        # click on the "Créer un compte" button
+        actions.click(submit_button)
+        # wait for seeing the error message
+        actions.pause(1)
+        # compile chained actions
+        actions.perform()
+        # get an error message: True or False?
+        error_message = self.selenium.find_element_by_class_name("text-danger")
+        expected_error = (
+            error_message.text == "Un compte est déjà créé avec ce courriel."
+        ) 
+        # stay on current page: True or False?
+        current_page = (self.selenium.current_url == f"{start_url}auth/sign/")
+        self.assertTrue(error_message and current_page)
 
 
 # class TestWithAuthenticatedUser(LiveServerTestCase):

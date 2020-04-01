@@ -58,15 +58,15 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          {% if user_authenticated %}
-            <li class="nav-item">
-              <p  class="nav-link disabled">Bonjour {{ user.first_name }} !</p>
-            </li>
-          {% else %}
-            <li class="nav-item">
-              <p  class="nav-link disabled">Vous n'êtes pas connecté(e)</p>
-            </li>
-          {% endif %}
+          <li class="nav-item">
+            <p class="nav-link disabled">
+              {% if user_authenticated %}
+                Bonjour {{ user.first_name }} !
+              {% else %}
+                Vous n'êtes pas connecté(e)
+              {% endif %}
+            </p>
+          </li>          
           {% block search %}
             <li class="nav-item mt-n2">
               <form id="productSubmitFormNavbar" method="post" class="productSubmitForm form-inline" action="{% url 'off_sub:results' 0 %}" ajax-find-product-url="{% url 'off_sub:ajax_find_product' %}">
@@ -82,19 +82,19 @@
           {% if user_authenticated %}
             {% block signed_in %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'auth:account' %}" title="Mon compte"><i class="far fa-user"></i></a>
+                <a class="nav-link" href="{% url 'auth:account' %}" title="Mon compte"><i id="account-icon" class="far fa-user"></i></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'off_sub:favorites' %}" title="Mes aliments"><i class="fas fa-carrot"></i></a>
+                <a class="nav-link" href="{% url 'off_sub:favorites' %}" title="Mes aliments"><i id="favorites-icon" class="fas fa-carrot"></i></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'auth:log_out' %}" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a>
+                <a class="nav-link" href="{% url 'auth:log_out' %}" title="Déconnexion"><i id="logout-icon" class="fas fa-sign-out-alt"></i></a>
               </li>
             {% endblock signed_in %}
           {% else %}
             {% block not_signed_in %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'auth:sign' %}" title="Connexion"><i class="fas fa-sign-in-alt"></i></a>
+                <a class="nav-link" href="{% url 'auth:sign' %}" title="Connexion"><i id="sign-icon" class="fas fa-sign-in-alt"></i></a>
               </li>
               <li class="nav-item text-transparent d-none d-lg-block">
                 <a class="nav-link disabled" href="{% url 'auth:sign' %}" title="Connexion"><i class="far fa-user"></i></a>

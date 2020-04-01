@@ -68,7 +68,9 @@
                   <label>{{ field.label_tag }}</label>
                 </div>
                 <div class="col-12 col-md-9">
-                  {{ field }}
+                  <div class="is-invalid">
+                    {{ field }}
+                  </div>
                 </div>
               </div>
             {% endfor %}
