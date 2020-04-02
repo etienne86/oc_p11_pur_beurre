@@ -314,13 +314,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         product_id = self.product_c.id
         start_url = f"{self.live_server_url}/results/{product_id}"
         self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # click on product picture
         product_picture = self.selenium.find_element_by_id("masthead_picture")
-        actions.click(product_picture)
-        # compile chained actions
-        actions.perform()
+        product_picture.click()
         # wait for page loading
         WebDriverWait(
             self.selenium,
@@ -339,13 +335,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         product_id = self.product_c.id
         start_url = f"{self.live_server_url}/results/{product_id}"
         self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # click on product name
         product_subtitle = self.selenium.find_element_by_id("masthead_subtitle")
-        actions.click(product_subtitle)
-        # compile chained actions
-        actions.perform()
+        product_subtitle.click()
         # wait for page loading
         WebDriverWait(
             self.selenium,
@@ -362,25 +354,17 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # click on "sign" icon
         sign_icon = self.selenium.find_element_by_id("sign-icon")
-        actions.click(sign_icon)
-        # compile chained actions
-        actions.perform()
+        sign_icon.click()
         # wait for page loading
         WebDriverWait(
             self.selenium,
             timeout=2
         ).until(url_changes(f"{self.live_server_url}/"))
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # select the tab "Nous rejoindre"
         signup_tab = self.selenium.find_element_by_id("nous-rejoindre")
-        actions.click(signup_tab)
-        # compile chained actions
-        actions.perform()
+        signup_tab.click()
         # scroll down
         self.selenium.execute_script(
             "window.scrollTo(0, document.body.scrollHeight);"
@@ -434,25 +418,17 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # click on "sign" icon
         sign_icon = self.selenium.find_element_by_id("sign-icon")
-        actions.click(sign_icon)
-        # compile chained actions
-        actions.perform()
+        sign_icon.click()
         # wait for page loading
         WebDriverWait(
             self.selenium,
             timeout=2
         ).until(url_changes(f"{self.live_server_url}/"))
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # select the tab "Nous rejoindre"
         signup_tab = self.selenium.find_element_by_id("nous-rejoindre")
-        actions.click(signup_tab)
-        # compile chained actions
-        actions.perform()
+        signup_tab.click()
         # scroll down
         self.selenium.execute_script(
             "window.scrollTo(0, document.body.scrollHeight);"
@@ -499,25 +475,17 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # click on "sign" icon
         sign_icon = self.selenium.find_element_by_id("sign-icon")
-        actions.click(sign_icon)
-        # compile chained actions
-        actions.perform()
+        sign_icon.click()
         # wait for page loading
         WebDriverWait(
             self.selenium,
             timeout=2
         ).until(url_changes(f"{self.live_server_url}/"))
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # select the tab "Nous rejoindre"
         login_tab = self.selenium.find_element_by_id("se-connecter")
-        actions.click(login_tab)
-        # compile chained actions
-        actions.perform()
+        login_tab.click()
         # scroll down
         self.selenium.execute_script(
             "window.scrollTo(0, document.body.scrollHeight);"
@@ -565,25 +533,17 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # click on "sign" icon
         sign_icon = self.selenium.find_element_by_id("sign-icon")
-        actions.click(sign_icon)
-        # compile chained actions
-        actions.perform()
+        sign_icon.click()
         # wait for page loading
         WebDriverWait(
             self.selenium,
             timeout=2
         ).until(url_changes(f"{self.live_server_url}/"))
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # select the tab "Nous rejoindre"
         login_tab = self.selenium.find_element_by_id("se-connecter")
-        actions.click(login_tab)
-        # compile chained actions
-        actions.perform()
+        login_tab.click()
         # scroll down
         self.selenium.execute_script(
             "window.scrollTo(0, document.body.scrollHeight);"
@@ -636,13 +596,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
             self.selenium,
             timeout=2
         ).until(url_changes(f"{self.live_server_url}/"))
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # select the tab "Nous rejoindre"
         login_tab = self.selenium.find_element_by_id("se-connecter")
-        actions.click(login_tab)
-        # compile chained actions
-        actions.perform()
+        login_tab.click()
         # scroll down
         self.selenium.execute_script(
             "window.scrollTo(0, document.body.scrollHeight);"
@@ -741,12 +697,9 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             nutriscore_grade='e',
             nutriscore_score=25,
         )
-        # add these product as favorites for the test user
+        # add some of these products as favorites for the test user
         self.user.favorites.add(self.product_a)
         self.user.favorites.add(self.product_b)
-        self.user.favorites.add(self.product_c)
-        self.user.favorites.add(self.product_d)
-        self.user.favorites.add(self.product_e)
 
     # basic scenarii
 
@@ -825,13 +778,9 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         # start from index (home) page
         start_url = f"{self.live_server_url}/"
         self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
         # click on "sign" icon
         logout_icon = self.selenium.find_element_by_id("logout-icon")
-        actions.click(logout_icon)
-        # compile chained actions
-        actions.perform()
+        logout_icon.click()
         # wait for page loading
         WebDriverWait(
             self.selenium,
@@ -840,3 +789,199 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         # see "logout" page
         expected_url = f"{self.live_server_url}/auth/log_out/"
         self.assertEqual(self.selenium.current_url, expected_url)
+
+    def test_save_a_product_as_favorite(self):
+        """
+        Test for User Story US07: scenario 1.
+        Standard process:
+        - click on the button to save the product
+        - check that the button state switches
+        - check on the favorites page that the product is well saved
+        """
+        result = True
+        # start from results page
+        product_id = self.product_c.id
+        start_url = f"{self.live_server_url}/results/{product_id}"
+        self.selenium.get(start_url)
+        # is/are there a/some product(s) clickable to be saved as favorite(s)?
+        clickable = self.selenium.find_elements_by_class_name("saveProduct")
+        clickable_quantity = len(clickable)
+        # on the contrary, is/are there a/some unclickable product(s)?
+        unclickable = self.selenium.find_elements_by_class_name(
+            "unsaveProduct"
+        )
+        unclickable_quantity = len(unclickable)
+        # click process
+        if clickable_quantity > 0:  # at least one product is clickable
+            # randomly choose a favorite
+            index = random.randint(0, clickable_quantity - 1)
+            save_button = clickable[index]
+            # which product will be saved?
+            saved_product_id = save_button.get_attribute("property")
+            # start chained actions        
+            actions = ActionChains(self.selenium)
+            # click on "Sauvegarder" button
+            actions.click(save_button)
+            # wait for the button switch
+            actions.pause(1)
+            # compile chained actions
+            actions.perform()
+            # has the product saved button switched to "unclickable"?
+            switch_button_status = True
+            new_clickable = self.selenium.find_elements_by_class_name(
+                "saveProduct"
+            )
+            new_clickable_quantity = len(new_clickable)
+            if (clickable_quantity == 1):
+                # there should not be any clickable products
+                switch_button_status *= (new_clickable_quantity == 0)
+            else:  # clickable_quantity > 1
+                # there should be one clickable product less
+                stmt = (new_clickable_quantity == clickable_quantity - 1)
+                switch_button_status *= stmt
+                # the product should be unclickable
+                new_unclickable = self.selenium.find_elements_by_class_name(
+                    "unsaveProduct"
+                )
+                found = False
+                # loop on all unclickable products
+                counter = 0
+                while ((not found) and (counter < len(new_unclickable))):
+                    button = new_unclickable[counter]
+                    if button.get_attribute("property") == product_id:
+                        found = True
+                    counter += 1
+                switch_button_status *= found
+                # there should be one unclickable product more
+                new_unclickable_quantity = len(new_unclickable)
+                stmt = (new_unclickable_quantity == unclickable_quantity + 1)
+                switch_button_status *= stmt
+            # update result
+            result *= switch_button_status
+            # switch to favorites page
+            favorites_icon = self.selenium.find_element_by_id("favorites-icon")
+            favorites_icon.click()
+            # wait for page loading
+            WebDriverWait(
+                self.selenium,
+                timeout=2
+            ).until(url_changes(start_url))
+            expected_url = f"{self.live_server_url}/favorites/"
+            redirect_status = (expected_url == self.selenium.current_url)
+            # update result
+            result *= redirect_status
+            # is the saved product among the favorites?
+            saved = self.selenium.find_elements_by_class_name(
+                "unsaveProduct"
+            )
+            found = False
+            # loop on all saved products
+            counter = 0
+            while ((not found) and (counter < len(saved))):
+                button = saved[counter]
+                if button.get_attribute("property") == product_id:
+                    found = True
+                counter += 1
+            saved_product_status = found
+            # update result
+            result *= saved_product_status
+        else:  # no product is clickable to be saved as favorite
+            pass
+        self.assertTrue(result)
+
+    def test_save_a_product_as_favorite_immediate_reverse(self):
+        """
+        Test for User Story US07: scenario 2.
+        Alternative process:
+        - click on the button to save the product
+        - immediately reverse clicking to cancel product saving
+        """
+        result = True
+        # start from results page
+        product_id = self.product_c.id
+        start_url = f"{self.live_server_url}/results/{product_id}"
+        self.selenium.get(start_url)
+        # is/are there a/some product(s) clickable to be saved as favorite(s)?
+        clickable = self.selenium.find_elements_by_class_name("saveProduct")
+        clickable_quantity = len(clickable)
+        # on the contrary, is/are there a/some unclickable product(s)?
+        unclickable = self.selenium.find_elements_by_class_name(
+            "unsaveProduct"
+        )
+        unclickable_quantity = len(unclickable)
+        # click process
+        if clickable_quantity > 0:  # at least one product is clickable
+            # randomly choose a favorite
+            index = random.randint(0, clickable_quantity - 1)
+            save_button = clickable[index]
+            # which product will be saved?
+            saved_product_id = save_button.get_attribute("property")
+            # start chained actions        
+            actions = ActionChains(self.selenium)
+            # click on "Sauvegarder" button
+            actions.click(save_button)
+            # wait for the button switch
+            actions.pause(1)
+            # compile chained actions
+            actions.perform()
+            # has the product saved button switched to "unclickable"?
+            switch_button_status = True
+            new_clickable = self.selenium.find_elements_by_class_name(
+                "saveProduct"
+            )
+            new_clickable_quantity = len(new_clickable)
+            if (clickable_quantity == 1):
+                # there should not be any clickable products
+                switch_button_status *= (new_clickable_quantity == 0)
+            else:  # clickable_quantity > 1
+                # there should be one clickable product less
+                stmt = (new_clickable_quantity == clickable_quantity - 1)
+                switch_button_status *= stmt
+                # the product should be unclickable
+                new_unclickable = self.selenium.find_elements_by_class_name(
+                    "unsaveProduct"
+                )
+                found = False
+                # loop on all unclickable products
+                counter = 0
+                while ((not found) and (counter < len(new_unclickable))):
+                    button = new_unclickable[counter]
+                    if button.get_attribute("property") == product_id:
+                        found = True
+                    counter += 1
+                switch_button_status *= found
+                # there should be one unclickable product more
+                new_unclickable_quantity = len(new_unclickable)
+                stmt = (new_unclickable_quantity == unclickable_quantity + 1)
+                switch_button_status *= stmt
+            # update result
+            result *= switch_button_status     
+            # is the product among the saved products? (based on button state)
+            saved = self.selenium.find_elements_by_class_name(
+                "unsaveProduct"
+            )
+            found = False
+            # loop on all saved products
+            counter = 0
+            while ((not found) and (counter < len(saved))):
+                button = saved[counter]
+                if button.get_attribute("property") == product_id:
+                    break
+                counter += 1
+            # start chained actions        
+            actions = ActionChains(self.selenium)
+            # click on the right button
+            actions.click(button)
+            # wait for the button switch
+            actions.pause(1)
+            # compile chained actions
+            actions.perform()            
+            # are we well back to the beginning of the story?
+            unsaved = self.selenium.find_elements_by_class_name("saveProduct")
+            saved = self.selenium.find_elements_by_class_name("unsaveProduct")
+            back_status = (unsaved is clickable and saved is unclickable)
+            # update result
+            result *= back_status
+        else:  # no product is clickable to be saved as favorite
+            pass
+        self.assertTrue(result)
