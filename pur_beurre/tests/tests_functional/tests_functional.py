@@ -648,6 +648,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
                 BASE_DIR, 'drivers/geckodriver'
             )
         )
+        cls.selenium.maximize_window()
         # set home_url
         cls.home_url = f"{cls.live_server_url}/"
 
@@ -792,30 +793,32 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
 
     def test_save_a_product_as_favorite(self):
         """
-        Test for User Story US07: scenario 1.
+        Test for User Story US07: scenario #1.
         Standard process:
-        - click on the button to save the product
-        - check that the button state switches
-        - check on the favorites page that the product is well saved
+        1. click on the button to save the product
+        2. check that the button state switches
+        3. check on the favorites page that the product is well saved
         """
         result = True
         # start from results page
         product_id = self.product_c.id
         start_url = f"{self.live_server_url}/results/{product_id}"
         self.selenium.get(start_url)
-        # is/are there a/some product(s) clickable to be saved as favorite(s)?
-        clickable = self.selenium.find_elements_by_class_name("saveProduct")
-        clickable_quantity = len(clickable)
-        # on the contrary, is/are there a/some unclickable product(s)?
-        unclickable = self.selenium.find_elements_by_class_name(
-            "unsaveProduct"
-        )
-        unclickable_quantity = len(unclickable)
-        # click process
-        if clickable_quantity > 0:  # at least one product is clickable
+        # is/are there a/some product(s) savable as favorite(s)?
+        savable = self.selenium.find_elements_by_class_name("saveProduct")
+        savable_quantity = len(savable)
+        # # on the contrary, is/are there a/some unsavable product(s)?
+        # unsavable = self.selenium.find_elements_by_class_name(
+        #     "unsaveProduct"
+        # )
+        # unsavable_quantity = len(unsavable)
+        if savable_quantity > 0:  # at least one product is savable
+            ##############################################
+            # 1. click on the button to save the product #
+            ##############################################
             # randomly choose a favorite
-            index = random.randint(0, clickable_quantity - 1)
-            save_button = clickable[index]
+            index = random.randint(0, savable_quantity - 1)
+            save_button = savable[index]
             # which product will be saved?
             saved_product_id = save_button.get_attribute("property")
             # start chained actions        
@@ -826,38 +829,17 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             actions.pause(1)
             # compile chained actions
             actions.perform()
-            # has the product saved button switched to "unclickable"?
-            switch_button_status = True
-            new_clickable = self.selenium.find_elements_by_class_name(
-                "saveProduct"
-            )
-            new_clickable_quantity = len(new_clickable)
-            if (clickable_quantity == 1):
-                # there should not be any clickable products
-                switch_button_status *= (new_clickable_quantity == 0)
-            else:  # clickable_quantity > 1
-                # there should be one clickable product less
-                stmt = (new_clickable_quantity == clickable_quantity - 1)
-                switch_button_status *= stmt
-                # the product should be unclickable
-                new_unclickable = self.selenium.find_elements_by_class_name(
-                    "unsaveProduct"
-                )
-                found = False
-                # loop on all unclickable products
-                counter = 0
-                while ((not found) and (counter < len(new_unclickable))):
-                    button = new_unclickable[counter]
-                    if button.get_attribute("property") == product_id:
-                        found = True
-                    counter += 1
-                switch_button_status *= found
-                # there should be one unclickable product more
-                new_unclickable_quantity = len(new_unclickable)
-                stmt = (new_unclickable_quantity == unclickable_quantity + 1)
-                switch_button_status *= stmt
+            ###########################################
+            # 2. check that the button state switches #
+            ###########################################
+            # has the product saved button switched to "unsavable"?
+            button = self.selenium.find_element_by_id(saved_product_id)
+            switch_button_status = (button.text == "Retirer des favoris")
             # update result
             result *= switch_button_status
+            #################################################################
+            # 3. check on the favorites page that the product is well saved #
+            #################################################################
             # switch to favorites page
             favorites_icon = self.selenium.find_element_by_id("favorites-icon")
             favorites_icon.click()
@@ -879,41 +861,46 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             counter = 0
             while ((not found) and (counter < len(saved))):
                 button = saved[counter]
-                if button.get_attribute("property") == product_id:
+                if (button.get_attribute("property") == saved_product_id):
                     found = True
                 counter += 1
             saved_product_status = found
             # update result
             result *= saved_product_status
-        else:  # no product is clickable to be saved as favorite
+        else:  # no product is savable as favorite
             pass
         self.assertTrue(result)
 
     def test_save_a_product_as_favorite_immediate_reverse(self):
         """
-        Test for User Story US07: scenario 2.
+        Test for User Story US07: scenario #2.
         Alternative process:
-        - click on the button to save the product
-        - immediately reverse clicking to cancel product saving
+        1. click on the button to save the product
+        2. check that the button state switches
+        3. reverse clicking to cancel product saving
+        4. check that the button state switches back to original
+        5. check on the favorites page that the product is NOT saved
         """
         result = True
         # start from results page
         product_id = self.product_c.id
         start_url = f"{self.live_server_url}/results/{product_id}"
         self.selenium.get(start_url)
-        # is/are there a/some product(s) clickable to be saved as favorite(s)?
-        clickable = self.selenium.find_elements_by_class_name("saveProduct")
-        clickable_quantity = len(clickable)
-        # on the contrary, is/are there a/some unclickable product(s)?
-        unclickable = self.selenium.find_elements_by_class_name(
+        # is/are there a/some product(s) savable as favorite(s)?
+        savable = self.selenium.find_elements_by_class_name("saveProduct")
+        savable_quantity = len(savable)
+        # on the contrary, is/are there a/some unsavable product(s)?
+        unsavable = self.selenium.find_elements_by_class_name(
             "unsaveProduct"
         )
-        unclickable_quantity = len(unclickable)
         # click process
-        if clickable_quantity > 0:  # at least one product is clickable
+        if savable_quantity > 0:  # at least one product is savable
+            ##############################################
+            # 1. click on the button to save the product #
+            ##############################################
             # randomly choose a favorite
-            index = random.randint(0, clickable_quantity - 1)
-            save_button = clickable[index]
+            index = random.randint(0, savable_quantity - 1)
+            save_button = savable[index]
             # which product will be saved?
             saved_product_id = save_button.get_attribute("property")
             # start chained actions        
@@ -924,65 +911,71 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             actions.pause(1)
             # compile chained actions
             actions.perform()
-            # has the product saved button switched to "unclickable"?
-            switch_button_status = True
-            new_clickable = self.selenium.find_elements_by_class_name(
-                "saveProduct"
-            )
-            new_clickable_quantity = len(new_clickable)
-            if (clickable_quantity == 1):
-                # there should not be any clickable products
-                switch_button_status *= (new_clickable_quantity == 0)
-            else:  # clickable_quantity > 1
-                # there should be one clickable product less
-                stmt = (new_clickable_quantity == clickable_quantity - 1)
-                switch_button_status *= stmt
-                # the product should be unclickable
-                new_unclickable = self.selenium.find_elements_by_class_name(
-                    "unsaveProduct"
-                )
-                found = False
-                # loop on all unclickable products
-                counter = 0
-                while ((not found) and (counter < len(new_unclickable))):
-                    button = new_unclickable[counter]
-                    if button.get_attribute("property") == product_id:
-                        found = True
-                    counter += 1
-                switch_button_status *= found
-                # there should be one unclickable product more
-                new_unclickable_quantity = len(new_unclickable)
-                stmt = (new_unclickable_quantity == unclickable_quantity + 1)
-                switch_button_status *= stmt
+            ###########################################
+            # 2. check that the button state switches #
+            ###########################################
+            # has the product saved button switched to "unsavable"?
+            button = self.selenium.find_element_by_id(saved_product_id)
+            switch_button_status = (button.text == "Retirer des favoris")
             # update result
-            result *= switch_button_status     
-            # is the product among the saved products? (based on button state)
+            result *= switch_button_status
+            ################################################
+            # 3. reverse clicking to cancel product saving #
+            ################################################
+            # start chained actions        
+            actions = ActionChains(self.selenium)
+            # click on "Retirer des favoris" button (updated)
+            updated_button = self.selenium.find_element_by_id(saved_product_id)
+            actions.click(updated_button)
+            # wait for the button switch
+            actions.pause(1)
+            # compile chained actions
+            actions.perform()
+            ############################################################
+            # 4. check that the button state switches back to original #
+            ############################################################
+            # has the product unsaved button switched to "savable"?
+            reverse_button = self.selenium.find_element_by_id(saved_product_id)
+            switch_button_status = (reverse_button.text == "Sauvegarder")
+            # update result
+            result *= switch_button_status
+            # double check: are we well back to the beginning of the story?
+            unsaved = self.selenium.find_elements_by_class_name("saveProduct")
+            saved = self.selenium.find_elements_by_class_name("unsaveProduct")
+            back_status = ((unsaved is savable) and (saved is unsavable))
+            # update result
+            result *= back_status
+            ################################################################
+            # 5. check on the favorites page that the product is NOT saved #
+            ################################################################
+            # switch to favorites page
+            favorites_icon = self.selenium.find_element_by_id("favorites-icon")
+            favorites_icon.click()
+            # wait for page loading
+            WebDriverWait(
+                self.selenium,
+                timeout=2
+            ).until(url_changes(start_url))
+            expected_url = f"{self.live_server_url}/favorites/"
+            redirect_status = (expected_url == self.selenium.current_url)
+            # update result
+            result *= redirect_status
+            found = False
+            # is the saved product among the favorites?
             saved = self.selenium.find_elements_by_class_name(
                 "unsaveProduct"
             )
-            found = False
             # loop on all saved products
             counter = 0
             while ((not found) and (counter < len(saved))):
                 button = saved[counter]
-                if button.get_attribute("property") == product_id:
-                    break
+                if (button.get_attribute("property") == saved_product_id):
+                    found = True
                 counter += 1
-            # start chained actions        
-            actions = ActionChains(self.selenium)
-            # click on the right button
-            actions.click(button)
-            # wait for the button switch
-            actions.pause(1)
-            # compile chained actions
-            actions.perform()            
-            # are we well back to the beginning of the story?
-            unsaved = self.selenium.find_elements_by_class_name("saveProduct")
-            saved = self.selenium.find_elements_by_class_name("unsaveProduct")
-            back_status = (unsaved is clickable and saved is unclickable)
+            saved_product_status = not found
             # update result
-            result *= back_status
-        else:  # no product is clickable to be saved as favorite
+            result *= saved_product_status
+        else:  # no product is savable as favorite
             pass
         self.assertTrue(result)
 
@@ -1004,6 +997,225 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         expected_url = f"{self.live_server_url}/favorites/"
         self.assertEqual(self.selenium.current_url, expected_url)
 
+    def test_unsave_product_from_favorites(self):
+        """
+        Test for User Story US09: scenario #1.
+        Standard process:
+        1. click on the button to unsave the product
+        2. check that the button state switches
+        3. refresh the page to check that the product "disappeared"
+        """
+        result = True
+        # start from favorites page
+        start_url = f"{self.live_server_url}/favorites/"
+        self.selenium.get(start_url)
+        # is/are there a/some product(s) registered as favorites?
+        saved = self.selenium.find_elements_by_class_name("unsaveProduct")
+        saved_quantity = len(saved)
+        # click process
+        if saved_quantity > 0:  # at least one favorite is registered
+            ################################################
+            # 1. click on the button to unsave the product #
+            ################################################
+            # scroll down
+            self.selenium.execute_script(
+                "window.scrollTo(0, document.body.scrollHeight);"
+            )
+            # wait for scrolling
+            legal_link = self.selenium.find_element_by_id("legal-footer")
+            WebDriverWait(
+                self.selenium,
+                timeout=2
+            ).until(visibility_of(legal_link))
+            # randomly choose a favorite
+            index = random.randint(0, saved_quantity - 1)
+            unsave_button = saved[index]
+            # which product will be unsaved?
+            saved_product_id = unsave_button.get_attribute("property")
+            # start chained actions
+            actions = ActionChains(self.selenium)
+            # click on "Retirer des favoris" button
+            actions.click(unsave_button)
+            # wait for the button switch
+            actions.pause(1)
+            # compile chained actions
+            actions.perform()
+            ###########################################
+            # 2. check that the button state switches #
+            ###########################################
+            # has the "unsavable" button switched to "savable"?
+            button = self.selenium.find_element_by_id(saved_product_id)
+            switch_button_status = (button.text == "Sauvegarder")
+            # update result
+            result *= switch_button_status
+            ###############################################################
+            # 3. refresh the page to check that the product "disappeared" #
+            ###############################################################
+            # start chained actions
+            actions = ActionChains(self.selenium)
+            # click on a "refresh" button
+            refresh_button = self.selenium.find_elements_by_class_name(
+                "btn-primary"
+            )[1]
+            actions.click(refresh_button)
+            # wait for page reloading
+            actions.pause(2)
+            # compile chained actions
+            actions.perform()
+            # check that we are still on the favorites page
+            expected_url = f"{self.live_server_url}/favorites/"
+            page_status = (expected_url == self.selenium.current_url)
+            # update result
+            result *= page_status
+            found = False
+            # is the saved product among the favorites?
+            saved = self.selenium.find_elements_by_class_name(
+                "unsaveProduct"
+            )
+            # loop on all saved products
+            counter = 0
+            while ((not found) and (counter < len(saved))):
+                button = saved[counter]
+                if (button.get_attribute("property") == saved_product_id):
+                    found = True
+                counter += 1
+            saved_product_status = not found
+            # update result
+            result *= saved_product_status
+        else:  # no product is savable as favorite
+            pass
+        self.assertTrue(result)
+
+    def test_unsave_product_from_favorites_immediate_reverse(self):
+        """
+        Test for User Story US09: scenario #2.
+        Alternative process:
+        1. click on the button to unsave the product
+        2. check that the button state switches
+        3. reverse clicking to cancel product unsaving (keep saved)
+        4. check that the button state switches back to original
+        5. refresh the page to check that the product is still here
+        """
+        result = True
+        # start from favorites page
+        start_url = f"{self.live_server_url}/favorites/"
+        self.selenium.get(start_url)
+        # is/are there a/some product(s) registered as favorites?
+        saved = self.selenium.find_elements_by_class_name("unsaveProduct")
+        saved_quantity = len(saved)
+        # click process
+        if saved_quantity > 0:  # at least one favorite is registered
+            ################################################
+            # 1. click on the button to unsave the product #
+            ################################################
+            # scroll down
+            self.selenium.execute_script(
+                "window.scrollTo(0, document.body.scrollHeight);"
+            )
+            # wait for scrolling
+            legal_link = self.selenium.find_element_by_id("legal-footer")
+            WebDriverWait(
+                self.selenium,
+                timeout=2
+            ).until(visibility_of(legal_link))
+            # randomly choose a favorite
+            index = random.randint(0, saved_quantity - 1)
+            unsave_button = saved[index]
+            # which product will be unsaved?
+            saved_product_id = unsave_button.get_attribute("property")
+            # start chained actions
+            actions = ActionChains(self.selenium)
+            # click on "Retirer des favoris" button
+            actions.click(unsave_button)
+            # wait for the button switch
+            actions.pause(1)
+            # compile chained actions
+            actions.perform()
+            ###########################################
+            # 2. check that the button state switches #
+            ###########################################
+            # has the "unsavable" button switched to "savable"?
+            button = self.selenium.find_element_by_id(saved_product_id)
+            switch_button_status = (button.text == "Sauvegarder")
+            # update result
+            result *= switch_button_status
+            ###############################################################
+            # 3. reverse clicking to cancel product unsaving (keep saved) #
+            ###############################################################
+            # start chained actions        
+            actions = ActionChains(self.selenium)
+            # click on "Retirer des favoris" button (updated)
+            updated_button = self.selenium.find_element_by_id(saved_product_id)
+            actions.click(updated_button)
+            # wait for the button switch
+            actions.pause(1)
+            # compile chained actions
+            actions.perform()
+            ############################################################
+            # 4. check that the button state switches back to original #
+            ############################################################
+            # has the "savable" button switched back to "unsavable"?
+            reverse_button = self.selenium.find_element_by_id(saved_product_id)
+            switch_button_status = (
+                reverse_button.text == "Retirer des favoris"
+            )
+            # update result
+            result *= switch_button_status
+            ###############################################################
+            # 5. refresh the page to check that the product is still here #
+            ###############################################################
+            # start chained actions
+            actions = ActionChains(self.selenium)
+            # click on a "refresh" button
+            refresh_button = self.selenium.find_elements_by_class_name(
+                "btn-primary"
+            )[1]
+            actions.click(refresh_button)
+            # wait for page reloading
+            actions.pause(2)
+            # compile chained actions
+            actions.perform()
+            # check that we are still on the favorites page
+            expected_url = f"{self.live_server_url}/favorites/"
+            page_status = (expected_url == self.selenium.current_url)
+            # update result
+            result *= page_status
+            found = False
+            # is the saved product among the favorites?
+            saved = self.selenium.find_elements_by_class_name(
+                "unsaveProduct"
+            )
+            # loop on all saved products
+            counter = 0
+            while ((not found) and (counter < len(saved))):
+                button = saved[counter]
+                if (button.get_attribute("property") == saved_product_id):
+                    found = True
+                counter += 1
+            saved_product_status = found
+            # update result
+            result *= saved_product_status
+        else:  # no product is savable as favorite
+            pass
+        self.assertTrue(result)
+
+    def test_go_to_account_page(self):
+        """
+        Test for User Story US10: unique scenario.
+        """
+        # start from index (home) page
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
+        # click on the account icon
+        account_icon = self.selenium.find_element_by_id("account-icon")
+        account_icon.click()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(start_url))
+        expected_url = f"{self.live_server_url}/auth/account/"
+        self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_go_to_legal_page(self):
         """
