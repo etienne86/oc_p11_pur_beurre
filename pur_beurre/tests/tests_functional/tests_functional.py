@@ -985,3 +985,49 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         else:  # no product is clickable to be saved as favorite
             pass
         self.assertTrue(result)
+
+    def test_go_to_favorites_page(self):
+        """
+        Test for User Story US08: unique scenario.
+        """
+        # start from index (home) page
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
+        # click on the favorites icon
+        favorites_icon = self.selenium.find_element_by_id("favorites-icon")
+        favorites_icon.click()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(start_url))
+        expected_url = f"{self.live_server_url}/favorites/"
+        self.assertEqual(self.selenium.current_url, expected_url)
+
+
+    def test_go_to_legal_page(self):
+        """
+        Test for User Story US11: unique scenario.
+        """
+        # start from index (home) page
+        start_url = f"{self.live_server_url}/"
+        self.selenium.get(start_url)
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        legal_link = self.selenium.find_element_by_id("legal-footer")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(legal_link))
+        # click on the "Mentions légales" link
+        legal_link.click()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(start_url))
+        expected_url = f"{self.live_server_url}/legal/"
+        self.assertEqual(self.selenium.current_url, expected_url)
