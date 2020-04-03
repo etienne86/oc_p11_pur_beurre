@@ -52,9 +52,9 @@ def main():
                         prod.product_name = item["product_name"]
                     except KeyError:
                         prod.product_name = "[Produit sans nom]"
-                    prod.nutriscore_grade = item["nutrition_grade_fr"]
+                    prod.nutriscore_grade = item["nutriscore_grade"]
                     prod.nutriscore_score = \
-                        int(item["nutriments"]["nutrition-score-fr_100g"])
+                        int(item["nutriscore_score"])
                     try:
                         prod.url = item["url"]
                     except KeyError:
