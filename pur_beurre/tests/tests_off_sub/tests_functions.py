@@ -63,6 +63,6 @@ class GetAllProductsTestCase(TestCase):
         # count the number of products in the returned dict
         context_value = fct.get_all_products()['all_products']  # type is str
         # for one product, there are two double quotes
-        double_context_counter = context_value.count('\"')
+        double_quotes_counter = context_value.count('\"')
         # match
-        self.assertEqual(products_counter * 2, double_context_counter)
+        self.assertEqual(products_counter * 2, double_quotes_counter)
