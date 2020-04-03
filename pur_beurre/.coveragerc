@@ -1,0 +1,19 @@
+# .coveragerc to control coverage.py
+[run]
+command_line = "manage.py" test
+source = . 
+
+[report]
+# Regexes for lines to exclude from consideration
+omit =
+    tests*
+    *migrations*
+    runtests.py
+    *wsgi*
+    *asgi*
+    *site-packages*
+
+ignore_errors = True
+
+[html]
+directory = coverage_html_report
