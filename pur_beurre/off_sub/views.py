@@ -70,3 +70,8 @@ def results(request, product_id):
         'off_sub/results.html',
         context,
     )
+
+
+@login_required
+def results_login(request, product_id):
+    return results(request, product_id)

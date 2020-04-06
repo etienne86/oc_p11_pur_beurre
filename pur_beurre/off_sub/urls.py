@@ -10,6 +10,8 @@ urlpatterns = [
     path('food/<product_id>', views.food, name="food"),
     path('legal/', views.legal, name="legal"),
     path('results/<product_id>', views.results, name="results"),
+    path('results_/<product_id>', views.results_login, name="results_login"),
+
     path(
         'ajax_find_product',
         ajax_views.ajax_find_product,

@@ -3,7 +3,7 @@
 
 
 {% block masthead_style %}
-  background: #343a40;
+  background: #345a61;
 {% endblock masthead_style %}
 
 {% block masthead_picture %}
@@ -40,8 +40,8 @@
   {% if not user_authenticated %}
   <div class="text-center py-3">
     <p class="h5">Connectez-vous pour pouvoir enregistrer des produits !</p>
-    <form action="{% url 'auth:sign' %}">
-      <button class="btn btn-outline-primary">Se connecter</button>
+    <form action="{% url 'off_sub:results_login' initial_product.id %}">
+      <button id="btn-login" class="btn btn-outline-primary">Se connecter</button>
     </form>
   </div>
   {% endif %}

@@ -52,18 +52,11 @@ def sign(request):
             email = authentication_form.cleaned_data['email']
             password = authentication_form.cleaned_data['password']
         if user_creation_form.is_valid() or authentication_form.is_valid():
-            # try to log in the user
-            try:
-                with transaction.atomic():
-                    account = authenticate(
-                        email=email,
-                        password=password
-                    )
-                    if account is not None:
-                        # log in the user
-                        login(request, account)
-            except IntegrityError:
-                pass
+            # log in the user
+            with transaction.atomic():
+                account = authenticate(email=email, password=password)
+                if account is not None:
+                    login(request, account)
             # redirect...
             if "?next=" in request.get_full_path():
                 # ... either to the requested page
