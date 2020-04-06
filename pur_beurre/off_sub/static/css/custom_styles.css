@@ -1,0 +1,95 @@
+html, body
+{
+  height: 100% !important;
+}
+
+.corner-top-right
+{
+  margin-bottom: -100%;
+  margin-left: -100%;
+}
+
+.z-index-0
+{
+  z-index: 0;
+}
+
+.z-index-1
+{
+  z-index: 1;
+}
+
+.card
+{
+  border-style: none;
+}
+
+.img-s-square
+{
+  width: 100%;
+  overflow: hidden;
+  object-fit: cover;
+  height: 316.667px; /* default height for xl screens*/
+}
+
+@media all and (max-width: 1199px) /*for l screens*/
+{
+  .img-s-square
+  {
+    height: 266.667px;
+  }
+}
+
+@media all and (max-width: 991px) /*for m screens*/
+{
+  .img-s-square
+  {
+    height: 200px;
+  }
+}
+
+@media all and (max-width: 767px) /*for s screens*/
+{
+  .img-s-square
+  {
+    height: 150px;
+  }
+}
+
+@media all and (max-width: 575px) /*for xs screens*/
+{
+  .img-s-square
+  {
+    height: auto;
+  }
+}
+
+.img-nutri
+{
+  width: 100%;
+  object-fit: cover;
+}
+
+.ui-autocomplete
+{
+    max-height: 150px;
+    max-width: 200px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
+
+.text-transparent
+{
+  opacity: 0;
+}
+
+.border-solid
+{
+  border-style: solid;
+}
+
+.bg-moules
+{
+  background: #345a61;
+}
