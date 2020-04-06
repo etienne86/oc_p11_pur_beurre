@@ -3,7 +3,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
-from pur_beurre.off_sub.models import Product
+from off_sub.models import Product
 
 # The classes MyUserManager and MyUser are issued from django documentation:
 # https://docs.djangoproject.com/en/3.0/topics/auth/customizing/#a-full-example
