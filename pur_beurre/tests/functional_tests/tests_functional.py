@@ -511,13 +511,13 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         actions.send_keys("Toto")
         email_field = self.selenium.find_elements_by_id("id_email")[1]
         actions.click(email_field)
-        actions.send_keys("toto@mail.com")  # already used email
+        actions.send_keys("un_autre_toto@mail.com")
         password1_field = self.selenium.find_element_by_id("id_password1")
         actions.click(password1_field)
         actions.send_keys("Password123")
         password2_field = self.selenium.find_element_by_id("id_password2")
         actions.click(password2_field)
-        actions.send_keys("WrongPassword!")
+        actions.send_keys("WrongPassword!")  # wrong password
         # click on the "Créer un compte" button
         actions.click(submit_button)
         # wait for seeing the error message
