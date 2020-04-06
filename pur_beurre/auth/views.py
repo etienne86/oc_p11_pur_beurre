@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserCreationForm, AuthenticationForm
-from off_sub import functions as off_sub_fct
+from pur_beurre.off_sub import functions as off_sub_fct
 
 
 @login_required

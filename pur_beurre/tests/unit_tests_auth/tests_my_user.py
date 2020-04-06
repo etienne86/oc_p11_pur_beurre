@@ -4,7 +4,7 @@ This module contains the unit tests related to the 'MyUserManager' class.
 
 from django.test import TestCase
 
-from auth.models import MyUser
+from pur_beurre.auth.models import MyUser
 
 
 class MyUserTestCase(TestCase):

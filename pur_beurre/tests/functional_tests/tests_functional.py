@@ -18,9 +18,9 @@ from selenium.webdriver.support.expected_conditions import (
 )
 from seleniumlogin import force_login
 
-from auth.models import MyUser
-from off_sub.models import Product, Category
-from pur_beurre.settings import BASE_DIR
+from pur_beurre.auth.models import MyUser
+from pur_beurre.off_sub.models import Product, Category
+from pur_beurre.pur_beurre.settings import BASE_DIR
 
 
 class TestWithAnonymousUser(StaticLiveServerTestCase):

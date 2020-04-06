@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .models import Product
-from off_sub import functions as fct
+from pur_beurre.off_sub import functions as fct
 
 
 @login_required

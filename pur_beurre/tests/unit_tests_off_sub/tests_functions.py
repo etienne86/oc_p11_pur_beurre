@@ -4,8 +4,8 @@ This module contains the unit tests related to the functions (app 'off_sub').
 
 from django.test import TestCase
 
-from off_sub import functions as fct
-from off_sub.models import Product
+from pur_beurre.off_sub import functions as fct
+from pur_beurre.off_sub.models import Product
 
 
 class GetAllProductsTestCase(TestCase):

@@ -8,7 +8,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import capfirst
 
-from .models import MyUser
+from pur_beurre.auth.models import MyUser
 
 
 # this class is widely inspired from django.contrib.auth.forms:
