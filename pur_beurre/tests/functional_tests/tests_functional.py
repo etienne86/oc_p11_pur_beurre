@@ -8,7 +8,6 @@ import os
 import random
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.contrib.auth.models import AnonymousUser
 import selenium
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.common.action_chains import ActionChains
@@ -342,7 +341,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         start_url = f"{self.live_server_url}/results/{product_id}"
         self.selenium.get(start_url)
         # click on product name
-        product_subtitle = self.selenium.find_element_by_id("masthead_subtitle")
+        product_subtitle = self.selenium.find_element_by_id(
+            "masthead_subtitle"
+        )
         product_subtitle.click()
         # wait for page loading
         WebDriverWait(
@@ -410,13 +411,13 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # user authenticated: True or False?
         authenticated = False
         try:
-            logout_icon = self.selenium.find_element_by_id("logout-icon")
+            self.selenium.find_element_by_id("logout-icon")
         except selenium.common.exceptions.NoSuchElementException:
             pass
         else:
             authenticated = True
         self.assertTrue(home_sweet_home and authenticated)
- 
+
     def test_create_user_account_failure_already_used_email(self):
         """
         Test for User Story US04: scenario #2.
@@ -453,7 +454,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         actions.send_keys("Toto")
         email_field = self.selenium.find_elements_by_id("id_email")[1]
         actions.click(email_field)
-        actions.send_keys("toto@mail.com") #  already used email
+        actions.send_keys("toto@mail.com")  # already used email
         password1_field = self.selenium.find_element_by_id("id_password1")
         actions.click(password1_field)
         actions.send_keys("Password123")
@@ -469,11 +470,11 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # get an error message: True or False?
         error_message = self.selenium.find_element_by_class_name("text-danger")
         message = "Un compte est déjà créé avec ce courriel."
-        expected_error = (error_message.text == message) 
+        expected_error = (error_message.text == message)
         # stay on current page: True or False?
         current_page = (self.selenium.current_url == f"{start_url}auth/sign/")
-        self.assertTrue(error_message and current_page)
- 
+        self.assertTrue(expected_error and current_page)
+
     def test_create_user_account_failure_two_different_passwords(self):
         """
         Test for User Story US04: scenario #3.
@@ -510,7 +511,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         actions.send_keys("Toto")
         email_field = self.selenium.find_elements_by_id("id_email")[1]
         actions.click(email_field)
-        actions.send_keys("toto@mail.com") #  already used email
+        actions.send_keys("toto@mail.com")  # already used email
         password1_field = self.selenium.find_element_by_id("id_password1")
         actions.click(password1_field)
         actions.send_keys("Password123")
@@ -526,10 +527,10 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # get an error message: True or False?
         error_message = self.selenium.find_element_by_class_name("text-danger")
         message = "Les deux mots de passe ne correspondent pas"
-        expected_error = (error_message.text == message) 
+        expected_error = (error_message.text == message)
         # stay on current page: True or False?
         current_page = (self.selenium.current_url == f"{start_url}auth/sign/")
-        self.assertTrue(error_message and current_page)
+        self.assertTrue(expected_error and current_page)
 
     def test_login_success(self):
         """
@@ -582,7 +583,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # user authenticated: True or False?
         authenticated = False
         try:
-            logout_icon = self.selenium.find_element_by_id("logout-icon")
+            self.selenium.find_element_by_id("logout-icon")
         except selenium.common.exceptions.NoSuchElementException:
             pass
         else:
@@ -635,10 +636,10 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # get an error message: True or False?
         error_message = self.selenium.find_element_by_class_name("text-danger")
         message = "Merci de saisir un email et un mot de passe valides SVP."
-        expected_error = (error_message.text == message) 
+        expected_error = (error_message.text == message)
         # stay on current page: True or False?
         current_page = (self.selenium.current_url == f"{start_url}auth/sign/")
-        self.assertTrue(error_message and current_page)
+        self.assertTrue(expected_error and current_page)
 
     def test_login_failure_wrong_password(self):
         """
@@ -690,10 +691,10 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # get an error message: True or False?
         error_message = self.selenium.find_element_by_class_name("text-danger")
         message = "Merci de saisir un email et un mot de passe valides SVP."
-        expected_error = (error_message.text == message) 
+        expected_error = (error_message.text == message)
         # stay on current page: True or False?
         current_page = (self.selenium.current_url == f"{start_url}auth/sign/")
-        self.assertTrue(error_message and current_page)
+        self.assertTrue(expected_error and current_page)
 
     def test_sign_from_results_page_without_losing_results(self):
         """
@@ -748,13 +749,12 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # user authenticated: True or False?
         authenticated = False
         try:
-            logout_icon = self.selenium.find_element_by_id("logout-icon")
+            self.selenium.find_element_by_id("logout-icon")
         except selenium.common.exceptions.NoSuchElementException:
             pass
         else:
             authenticated = True
         self.assertTrue(redirection_to_results and authenticated)
-
 
 
 class TestWithAuthenticatedUser(StaticLiveServerTestCase):
@@ -784,7 +784,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
     def setUp(self):
         super().setUp()
         # a test user
-        self.user =  MyUser.objects.create_user(
+        self.user = MyUser.objects.create_user(
             email="toto@mail.com",
             first_name="Toto",
             password="TopSecret"
@@ -949,7 +949,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             save_button = savable[index]
             # which product will be saved?
             saved_product_id = save_button.get_attribute("property")
-            # start chained actions        
+            # start chained actions
             actions = ActionChains(self.selenium)
             # click on "Sauvegarder" button
             actions.click(save_button)
@@ -1031,7 +1031,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             save_button = savable[index]
             # which product will be saved?
             saved_product_id = save_button.get_attribute("property")
-            # start chained actions        
+            # start chained actions
             actions = ActionChains(self.selenium)
             # click on "Sauvegarder" button
             actions.click(save_button)
@@ -1050,7 +1050,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             ################################################
             # 3. reverse clicking to cancel product saving #
             ################################################
-            # start chained actions        
+            # start chained actions
             actions = ActionChains(self.selenium)
             # click on "Retirer des favoris" button (updated)
             updated_button = self.selenium.find_element_by_id(saved_product_id)
@@ -1270,7 +1270,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             ###############################################################
             # 3. reverse clicking to cancel product unsaving (keep saved) #
             ###############################################################
-            # start chained actions        
+            # start chained actions
             actions = ActionChains(self.selenium)
             # click on "Retirer des favoris" button (updated)
             updated_button = self.selenium.find_element_by_id(saved_product_id)

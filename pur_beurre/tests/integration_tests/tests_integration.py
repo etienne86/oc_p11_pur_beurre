@@ -8,15 +8,11 @@ import os
 
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.contrib.auth.models import AnonymousUser
-import selenium
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.expected_conditions import (
-    url_changes, url_to_be, visibility_of
-)
+from selenium.webdriver.support.expected_conditions import url_changes
 from seleniumlogin import force_login
 
 from auth.models import MyUser
@@ -27,7 +23,7 @@ from pur_beurre.settings import BASE_DIR
 class UnitTestCase(TestCase):
     """
     This class contains unit tests.
-    """   
+    """
 
     def setUp(self):
         # initialize two users
@@ -113,7 +109,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
     def setUp(self):
         super().setUp()
         # initialize a user
-        self.user =  MyUser.objects.create_user(
+        self.user = MyUser.objects.create_user(
             email="tic@mail.com",
             first_name="Tic",
             password="Hazelnut"
@@ -292,7 +288,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
     def setUp(self):
         super().setUp()
         # initialize a user
-        self.user =  MyUser.objects.create_user(
+        self.user = MyUser.objects.create_user(
             email="tic@mail.com",
             first_name="Tic",
             password="Hazelnut"

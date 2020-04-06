@@ -1,22 +1,22 @@
 """
-This module contains the unit tests related to the db_init module (app 'off_sub').
+This module contains the unit tests related to
+the db_init custom command (app 'off_sub').
 """
 
 from django.test import TestCase
 from unittest.mock import patch
 
 from django.core.management import call_command
-import requests
 
 from off_sub.models import Product, Category, Store
 
 
 class MockCategory:
-    
+
     CATEGORIES_LIST = ["desserts"]
 
     objects = Category.objects
-    
+
     def __init__(self, name):
         pass
 
@@ -32,7 +32,7 @@ class MockCategory:
 
 
 class MockRequestsGet:
-    
+
     OFF_API_RESULT = {
         "count": 123,
         "products": [
@@ -66,7 +66,7 @@ class MockRequestsGet:
             }
         ]
     }
-    
+
     def __init__(self, url, params=None):
         self.status_code = 200
 
@@ -100,7 +100,7 @@ class DatabaseInitialization(TestCase):
 
     def test_get_code_product_a_and_product_b(self):
         self.assertTrue(
-            self.prod_a.code == '1234567890123' and \
+            self.prod_a.code == '1234567890123' and
             self.prod_b.code == '3210987654321'
         )
 
@@ -109,16 +109,16 @@ class DatabaseInitialization(TestCase):
 
     def test_get_product_name_product_b(self):
         self.assertEqual(self.prod_b.product_name, "[Produit sans nom]")
-    
+
     def test_nutriscore_grade_product_a_and_product_b(self):
         self.assertTrue(
-            self.prod_a.nutriscore_grade == "a" and \
+            self.prod_a.nutriscore_grade == "a" and
             self.prod_b.nutriscore_grade == "b"
         )
 
     def test_nutriscore_score_product_a_and_product_b(self):
         self.assertTrue(
-            self.prod_a.nutriscore_score == -20 and \
+            self.prod_a.nutriscore_score == -20 and
             self.prod_b.nutriscore_score == 1
         )
 
@@ -173,8 +173,8 @@ class DatabaseInitialization(TestCase):
         prod_a_store_b_bool = (self.store_b in self.prod_a.stores.all())
         prod_a_store_c_bool = (self.store_c in self.prod_a.stores.all())
         products_stores_bool = (
-            prod_a_store_a_bool and \
-            prod_a_store_b_bool and \
+            prod_a_store_a_bool and
+            prod_a_store_b_bool and
             prod_a_store_c_bool
         )
         self.assertTrue(products_stores_bool)

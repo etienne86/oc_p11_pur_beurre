@@ -7,7 +7,7 @@ Pre-requisite: the database 'pur_beurre_db' has to be created.
 import re
 
 import requests
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from off_sub.models import Category, Product, Store
 
