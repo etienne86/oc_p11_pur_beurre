@@ -5,7 +5,9 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pur_beurre.settings')
+    os.environ.setdefault(
+        'DJANGO_SETTINGS_MODULE', 'pur_beurre.pur_beurre.settings'
+    )
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
