@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 from django.urls import reverse_lazy
-# import django_heroku
+
+if os.environ.get('ENV') == 'PRODUCTION':
+    import django_heroku
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -155,5 +157,6 @@ if os.environ.get('ENV') == 'PRODUCTION':
     # https://docs.djangoproject.com/en/3.0/howto/static-files/
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# # Activate Django-Heroku
-# django_heroku.settings(locals())
+if os.environ.get('ENV') == 'PRODUCTION':
+    # Activate Django-Heroku
+    django_heroku.settings(locals())
