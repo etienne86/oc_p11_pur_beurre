@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 from django.urls import reverse_lazy
-import django_heroku
+# import django_heroku
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -33,7 +33,10 @@ else:
     DEBUG = True
 
 
-ALLOWED_HOSTS = ['purbeurre-etienne86.herokuapp.com']
+if os.environ.get('ENV') == 'PRODUCTION':
+    ALLOWED_HOSTS = ['purbeurre-etienne86.herokuapp.com']
+else:
+    ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -152,5 +155,5 @@ if os.environ.get('ENV') == 'PRODUCTION':
     # https://docs.djangoproject.com/en/3.0/howto/static-files/
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Activate Django-Heroku
-django_heroku.settings(locals())
+# # Activate Django-Heroku
+# django_heroku.settings(locals())
