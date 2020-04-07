@@ -6,9 +6,9 @@ from django.urls import reverse
 from django.test import RequestFactory, TestCase
 from django.contrib.auth.models import AnonymousUser
 
-from pur_beurre.auth.models import MyUser
-from pur_beurre.off_sub import views
-from pur_beurre.off_sub.models import Product
+from auth.models import MyUser
+from off_sub import views
+from off_sub.models import Product
 
 
 class FavoritesPageTestCase(TestCase):

@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
-from pur_beurre.off_sub.models import Product
+from off_sub.models import Product
 
 
 def ajax_find_product(request):

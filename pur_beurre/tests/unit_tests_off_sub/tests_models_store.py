@@ -4,7 +4,7 @@ This module contains the unit tests related to the 'Store' class.
 
 from django.test import TestCase
 
-from pur_beurre.off_sub.models import Store
+from off_sub.models import Store
 
 
 class StoreTestCase(TestCase):
