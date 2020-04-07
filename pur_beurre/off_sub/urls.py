@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import ajax_views, views
+from pur_beurre.off_sub import ajax_views, views
 
 
 app_name = 'off_sub'

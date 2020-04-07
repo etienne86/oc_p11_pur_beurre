@@ -4,7 +4,7 @@ This module defines some functions called in the apps.
 
 import json
 
-from .models import Product
+from pur_beurre.off_sub.models import Product
 
 
 def get_all_products():
