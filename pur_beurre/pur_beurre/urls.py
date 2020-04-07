@@ -20,6 +20,6 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('orgadmin/', admin.site.urls),
-    path('', include('pur_beurre.off_sub.urls')),
-    path('auth/', include('pur_beurre.auth.urls')),
+    path('', include('off_sub.urls')),
+    path('auth/', include('auth.urls')),
 ]
