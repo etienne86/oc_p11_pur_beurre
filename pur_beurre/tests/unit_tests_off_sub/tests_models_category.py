@@ -4,7 +4,7 @@ This module contains the unit tests related to the 'Category' class.
 
 from django.test import TestCase
 
-from off_sub.models import Category
+from pur_beurre.off_sub.models import Category
 
 
 class CategoryTestCase(TestCase):

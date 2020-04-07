@@ -1,1 +1,1 @@
-default_app_config = "auth.apps.AuthConfig"
+default_app_config = "pur_beurre.auth.apps.AuthConfig"
