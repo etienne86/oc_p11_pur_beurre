@@ -9,7 +9,7 @@ import re
 import requests
 from django.core.management.base import BaseCommand
 
-from pur_beurre.off_sub.models import Category, Product, Store
+from off_sub.models import Category, Product, Store
 
 
 class Command(BaseCommand):
