@@ -58,13 +58,13 @@
     <p id="t5" class="run"><span class="n"><a href="#t5">5</a></span><span class="t"><span class="key">from</span> <span class="nam">django</span><span class="op">.</span><span class="nam">contrib</span><span class="op">.</span><span class="nam">auth</span><span class="op">.</span><span class="nam">decorators</span> <span class="key">import</span> <span class="nam">login_required</span>&nbsp;</span><span class="r"></span></p>
     <p id="t6" class="pln"><span class="n"><a href="#t6">6</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t7" class="run"><span class="n"><a href="#t7">7</a></span><span class="t"><span class="key">from</span> <span class="op">.</span><span class="nam">forms</span> <span class="key">import</span> <span class="nam">UserCreationForm</span><span class="op">,</span> <span class="nam">AuthenticationForm</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t8" class="run"><span class="n"><a href="#t8">8</a></span><span class="t"><span class="key">from</span> <span class="nam">off_sub</span> <span class="key">import</span> <span class="nam">functions</span> <span class="key">as</span> <span class="nam">off_sub_fct</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t8" class="run"><span class="n"><a href="#t8">8</a></span><span class="t"><span class="key">from</span> <span class="nam">off_sub</span> <span class="key">import</span> <span class="nam">functions</span> <span class="key">as</span> <span class="nam">fct</span>&nbsp;</span><span class="r"></span></p>
     <p id="t9" class="pln"><span class="n"><a href="#t9">9</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t10" class="pln"><span class="n"><a href="#t10">10</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t11" class="run"><span class="n"><a href="#t11">11</a></span><span class="t"><span class="op">@</span><span class="nam">login_required</span>&nbsp;</span><span class="r"></span></p>
     <p id="t12" class="pln"><span class="n"><a href="#t12">12</a></span><span class="t"><span class="key">def</span> <span class="nam">account</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t13" class="pln"><span class="n"><a href="#t13">13</a></span><span class="t">    <span class="com"># add all products to the context</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t14" class="run"><span class="n"><a href="#t14">14</a></span><span class="t">    <span class="nam">context</span> <span class="op">=</span> <span class="nam">off_sub_fct</span><span class="op">.</span><span class="nam">get_all_products</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t14" class="run"><span class="n"><a href="#t14">14</a></span><span class="t">    <span class="nam">context</span> <span class="op">=</span> <span class="nam">fct</span><span class="op">.</span><span class="nam">get_all_products</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t15" class="pln"><span class="n"><a href="#t15">15</a></span><span class="t">    <span class="com"># add the boolean, indicating if the user is authenticated, to the context</span>&nbsp;</span><span class="r"></span></p>
     <p id="t16" class="run"><span class="n"><a href="#t16">16</a></span><span class="t">    <span class="nam">context</span><span class="op">[</span><span class="str">'user_authenticated'</span><span class="op">]</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span><span class="op">.</span><span class="nam">is_authenticated</span>  <span class="com"># bool</span>&nbsp;</span><span class="r"></span></p>
     <p id="t17" class="pln"><span class="n"><a href="#t17">17</a></span><span class="t">    <span class="com"># add the user to the context</span>&nbsp;</span><span class="r"></span></p>
@@ -79,7 +79,7 @@
     <p id="t26" class="run"><span class="n"><a href="#t26">26</a></span><span class="t"><span class="op">@</span><span class="nam">login_required</span>&nbsp;</span><span class="r"></span></p>
     <p id="t27" class="pln"><span class="n"><a href="#t27">27</a></span><span class="t"><span class="key">def</span> <span class="nam">log_out</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t28" class="pln"><span class="n"><a href="#t28">28</a></span><span class="t">    <span class="com"># add all products to the context</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t29" class="run"><span class="n"><a href="#t29">29</a></span><span class="t">    <span class="nam">context</span> <span class="op">=</span> <span class="nam">off_sub_fct</span><span class="op">.</span><span class="nam">get_all_products</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t29" class="run"><span class="n"><a href="#t29">29</a></span><span class="t">    <span class="nam">context</span> <span class="op">=</span> <span class="nam">fct</span><span class="op">.</span><span class="nam">get_all_products</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t30" class="run"><span class="n"><a href="#t30">30</a></span><span class="t">    <span class="nam">logout</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t31" class="run"><span class="n"><a href="#t31">31</a></span><span class="t">    <span class="key">return</span> <span class="nam">render</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p id="t32" class="pln"><span class="n"><a href="#t32">32</a></span><span class="t">        <span class="nam">request</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -90,7 +90,7 @@
     <p id="t37" class="pln"><span class="n"><a href="#t37">37</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t38" class="run"><span class="n"><a href="#t38">38</a></span><span class="t"><span class="key">def</span> <span class="nam">sign</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t39" class="pln"><span class="n"><a href="#t39">39</a></span><span class="t">    <span class="com"># add all products to the context</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t40" class="run"><span class="n"><a href="#t40">40</a></span><span class="t">    <span class="nam">context</span> <span class="op">=</span> <span class="nam">off_sub_fct</span><span class="op">.</span><span class="nam">get_all_products</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t40" class="run"><span class="n"><a href="#t40">40</a></span><span class="t">    <span class="nam">context</span> <span class="op">=</span> <span class="nam">fct</span><span class="op">.</span><span class="nam">get_all_products</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t41" class="pln"><span class="n"><a href="#t41">41</a></span><span class="t">    <span class="com"># add the boolean indicating if the user is authenticated to the context</span>&nbsp;</span><span class="r"></span></p>
     <p id="t42" class="run"><span class="n"><a href="#t42">42</a></span><span class="t">    <span class="nam">context</span><span class="op">[</span><span class="str">'user_authenticated'</span><span class="op">]</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span><span class="op">.</span><span class="nam">is_authenticated</span>  <span class="com"># bool</span>&nbsp;</span><span class="r"></span></p>
     <p id="t43" class="run"><span class="n"><a href="#t43">43</a></span><span class="t">    <span class="key">if</span> <span class="nam">request</span><span class="op">.</span><span class="nam">method</span> <span class="op">==</span> <span class="str">'POST'</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -130,8 +130,8 @@
 <div id="footer">
     <div class="content">
         <p>
-            <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.0.3</a>,
-            created at 2020-04-06 14:27
+            <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.0.4</a>,
+            created at 2020-04-09 07:31
         </p>
     </div>
 </div>
