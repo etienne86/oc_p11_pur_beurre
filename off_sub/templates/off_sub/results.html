@@ -14,10 +14,7 @@
 
 {% block masthead_subtitle %}
   <a id="masthead_subtitle" href="/food/{{ initial_product.id }}" class="text-white">{{ initial_product.product_name }}</a>
-{% endblock masthead_subtitle %}
-
-{% block section_one_title %}
-  <div class="col-xs-6 offset-xs-3 col-sm-4 offset-sm-4 img-fluid d-none">
+  <div class="col-4 offset-4 img-fluid">
     {% if initial_product.nutriscore_grade == "a" %}
       <img class="img-fluid" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />
     {% elif initial_product.nutriscore_grade == "b" %}  
@@ -30,6 +27,9 @@
       <img class="img-fluid" src="{% static 'img/nutriscores/nutri_e.png' %}" alt="ABCD(E)" />
     {% endif %}
   </div>
+{% endblock masthead_subtitle %}
+
+{% block section_one_title %}
   <br />
   Vous pouvez remplacer cet aliment par :
 {% endblock section_one_title %}
