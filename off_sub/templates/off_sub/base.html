@@ -83,19 +83,23 @@
           {% if user_authenticated %}
             {% block signed_in %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'auth:account' %}" title="Mon compte"><i id="account-icon" class="far fa-user"></i></a>
+                <a class="nav-link d-none d-lg-block" href="{% url 'auth:account' %}" title="Mon compte"><i id="account-icon" class="far fa-user"></i></a>
+                <a class="nav-link d-lg-none" href="{% url 'auth:account' %}" title="Mon compte"><i id="account-icon" class="far fa-user"></i> Mon compte</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'off_sub:favorites' %}" title="Mes aliments"><i id="favorites-icon" class="fas fa-carrot"></i></a>
+                <a class="nav-link d-none d-lg-block" href="{% url 'off_sub:favorites' %}" title="Mes aliments"><i id="favorites-icon" class="fas fa-carrot"></i></a>
+                <a class="nav-link d-lg-none" href="{% url 'off_sub:favorites' %}" title="Mes aliments"><i id="favorites-icon" class="fas fa-carrot"></i> Mes aliments</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'auth:log_out' %}" title="Déconnexion"><i id="logout-icon" class="fas fa-sign-out-alt"></i></a>
+                <a class="nav-link d-none d-lg-block" href="{% url 'auth:log_out' %}" title="Déconnexion"><i id="logout-icon" class="fas fa-sign-out-alt"></i></a>
+                <a class="nav-link d-lg-none" href="{% url 'auth:log_out' %}" title="Déconnexion"><i id="logout-icon" class="fas fa-sign-out-alt"></i> Déconnexion</a>
               </li>
             {% endblock signed_in %}
           {% else %}
             {% block not_signed_in %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'auth:sign' %}" title="Connexion"><i id="sign-icon" class="fas fa-sign-in-alt"></i></a>
+                <a class="nav-link d-none d-lg-block" href="{% url 'auth:sign' %}" title="Connexion"><i id="sign-icon" class="fas fa-sign-in-alt"></i></a>
+                <a class="nav-link d-lg-none" href="{% url 'auth:sign' %}" title="Connexion"><i id="sign-icon" class="fas fa-sign-in-alt"></i> Connexion</a>
               </li>
               <li class="nav-item text-transparent d-none d-lg-block">
                 <a class="nav-link disabled" href="{% url 'auth:sign' %}" title="Connexion"><i class="far fa-user"></i></a>
