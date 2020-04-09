@@ -5,15 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserCreationForm, AuthenticationForm
-from off_sub import functions as fct
 
 
 @login_required
 def account(request):
-    # add all products to the context
-    context = fct.get_all_products()
-    # add the boolean, indicating if the user is authenticated, to the context
-    context['user_authenticated'] = request.user.is_authenticated  # bool
+    context = {}
     # add the user to the context
     context['user'] = request.user
     return render(
@@ -25,8 +21,7 @@ def account(request):
 
 @login_required
 def log_out(request):
-    # add all products to the context
-    context = fct.get_all_products()
+    context = {}
     logout(request)
     return render(
         request,
@@ -36,10 +31,7 @@ def log_out(request):
 
 
 def sign(request):
-    # add all products to the context
-    context = fct.get_all_products()
-    # add the boolean indicating if the user is authenticated to the context
-    context['user_authenticated'] = request.user.is_authenticated  # bool
+    context = {}
     if request.method == 'POST':
         user_creation_form = UserCreationForm(request.POST)
         authentication_form = AuthenticationForm(request, request.POST)

@@ -2,14 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .models import Product
-from . import functions as fct
 
 
 @login_required
 def favorites(request):
-    # add all products to the context
-    context = fct.get_all_products()
-    context['user_authenticated'] = request.user.is_authenticated  # bool
+    context = {}
     context['user_favorites'] = request.user.favorites.all()  # QuerySet
     context['products_list'] = context['user_favorites']
     return render(
@@ -20,9 +17,7 @@ def favorites(request):
 
 
 def food(request, product_id):
-    # add all products to the context
-    context = fct.get_all_products()
-    context['user_authenticated'] = request.user.is_authenticated  # bool
+    context = {}
     product = get_object_or_404(Product, id=product_id)
     context['product'] = product
     return render(
@@ -33,9 +28,7 @@ def food(request, product_id):
 
 
 def index(request):
-    # add all products to the context
-    context = fct.get_all_products()
-    context['user_authenticated'] = request.user.is_authenticated  # bool
+    context = {}
     return render(
         request,
         'off_sub/index.html',
@@ -44,9 +37,7 @@ def index(request):
 
 
 def legal(request):
-    # add all products to the context
-    context = fct.get_all_products()
-    context['user_authenticated'] = request.user.is_authenticated  # bool
+    context = {}
     return render(
         request,
         'off_sub/legal.html',
@@ -55,10 +46,8 @@ def legal(request):
 
 
 def results(request, product_id):
-    # add all products to the context
-    context = fct.get_all_products()
-    context['user_authenticated'] = request.user.is_authenticated  # bool
-    if context['user_authenticated']:
+    context = {}
+    if request.user.is_authenticated:
         context['user_favorites'] = request.user.favorites.all()  # QuerySet
     product = get_object_or_404(Product, id=product_id)
     # number of suggested substitutes: 6

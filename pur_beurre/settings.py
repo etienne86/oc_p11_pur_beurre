@@ -81,6 +81,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'off_sub.context_processors.pur_beurre_all_products',
+                'off_sub.context_processors.pur_beurre_user_authenticated',
+
             ],
         },
     },
