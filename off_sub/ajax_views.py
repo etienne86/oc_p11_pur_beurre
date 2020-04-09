@@ -14,7 +14,7 @@ def ajax_find_product(request):
     if request.method == 'POST':
         product_string = request.POST.get('product_string', "")
         # extract product code
-        product_code = product_string.split('[code EAN : ')[1][:-1]
+        product_code = product_string.split('[code-barres : ')[1][:-1]
         # find the product id
         product = get_object_or_404(Product, code=product_code)
         data['product_id'] = product.id

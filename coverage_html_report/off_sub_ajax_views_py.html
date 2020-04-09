@@ -67,7 +67,7 @@
     <p id="t14" class="run"><span class="n"><a href="#t14">14</a></span><span class="t">    <span class="key">if</span> <span class="nam">request</span><span class="op">.</span><span class="nam">method</span> <span class="op">==</span> <span class="str">'POST'</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t15" class="run"><span class="n"><a href="#t15">15</a></span><span class="t">        <span class="nam">product_string</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">'product_string'</span><span class="op">,</span> <span class="str">""</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t16" class="pln"><span class="n"><a href="#t16">16</a></span><span class="t">        <span class="com"># extract product code</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t17" class="run"><span class="n"><a href="#t17">17</a></span><span class="t">        <span class="nam">product_code</span> <span class="op">=</span> <span class="nam">product_string</span><span class="op">.</span><span class="nam">split</span><span class="op">(</span><span class="str">'[code EAN : '</span><span class="op">)</span><span class="op">[</span><span class="num">1</span><span class="op">]</span><span class="op">[</span><span class="op">:</span><span class="op">-</span><span class="num">1</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t17" class="run"><span class="n"><a href="#t17">17</a></span><span class="t">        <span class="nam">product_code</span> <span class="op">=</span> <span class="nam">product_string</span><span class="op">.</span><span class="nam">split</span><span class="op">(</span><span class="str">'[code-barres : '</span><span class="op">)</span><span class="op">[</span><span class="num">1</span><span class="op">]</span><span class="op">[</span><span class="op">:</span><span class="op">-</span><span class="num">1</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p id="t18" class="pln"><span class="n"><a href="#t18">18</a></span><span class="t">        <span class="com"># find the product id</span>&nbsp;</span><span class="r"></span></p>
     <p id="t19" class="run"><span class="n"><a href="#t19">19</a></span><span class="t">        <span class="nam">product</span> <span class="op">=</span> <span class="nam">get_object_or_404</span><span class="op">(</span><span class="nam">Product</span><span class="op">,</span> <span class="nam">code</span><span class="op">=</span><span class="nam">product_code</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t20" class="run"><span class="n"><a href="#t20">20</a></span><span class="t">        <span class="nam">data</span><span class="op">[</span><span class="str">'product_id'</span><span class="op">]</span> <span class="op">=</span> <span class="nam">product</span><span class="op">.</span><span class="nam">id</span>&nbsp;</span><span class="r"></span></p>
@@ -109,7 +109,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.0.4</a>,
-            created at 2020-04-09 07:31
+            created at 2020-04-09 17:59
         </p>
     </div>
 </div>

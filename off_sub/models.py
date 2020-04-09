@@ -87,7 +87,7 @@ class Product(models.Model):
 
     def __str__(self):
         # return f"{self.code} - {self.product_name}".replace("'", r"\'")
-        return f"{self.product_name} [code EAN : {self.code}]"
+        return f"{self.product_name} [code-barres : {self.code}]"
 
     def add_product_category_to_db(self, category):
         """
