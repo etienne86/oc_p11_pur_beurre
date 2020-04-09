@@ -72,11 +72,12 @@ html, body
 
 .ui-autocomplete
 {
-    max-height: 150px;
-    max-width: 200px;
-    overflow-y: auto;
-    /* prevent horizontal scrollbar */
-    overflow-x: hidden;
+  max-height: 150px;
+  width: inherit;
+  /*max-width: 100%;*/
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
 }
 
 .text-transparent
@@ -92,4 +93,27 @@ html, body
 .bg-moules
 {
   background: #345a61;
+}
+
+@media all and (min-width: 992px) /*for l and xl screens*/
+  {
+  .lg-no-group
+  {
+    border-top-right-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
+  }
+}
+
+@media all and (max-width: 992px) /*for xs, s and m screens*/
+{
+  .xs-s-m-border
+  {
+    border-top-right-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
+  }
+}
+
+.width-100
+{
+  width: 100% !important;
 }

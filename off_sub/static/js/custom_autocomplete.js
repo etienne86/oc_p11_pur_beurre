@@ -15,6 +15,12 @@ $( function() {
   });
 } );
 
+// adjust size of menu
+jQuery.ui.autocomplete.prototype._resizeMenu = function () {
+  var ul = this.menu.element;
+  ul.outerWidth(this.element.outerWidth());
+}
+
 
 // Block with AJAX POST:
 // - to send the product selected by the user to the Python view

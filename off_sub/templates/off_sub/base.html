@@ -58,7 +58,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+        <ul class="navbar-nav ml-5 my-2 my-lg-0 flex-grow-1">
           <li class="nav-item">
             <p class="nav-link disabled">
               {% if user_authenticated %}
@@ -69,13 +69,15 @@
             </p>
           </li>          
           {% block search %}
-            <li class="nav-item mt-n2">
+            <li class="nav-item mt-n2 flex-grow-1">
               <form id="productSubmitFormNavbar" method="post" class="productSubmitForm form-inline" action="{% url 'off_sub:results' 0 %}" ajax-find-product-url="{% url 'off_sub:ajax_find_product' %}">
                 {% csrf_token %}
-                <div class="ui-widget ui-front d-inline-flex">
-                  <label for="autocompletion-0"></label>
-                  <input id="autocompletion-0" class="form-control" type="search" placeholder="Chercher" />
-                  <input type="submit" value="?" class="btn btn-primary d-lg-none" />
+                <div class="input-group ui-widget ui-front d-inline-flex width-100">
+                  <!-- <label for="autocompletion-0"></label> -->
+                  <input id="autocompletion-0" class="form-control lg-no-group" aria-describedby="button-search-navbar" type="search" placeholder="Chercher" />
+                  <div class="input-group-append">
+                    <input type="submit" value="?" id="button-search-navbar" class="btn btn-primary d-lg-none xs-s-m-border" />
+                  </div>
                 </div>
               </form>
             </li>
@@ -123,7 +125,7 @@
           <h1 class="text-uppercase text-white font-weight-bold">{% block masthead_title %}{% endblock masthead_title %}</h1>
           {% block masthead_divider %}<hr class="divider my-4">{% endblock masthead_divider %}
         </div>
-        <div class="col-sm-8 align-self-baseline">
+        <div class="col-l-8 mx-2 align-self-baseline">
           <p class="text-white-75 font-weight-light mb-4">{% block masthead_subtitle %}{% endblock masthead_subtitle %}</p>
           {% block masthead_form %}{% endblock masthead_form %}
         </div>
