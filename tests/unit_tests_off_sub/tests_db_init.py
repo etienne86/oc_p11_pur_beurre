@@ -76,7 +76,7 @@ class MockRequestsGet:
 
 @patch(target='off_sub.models.Category', new=MockCategory)
 @patch(target='requests.get', new=MockRequestsGet)
-class DatabaseInitialization(TestCase):
+class DatabaseInitializationTestCase(TestCase):
 
     @classmethod
     @patch(target='off_sub.models.Category', new=MockCategory)
@@ -96,72 +96,132 @@ class DatabaseInitialization(TestCase):
         cls.store_c = cls.all_stores[2]
 
     def test_get_all_products(self):
+        """
+        Test if all products are returned.
+        """
         self.assertEqual(len(self.all_products), 2)
 
     def test_get_code_product_a_and_product_b(self):
+        """
+        Test if product codes are correct.
+        """
         self.assertTrue(
             self.prod_a.code == '1234567890123' and
             self.prod_b.code == '3210987654321'
         )
 
     def test_get_product_name_product_a(self):
+        """
+        Test if product name is correct (with a given name).
+        """
         self.assertEqual(self.prod_a.product_name, "a superb product")
 
     def test_get_product_name_product_b(self):
+        """
+        Test if product name is correct (without any given name).
+        """
         self.assertEqual(self.prod_b.product_name, "[Produit sans nom]")
 
     def test_nutriscore_grade_product_a_and_product_b(self):
+        """
+        Test if product nutriscore grades are correct.
+        """
         self.assertTrue(
             self.prod_a.nutriscore_grade == "a" and
             self.prod_b.nutriscore_grade == "b"
         )
 
     def test_nutriscore_score_product_a_and_product_b(self):
+        """
+        Test if product nutriscore scores are correct.
+        """
         self.assertTrue(
             self.prod_a.nutriscore_score == -20 and
             self.prod_b.nutriscore_score == 1
         )
 
     def test_get_url_product_a(self):
+        """
+        Test if product url is correct (with a given url).
+        """
         self.assertEqual(self.prod_a.url, "a_superb_url")
 
     def test_get_url_product_b(self):
+        """
+        Test if product url is correct (without any given url).
+        """
         self.assertEqual(self.prod_b.url, "")
 
     def test_get_image_url_product_a(self):
+        """
+        Test if product image url is correct (with a given url).
+        """
         self.assertEqual(self.prod_a.image_url, "a_superb_image_url")
 
     def test_get_image_url_product_b(self):
+        """
+        Test if product image url is correct (without any given url).
+        """
         self.assertEqual(self.prod_b.image_url, "")
 
     def test_get_fat_product_a(self):
+        """
+        Test if fat data are correct (with given data).
+        """
         self.assertEqual(self.prod_a.fat, "0g")
 
     def test_get_fat_product_b(self):
+        """
+        Test if fat data are correct (without any given data).
+        """
         self.assertEqual(self.prod_b.fat, "donnée inconnue")
 
     def test_get_saturated_fat_product_a(self):
+        """
+        Test if saturated fat data are correct (with given data).
+        """
         self.assertEqual(self.prod_a.saturated_fat, "0g")
 
     def test_get_saturated_fat_product_b(self):
+        """
+        Test if saturated fat data are correct (without any given data).
+        """
         self.assertEqual(self.prod_b.saturated_fat, "donnée inconnue")
 
     def test_get_sugars_product_a(self):
+        """
+        Test if sugars data are correct (with given data).
+        """
         self.assertEqual(self.prod_a.sugars, "0g")
 
     def test_get_sugars_product_b(self):
+        """
+        Test if sugars data are correct (without any given data).
+        """
         self.assertEqual(self.prod_b.sugars, "donnée inconnue")
 
     def test_get_salt_product_a(self):
+        """
+        Test if salt data are correct (with given data).
+        """
         self.assertEqual(self.prod_a.salt, "0mg")
 
     def test_get_salt_product_b(self):
+        """
+        Test if salt data are correct (without any given data).
+        """
         self.assertEqual(self.prod_b.salt, "donnée inconnue")
 
     def test_get_all_stores(self):
+        """
+        Test if all stores are returned.
+        """
         self.assertEqual(len(self.all_stores), 3)
 
     def test_get_stores_names(self):
+        """
+        Test if stores names are properly parsed.
+        """
         store_a_bool = (self.store_a.name == "Aux champignons")
         store_b_bool = (self.store_b.name == "Le clair de lune")
         store_c_bool = (self.store_c.name == "Bio coupe")
@@ -169,6 +229,10 @@ class DatabaseInitialization(TestCase):
         self.assertTrue(stores_bool)
 
     def test_stores_linked_to_product_a(self):
+        """
+        Test if all links between product and stores are correct
+        (if applicable).
+        """
         prod_a_store_a_bool = (self.store_a in self.prod_a.stores.all())
         prod_a_store_b_bool = (self.store_b in self.prod_a.stores.all())
         prod_a_store_c_bool = (self.store_c in self.prod_a.stores.all())
@@ -180,4 +244,7 @@ class DatabaseInitialization(TestCase):
         self.assertTrue(products_stores_bool)
 
     def test_no_store_linked_to_product_b(self):
+        """
+        Test if there are no store link to a product (if applicable).
+        """
         self.assertEqual(len(self.prod_b.stores.all()), 0)
