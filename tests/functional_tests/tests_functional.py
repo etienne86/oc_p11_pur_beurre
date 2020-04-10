@@ -38,6 +38,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
                 BASE_DIR, 'drivers/geckodriver'
             )
         )
+        cls.selenium.maximize_window()
         # set home_url
         cls.home_url = f"{cls.live_server_url}/"
 
@@ -225,7 +226,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         actions.send_keys(str(self.product_a))
         # click on "Chercher" button
         search_btn = self.selenium.find_element_by_css_selector(
-            "#autocompletion-1 + .btn"
+            ".group-autocompletion-1 > .btn"
         )
         actions.click(search_btn)
         # compile chained actions
@@ -291,9 +292,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         actions.click(product_field)
         # enter the product name
         actions.send_keys(str(self.product_a))
-        # click on "Chercher" button (unavailable only on L and wider screens)
+        # click on "Chercher" button (unavailable on L and wider screens)
         search_btn = self.selenium.find_element_by_css_selector(
-            "#autocompletion-0 + .btn"
+            ".group-autocompletion-0 > .btn"
         )
         actions.click(search_btn)
         # compile chained actions
