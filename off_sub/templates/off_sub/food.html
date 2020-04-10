@@ -27,6 +27,14 @@
   </a>
 {% endblock %}
 
+{% block masthead_form %}
+  <div class="col-12 p-4 text-center">
+    <form action="/results/{{ product.id }}">
+      <input type="submit" value="Retour aux résultats" class="btn btn-primary" />
+    </form>
+  </div>
+{% endblock %}
+
 {% block section_one %}
   <section class="page-section" id="section-one">
     <div class="container">
