@@ -66,6 +66,11 @@ class UnitTestCase(TestCase):
         self.tac_favorites_start = self.user_tac.favorites.all()
 
     def test_remove_common_favorite_no_change_on_other_user(self):
+        """
+        A product is registered as favorite for two different users.
+        Test if removal of this favorite for one user
+        has no impact on other user's favorites.
+        """
         # remove the favorite from user "Tic"
         self.user_tic.favorites.remove(self.product_b)
         # update the favorites for user "Tac"
@@ -73,7 +78,11 @@ class UnitTestCase(TestCase):
         # no change is expected for user "Tac"
         self.assertEqual(list(self.tac_favorites_start), list(tac_favorites))
 
-    def test_a_favorite_no_change_on_other_user(self):
+    def test_add_a_favorite_no_change_on_other_user(self):
+        """
+        Test if adding a favorite to one user
+        has no impact on other user's favorites.
+        """        
         # add a favorite to user "Tic"
         self.user_tic.favorites.add(self.product_d)
         # update the favorites for user "Tac"
@@ -145,6 +154,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         self.product_d.categories.add(self.category_1)
 
     def test_navbar_click_from_logout_to_sign(self):
+        """
+        Test navigating from 'logout' page to 'sign' page.
+        """
         # start from logout page
         start_url = f"{self.live_server_url}/auth/log_out/"
         self.selenium.get(start_url)
@@ -161,6 +173,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_look_for_a_product_from_navbar_in_account_template(self):
+        """
+        Test if searching a product is also possible from 'account' page.
+        """
         # start from account page
         start_url = f"{self.live_server_url}/auth/account/"
         self.selenium.get(start_url)
@@ -186,6 +201,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_look_for_a_product_from_navbar_in_favorites_template(self):
+        """
+        Test if searching a product is also possible from 'favorites' page.
+        """
         # start from sign page
         start_url = f"{self.live_server_url}/favorites/"
         self.selenium.get(start_url)
@@ -211,6 +229,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_look_for_a_product_from_navbar_in_logout_template(self):
+        """
+        Test if searching a product is also possible from 'logout' page.
+        """
         # start from sign page
         start_url = f"{self.live_server_url}/auth/log_out/"
         self.selenium.get(start_url)
@@ -236,6 +257,9 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_look_for_a_product_from_navbar_in_sign_template(self):
+        """
+        Test if searching a product is also possible from 'sign' page.
+        """
         # start from sign page
         start_url = f"{self.live_server_url}/auth/sign/"
         self.selenium.get(start_url)
@@ -297,6 +321,9 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         force_login(self.user, self.selenium, self.live_server_url)
 
     def test_navbar_click_from_account_to_favorites(self):
+        """
+        Test navigating from 'account' page to 'favorites' page.
+        """
         # start from account page
         start_url = f"{self.live_server_url}/auth/account/"
         self.selenium.get(start_url)
@@ -313,6 +340,9 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_navbar_click_from_account_to_logout(self):
+        """
+        Test navigating from 'account' page to 'logout' page.
+        """
         # start from account page
         start_url = f"{self.live_server_url}/auth/account/"
         self.selenium.get(start_url)
@@ -329,6 +359,9 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_navbar_click_from_favorites_to_account(self):
+        """
+        Test navigating from 'favorites' page to 'account' page.
+        """
         # start from favorites page
         start_url = f"{self.live_server_url}/favorites/"
         self.selenium.get(start_url)
@@ -345,6 +378,9 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_navbar_click_from_favorites_to_logout(self):
+        """
+        Test navigating from 'favorites' page to 'logout' page.
+        """
         # start from favorites page
         start_url = f"{self.live_server_url}/favorites/"
         self.selenium.get(start_url)
