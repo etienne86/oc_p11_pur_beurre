@@ -7,13 +7,21 @@
 {% endblock masthead_style %}
 
 {% block masthead_picture %}
-  <a id="masthead_picture" href="/food/{{ initial_product.id }}"><img class="img-fluid" src={{ initial_product.image_url }} alt="photo du produit" style="max-width: 100%; max-height: 40vh;"/></a>
+  <a id="masthead_picture" href="/food/{{ initial_product.id }}?next={{ current_url }}">
+    <img class="img-fluid" src="{{ initial_product.image_url }}" alt="(photo manquante)" style="max-width: 100%; max-height: 40vh;"/></a>
+  </a>
 {% endblock masthead_picture %}
 
 {% block masthead_divider %}{% endblock masthead_divider %}
 
 {% block masthead_subtitle %}
-  <a id="masthead_subtitle" href="/food/{{ initial_product.id }}" class="text-white">{{ initial_product.product_name }}</a>
+  <a id="masthead_subtitle" href="/food/{{ initial_product.id }}?next={{ current_url }}" class="text-white">
+  {% if initial_product.product_name %}
+    {{ initial_product.product_name }}
+  {% else %}
+    <p>(nom manquant)</p>
+  {% endif %}
+  </a>
   <div class="col-4 offset-4 img-fluid">
     {% if initial_product.nutriscore_grade == "a" %}
       <img class="img-fluid" src="{% static 'img/nutriscores/nutri_a.png' %}" alt="(A)BCDE" />

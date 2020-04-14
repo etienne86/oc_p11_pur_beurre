@@ -329,7 +329,8 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
             timeout=2
         ).until(url_changes(start_url))
         # see "food" page
-        expected_url = f"{self.live_server_url}/food/{product_id}"
+        expected_url = f"{self.live_server_url}/food/" + \
+            f"{product_id}?next=/results/{product_id}"
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_click_on_product_name_to_consult_details_results_page(self):
@@ -352,7 +353,8 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
             timeout=2
         ).until(url_changes(start_url))
         # see "food" page
-        expected_url = f"{self.live_server_url}/food/{product_id}"
+        expected_url = f"{self.live_server_url}/food/" + \
+            f"{product_id}?next=/results/{product_id}"
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_create_user_account_success(self):

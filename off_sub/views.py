@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.models import Site
 
 from .models import Product
 
@@ -9,6 +10,10 @@ def favorites(request):
     context = {}
     context['user_favorites'] = request.user.favorites.all()  # QuerySet
     context['products_list'] = context['user_favorites']
+    current_url = request.get_full_path().strip(
+        Site.objects.get_current().domain
+    )
+    context['current_url'] = current_url
     return render(
         request,
         'off_sub/favorites.html',
@@ -20,6 +25,13 @@ def food(request, product_id):
     context = {}
     product = get_object_or_404(Product, id=product_id)
     context['product'] = product
+    try:
+        previous_url = request.get_full_path().split("?next=")[1]
+    except IndexError:
+        previous_url = request.get_full_path().strip(
+            Site.objects.get_current().domain
+        )
+    context['previous_url'] = previous_url
     return render(
         request,
         'off_sub/food.html',
@@ -54,6 +66,10 @@ def results(request, product_id):
     subs = product.get_best_subs(6)
     context['products_list'] = subs  # QuerySet
     context['initial_product'] = product
+    current_url = request.get_full_path().strip(
+        Site.objects.get_current().domain
+    )
+    context['current_url'] = current_url
     return render(
         request,
         'off_sub/results.html',

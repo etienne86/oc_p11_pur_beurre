@@ -6,31 +6,23 @@
 {% endblock %}
 
 {% block masthead_picture %}
-  <a href="/food/{{ product.id }}">
-    {% if product.image_url %}
-      <img class="img-fluid" src={{ product.image_url }} alt="photo du produit" style="max-width: 100%; max-height: 40vh;"/>
-    {% else %}
-      <p>(photo manquante)</p>
-    {% endif %}
-  </a>
+  <img class="img-fluid" src="{{ product.image_url }}" alt="(photo manquante)" style="max-width: 100%; max-height: 40vh;"/>
 {% endblock %}
 
 {% block masthead_divider %}{% endblock %}
 
 {% block masthead_subtitle %}
-  <a href="/food/{{ product.id }}" class="text-white">
-    {% if product.product_name %}
-      {{ product.product_name }}
-    {% else %}
-      <p>(nom manquant)</p>
-    {% endif %}
-  </a>
+  {% if product.product_name %}
+    {{ product.product_name }}
+  {% else %}
+    <p>(nom manquant)</p>
+  {% endif %}
 {% endblock %}
 
 {% block masthead_form %}
   <div class="col-12 p-4 text-center">
-    <form action="/results/{{ product.id }}">
-      <input type="submit" value="Retour aux résultats" class="btn btn-primary" />
+    <form action="{{ previous_url }}">
+      <input type="submit" value="Retour" class="btn btn-primary" />
     </form>
   </div>
 {% endblock %}
