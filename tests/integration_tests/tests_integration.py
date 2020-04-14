@@ -82,7 +82,7 @@ class UnitTestCase(TestCase):
         """
         Test if adding a favorite to one user
         has no impact on other user's favorites.
-        """        
+        """
         # add a favorite to user "Tic"
         self.user_tic.favorites.add(self.product_d)
         # update the favorites for user "Tac"
