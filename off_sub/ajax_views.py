@@ -8,7 +8,7 @@ from off_sub.models import Product
 
 def ajax_find_product(request):
     """
-    This view is used to find the producted searched by the user.
+    This view is used to find the product searched by the user.
     This is not linked to a template.
     """
     data = {}
