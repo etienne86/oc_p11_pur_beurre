@@ -1,3 +1,5 @@
+import re
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
@@ -14,7 +16,14 @@ def ajax_find_product(request):
     if request.method == 'POST':
         product_string = request.POST.get('product_string', "")
         # extract product code
-        product_code = product_string.split('[code-barres : ')[1][:-1]
+        match = re.search(
+            "\\[code-barres : ([0-9]+?)\\]",
+            product_string
+        )
+        if match:
+            product_code = match.group(1)
+        else:
+            product_code = 0
         # find the product id
         product = get_object_or_404(Product, code=product_code)
         data['product_id'] = product.id
