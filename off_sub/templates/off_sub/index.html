@@ -15,7 +15,6 @@
     <form id="productSubmitFormIndex" method="post" class="productSubmitForm" action="{% url 'off_sub:results' 0 %}" ajax-find-product-url="{% url 'off_sub:ajax_find_product' %}">
       {% csrf_token %}
       <div class="input-group ui-widget d-inline-flex">
-        <!-- <label for="autocompletion-1"></label> -->
         <input id="autocompletion-1" class="form-control" aria-describedby="button-search-index" type="search" placeholder="Produit" />
         <div class="input-group-append group-autocompletion-1">
           <input type="submit" value="Chercher" id="button-search-index" class="btn btn-primary" />

@@ -73,7 +73,6 @@
               <form id="productSubmitFormNavbar" method="post" class="productSubmitForm form-inline" action="{% url 'off_sub:results' 0 %}" ajax-find-product-url="{% url 'off_sub:ajax_find_product' %}">
                 {% csrf_token %}
                 <div class="input-group ui-widget ui-front d-inline-flex width-100">
-                  <!-- <label for="autocompletion-0"></label> -->
                   <input id="autocompletion-0" class="form-control lg-no-group" aria-describedby="button-search-navbar" type="search" placeholder="Chercher" />
                   <div class="input-group-append group-autocompletion-0">
                     <input type="submit" value="?" id="button-search-navbar" class="btn btn-primary d-lg-none xs-s-m-border" />
@@ -171,23 +170,14 @@
     </div>
   </footer>
 
-  <!-- Bootstrap core JavaScript -->
-  <!-- /!\ kills UI <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>-->
-  
-  <!-- OK UI -->
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Plugin JavaScript -->
-  <!-- OK UI -->
   <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-  <!-- OK UI -->
   <script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
 
   <!-- Custom scripts for this template -->
-  <!-- OK UI -->
   <script src="{% static 'js/creative.min.js' %}"></script>
-
-  <!-- /!\ kills UI <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
 
   <!-- Custom scripts for other templates -->
   {% block scripts %}{% endblock scripts %}
