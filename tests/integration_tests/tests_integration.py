@@ -204,7 +204,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         """
         Test if searching a product is also possible from 'favorites' page.
         """
-        # start from sign page
+        # start from favorites page
         start_url = f"{self.live_server_url}/favorites/"
         self.selenium.get(start_url)
         # start chained actions
@@ -232,7 +232,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         """
         Test if searching a product is also possible from 'logout' page.
         """
-        # start from sign page
+        # start from logout page
         start_url = f"{self.live_server_url}/auth/log_out/"
         self.selenium.get(start_url)
         # start chained actions
