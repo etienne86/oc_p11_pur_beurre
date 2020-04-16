@@ -74,8 +74,6 @@ class MockRequestsGet:
         return self.OFF_API_RESULT
 
 
-@patch(target='off_sub.models.Category', new=MockCategory)
-@patch(target='requests.get', new=MockRequestsGet)
 class DatabaseInitializationTestCase(TestCase):
 
     @classmethod
