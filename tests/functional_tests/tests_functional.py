@@ -1182,7 +1182,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             )[1]
             actions.click(refresh_button)
             # wait for page reloading
-            actions.pause(5)
+            actions.pause(60)
             # compile chained actions
             actions.perform()
             # check that we are still on the favorites page
