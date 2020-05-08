@@ -20,7 +20,6 @@ from seleniumlogin import force_login
 
 from auth.models import MyUser
 from off_sub.models import Product, Category
-from pur_beurre.settings import BASE_DIR
 
 
 class TestWithAnonymousUser(StaticLiveServerTestCase):
@@ -1183,7 +1182,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             )[1]
             actions.click(refresh_button)
             # wait for page reloading
-            actions.pause(60)
+            actions.pause(5)
             # compile chained actions
             actions.perform()
             # check that we are still on the favorites page
@@ -1298,7 +1297,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             )[1]
             actions.click(refresh_button)
             # wait for page reloading
-            actions.pause(10)
+            actions.pause(5)
             # compile chained actions
             actions.perform()
             # check that we are still on the favorites page
