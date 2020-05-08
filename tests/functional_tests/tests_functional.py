@@ -1181,14 +1181,12 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             )[1]
             actions.click(refresh_button)
             # wait for page reloading
-            actions.pause(5)
+            actions.pause(2)
             # compile chained actions
             actions.perform()
             # check that we are still on the favorites page
             expected_url = f"{self.live_server_url}/favorites/"
-            print("expected_url :", expected_url)
-            print("current_url :", self.selenium.current_url)
-            page_status = (expected_url == self.selenium.current_url)
+            page_status = self.selenium.current_url.startswith(expected_url)
             # update result
             result *= page_status
             found = False
@@ -1296,12 +1294,12 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             )[1]
             actions.click(refresh_button)
             # wait for page reloading
-            actions.pause(5)
+            actions.pause(2)
             # compile chained actions
             actions.perform()
             # check that we are still on the favorites page
             expected_url = f"{self.live_server_url}/favorites/"
-            page_status = (expected_url == self.selenium.current_url)
+            page_status = self.selenium.current_url.startswith(expected_url)
             # update result
             result *= page_status
             found = False
