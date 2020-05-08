@@ -1170,7 +1170,6 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             switch_button_status = (button.text == "Sauvegarder")
             # update result
             result *= switch_button_status
-            print(result)
             ###############################################################
             # 3. refresh the page to check that the product "disappeared" #
             ###############################################################
@@ -1182,15 +1181,16 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             )[1]
             actions.click(refresh_button)
             # wait for page reloading
-            actions.pause(60)
+            actions.pause(5)
             # compile chained actions
             actions.perform()
             # check that we are still on the favorites page
             expected_url = f"{self.live_server_url}/favorites/"
+            print("expected_url :", expected_url)
+            print("current_url :", self.selenium.current_url)
             page_status = (expected_url == self.selenium.current_url)
             # update result
             result *= page_status
-            print(result)
             found = False
             # is the saved product among the favorites?
             saved = self.selenium.find_elements_by_class_name(
@@ -1206,7 +1206,6 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             saved_product_status = not found
             # update result
             result *= saved_product_status
-            print(result)
         else:  # no product is savable as favorite
             pass
         self.assertTrue(result)
