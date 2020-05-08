@@ -145,12 +145,10 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         self.product_c.categories.add(self.category_1)
         self.product_d.categories.add(self.category_1)
 
-    def test_look_for_a_product_from_navbar_in_sign_template(self):
+    def look_for_a_product_from_navbar(self, start_url):
         """
-        Test if searching a product is also possible from 'sign' page.
+        This method is called in several tests (in this class, and other).
         """
-        # start from sign page
-        start_url = f"{self.live_server_url}/auth/sign/"
         self.selenium.get(start_url)
         # start chained actions
         actions = ActionChains(self.selenium)
@@ -171,6 +169,16 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
         # see "results" page
         product_id = self.product_a.id
         expected_url = f"{self.live_server_url}/results/{product_id}"
+        return expected_url
+
+    def test_look_for_a_product_from_navbar_in_sign_template(self):
+        """
+        Test if searching a product is also possible from 'sign' page.
+        """
+        # start from sign page
+        start_url = f"{self.live_server_url}/auth/sign/"
+        # execute the process
+        expected_url = self.look_for_a_product_from_navbar(start_url)
         self.assertEqual(self.selenium.current_url, expected_url)
 
 
@@ -235,6 +243,12 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         self.product_b.categories.add(self.category_1)
         self.product_c.categories.add(self.category_1)
         self.product_d.categories.add(self.category_1)
+
+    def look_for_a_product_from_navbar(self, start_url):
+        return TestWithAnonymousUser.look_for_a_product_from_navbar(
+            self,
+            start_url
+        )
 
     def test_navbar_click_from_logout_to_sign(self):
         """
@@ -337,26 +351,8 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         """
         # start from account page
         start_url = f"{self.live_server_url}/auth/account/"
-        self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
-        # click on field "Produit" (select field)
-        product_field = self.selenium.find_element_by_id("autocompletion-0")
-        actions.click(product_field)
-        # enter the product name
-        actions.send_keys(str(self.product_a))
-        # press "Return" key
-        actions.send_keys(Keys.RETURN)
-        # compile chained actions
-        actions.perform()
-        # wait for page loading
-        WebDriverWait(
-            self.selenium,
-            timeout=2
-        ).until(url_changes(start_url))
-        # see "results" page
-        product_id = self.product_a.id
-        expected_url = f"{self.live_server_url}/results/{product_id}"
+        # execute the process
+        expected_url = self.look_for_a_product_from_navbar(start_url)
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_look_for_a_product_from_navbar_in_favorites_template(self):
@@ -365,26 +361,8 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         """
         # start from favorites page
         start_url = f"{self.live_server_url}/favorites/"
-        self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
-        # click on field "Produit" (select field)
-        product_field = self.selenium.find_element_by_id("autocompletion-0")
-        actions.click(product_field)
-        # enter the product name
-        actions.send_keys(str(self.product_a))
-        # press "Return" key
-        actions.send_keys(Keys.RETURN)
-        # compile chained actions
-        actions.perform()
-        # wait for page loading
-        WebDriverWait(
-            self.selenium,
-            timeout=2
-        ).until(url_changes(start_url))
-        # see "results" page
-        product_id = self.product_a.id
-        expected_url = f"{self.live_server_url}/results/{product_id}"
+        # execute the process
+        expected_url = self.look_for_a_product_from_navbar(start_url)
         self.assertEqual(self.selenium.current_url, expected_url)
 
     def test_look_for_a_product_from_navbar_in_logout_template(self):
@@ -393,24 +371,6 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         """
         # start from logout page
         start_url = f"{self.live_server_url}/auth/log_out/"
-        self.selenium.get(start_url)
-        # start chained actions
-        actions = ActionChains(self.selenium)
-        # click on field "Produit" (select field)
-        product_field = self.selenium.find_element_by_id("autocompletion-0")
-        actions.click(product_field)
-        # enter the product name
-        actions.send_keys(str(self.product_a))
-        # press "Return" key
-        actions.send_keys(Keys.RETURN)
-        # compile chained actions
-        actions.perform()
-        # wait for page loading
-        WebDriverWait(
-            self.selenium,
-            timeout=2
-        ).until(url_changes(start_url))
-        # see "results" page
-        product_id = self.product_a.id
-        expected_url = f"{self.live_server_url}/results/{product_id}"
+        # execute the process
+        expected_url = self.look_for_a_product_from_navbar(start_url)
         self.assertEqual(self.selenium.current_url, expected_url)
