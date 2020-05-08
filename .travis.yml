@@ -1,0 +1,28 @@
+language: python
+python:
+  - '3.6.9'
+
+# safelist
+branches:
+  only:
+    - staging
+
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE=pur_beurre.settings.travis
+    - MOZ_HEADLESS=1
+
+addons:
+  firefox: latest
+  apt:
+    packages:
+      firefox-geckodriver
+
+install:
+  - pip install -r requirements.txt
+
+services:
+  - postgresql
+
+script:
+  - ./manage.py test
