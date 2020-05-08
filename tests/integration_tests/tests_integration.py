@@ -101,11 +101,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         # initialize a webdriver
-        cls.selenium = WebDriver(
-            executable_path=os.path.join(
-                BASE_DIR, 'drivers/geckodriver'
-            )
-        )
+        cls.selenium = WebDriver()
         cls.selenium.maximize_window()
         # set home_url
         cls.home_url = f"{cls.live_server_url}/"
@@ -192,11 +188,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         # initialize a webdriver
-        cls.selenium = WebDriver(
-            executable_path=os.path.join(
-                BASE_DIR, 'drivers/geckodriver'
-            )
-        )
+        cls.selenium = WebDriver()
         cls.selenium.maximize_window()
         # set home_url
         cls.home_url = f"{cls.live_server_url}/"
