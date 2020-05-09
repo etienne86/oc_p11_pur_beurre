@@ -9,30 +9,29 @@
 
 
 {% block section_one_text %}
-      <form action="/">
-        <div class="form-group py-4">
-          <div class="row">
-            <div class="col-12 col-sm-3 text-left">
-              <label>Courriel :</label>
-            </div>
-            <div class="col-12 col-sm-6">
-              <input type="email" class="form-control" placeholder="{{ user.email }}" disabled>
-            </div>
-          </div>
+  <form action="/">
+    <div class="form-group py-4">
+      <div class="row">
+        <div class="col-12 col-sm-3 text-left">
+          <label>Courriel :</label>
         </div>
-      </form>
+        <div class="col-12 col-sm-6">
+          <input type="email" class="form-control" placeholder="{{ user.email }}" disabled>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="text-center">
+    <a class="btn btn-outline-primary" href="{% url 'auth:change_password' %}">Changer de mot de passe</a>
+  </div>
 {% endblock %}
 
 {% block section_one_divider %}{% endblock %}
 
-{% block section_3 %}
-
-  <div class="col-12 p-4 text-center">
-
-    <form action="/">
-      <input type="submit" value="Retour à l'accueil" class="btn btn-warning" />
-    </form>
-
-  </div>
-
-{% endblock %}
+{% block section_two %}
+  <section class="page-section bg-moules text-white py-4">
+    <div class="text-center">
+      <a class="btn btn-primary" href="{% url 'off_sub:index' %}">Retour à l'accueil</a>
+    </div>
+  </section>
+{% endblock section_two %}

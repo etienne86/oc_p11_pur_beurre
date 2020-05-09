@@ -1,10 +1,15 @@
 from django import forms
 from django.forms import TextInput, EmailInput, PasswordInput
 from django.contrib import admin
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, password_validation
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import (
+    PasswordChangeForm as BasePasswordChangeForm,
+    PasswordResetForm as BasePasswordResetForm,
+    SetPasswordForm as BaseSetPasswordForm,
+    ReadOnlyPasswordHashField
+)
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import capfirst
 
@@ -94,6 +99,44 @@ class AuthenticationForm(forms.Form):
             code='invalid_login',
             params={'email': self.email_field.verbose_name},
         )
+
+class PasswordChangeForm(BasePasswordChangeForm):
+    old_password = forms.CharField(
+        label=_("Old password"),
+        strip=False,
+        widget=PasswordInput(attrs={'class': 'form-control'}),
+    )
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        strip=False,
+        widget=PasswordInput(attrs={'class': 'form-control'}),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=PasswordInput(attrs={'class': 'form-control'}),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+
+class PasswordResetForm(BasePasswordResetForm):
+    email = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        widget=forms.EmailInput(attrs={'class': 'form-control'}),
+    )
+
+class SetPasswordForm(BaseSetPasswordForm):
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=PasswordInput(attrs={'class': 'form-control'}),
+        strip=False,
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=PasswordInput(attrs={'class': 'form-control'}),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
 
 
 class UserCreationForm(forms.ModelForm):

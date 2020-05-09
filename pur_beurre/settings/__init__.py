@@ -117,6 +117,11 @@ AUTH_USER_MODEL = 'my_auth.MyUser'
 LOGIN_URL = reverse_lazy('auth:sign')
 
 
+# email params for dev
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
