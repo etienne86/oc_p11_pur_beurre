@@ -102,7 +102,7 @@ SITE_ID = 1
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pur_beurre_db',
+        'NAME': 'purbeurredb',
         'USER': 'ebarbier',
         'PASSWORD': '',
         'HOST': '',
@@ -117,12 +117,9 @@ AUTH_USER_MODEL = 'my_auth.MyUser'
 LOGIN_URL = reverse_lazy('auth:sign')
 
 
-if os.environ.get('ENV') == 'PRODUCTION':
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-else:
-    # email params for dev
-    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+# email params for dev
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 
 # Password validation
