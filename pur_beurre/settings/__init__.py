@@ -102,7 +102,7 @@ SITE_ID = 1
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'purbeurredb',
+        'NAME': 'pur_beurre_db',
         'USER': 'ebarbier',
         'PASSWORD': '',
         'HOST': '',
