@@ -38,7 +38,7 @@ else:
 
 
 if os.environ.get('ENV') == 'PRODUCTION':
-    ALLOWED_HOSTS = ['purbeurre-etienne86.herokuapp.com']
+    ALLOWED_HOSTS = ['pur-beurre-etienne86.herokuapp.com']
 else:
     ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -117,9 +117,17 @@ AUTH_USER_MODEL = 'my_auth.MyUser'
 LOGIN_URL = reverse_lazy('auth:sign')
 
 
-# email params for dev
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+if os.environ.get('ENV') == 'PRODUCTION':
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+else:
+    # email params for dev
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 
 # Password validation
