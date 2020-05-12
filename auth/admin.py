@@ -100,6 +100,7 @@ class AuthenticationForm(forms.Form):
             params={'email': self.email_field.verbose_name},
         )
 
+
 class PasswordChangeForm(BasePasswordChangeForm):
     old_password = forms.CharField(
         label=_("Old password"),
@@ -118,12 +119,14 @@ class PasswordChangeForm(BasePasswordChangeForm):
         help_text=password_validation.password_validators_help_text_html(),
     )
 
+
 class PasswordResetForm(BasePasswordResetForm):
     email = forms.EmailField(
         label=_("Email"),
         max_length=254,
         widget=forms.EmailInput(attrs={'class': 'form-control'}),
     )
+
 
 class SetPasswordForm(BaseSetPasswordForm):
     new_password1 = forms.CharField(

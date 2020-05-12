@@ -4,8 +4,6 @@ This module contains the integration tests for the project, using two classes:
 - TestWithAuthenticatedUser, which contains tests using the Firefox web browser
 """
 
-import os
-
 from django.test import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
