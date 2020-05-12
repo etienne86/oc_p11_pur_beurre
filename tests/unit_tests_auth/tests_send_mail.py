@@ -32,7 +32,7 @@ class EmailTest(TestCase):
             f'Password reset on {ALLOWED_HOSTS[0]}',
             message,
             'pur.beurre.etienne86@gmail.com',
-            user_mail,
+            [user_mail],
             fail_silently=False,
         )
 
