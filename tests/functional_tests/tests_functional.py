@@ -1365,3 +1365,196 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         ).until(url_changes(start_url))
         expected_url = f"{self.live_server_url}/legal/"
         self.assertEqual(self.selenium.current_url, expected_url)
+
+    def test_change_password_success(self):
+        """
+        Test for User Story US13: scenario #1.
+        Standard process:
+        1. click on "change password" button
+        2. fill in the form with no error
+        """
+        # start from account page
+        start_url = f"{self.live_server_url}/auth/account/"
+        self.selenium.get(start_url)
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        legal_link = self.selenium.find_element_by_id("legal-footer")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(legal_link))
+        # click on the "change pawword" button
+        change_pwd_btn = self.selenium.find_element_by_id("change_pwd_btn")
+        change_pwd_btn.click()
+        # wait for page loading
+        change_pwd_url = f"{self.live_server_url}/auth/change_password/"
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_to_be(change_pwd_url))
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        legal_link = self.selenium.find_element_by_id("legal-footer")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(legal_link))
+        # fill in the form
+        old_pwd_field = self.selenium.find_element_by_id("id_old_password")
+        old_pwd_field.send_keys("TopSecret")
+        new_pwd_field1 = self.selenium.find_element_by_id("id_new_password1")
+        new_pwd_field1.send_keys("TopSecret123")
+        new_pwd_field2 = self.selenium.find_element_by_id("id_new_password2")
+        new_pwd_field2.send_keys("TopSecret123")
+        # submit the form
+        pwd_submit = self.selenium.find_element_by_id("pwd_submit")
+        pwd_submit.click()
+        # wait for page loading
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_changes(change_pwd_url))
+        expected_url = f"{self.live_server_url}/auth/change_password/done/"
+        self.assertEqual(self.selenium.current_url, expected_url)
+
+    def test_change_password_failure_wrong_old_password(self):
+        """
+        Test for User Story US13: scenario #2.
+        Alternative process:
+        1. click on "change password" button
+        2. fill in the form with wrong old password
+        """
+        # start from account page
+        start_url = f"{self.live_server_url}/auth/account/"
+        self.selenium.get(start_url)
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        legal_link = self.selenium.find_element_by_id("legal-footer")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(legal_link))
+        # click on the "change pawword" button
+        change_pwd_btn = self.selenium.find_element_by_id("change_pwd_btn")
+        change_pwd_btn.click()
+        # wait for page loading
+        change_pwd_url = f"{self.live_server_url}/auth/change_password/"
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_to_be(change_pwd_url))
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        legal_link = self.selenium.find_element_by_id("legal-footer")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(legal_link))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # fill in the form
+        old_pwd_field = self.selenium.find_element_by_id("id_old_password")
+        actions.click(old_pwd_field)
+        actions.send_keys("WrongPassword")
+        new_pwd_field1 = self.selenium.find_element_by_id("id_new_password1")
+        actions.click(new_pwd_field1)
+        actions.send_keys("TopSecret123")
+        new_pwd_field2 = self.selenium.find_element_by_id("id_new_password2")
+        actions.click(new_pwd_field2)
+        actions.send_keys("TopSecret123")
+        # submit the form
+        pwd_submit = self.selenium.find_element_by_id("pwd_submit")
+        actions.click(pwd_submit)
+        # wait for seeing the error message
+        actions.pause(1)
+        # compile chained actions
+        actions.perform()
+        # get an error message: True or False?
+        error_message = self.selenium.find_element_by_class_name("text-danger")
+        msg = "Votre ancien mot de passe est incorrect. Veuillez le rectifier."
+        expected_error = (error_message.text == msg)
+        # stay on current page: True or False?
+        current_page = (
+            self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
+        )
+        self.assertTrue(expected_error and current_page)
+
+    def test_change_password_failure_different_new_passwords(self):
+        """
+        Test for User Story US13: scenario #3.
+        Alternative process:
+        1. click on "change password" button
+        2. fill in the form with two different new passwords
+        """
+        # start from account page
+        start_url = f"{self.live_server_url}/auth/account/"
+        self.selenium.get(start_url)
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        legal_link = self.selenium.find_element_by_id("legal-footer")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(legal_link))
+        # click on the "change pawword" button
+        change_pwd_btn = self.selenium.find_element_by_id("change_pwd_btn")
+        change_pwd_btn.click()
+        # wait for page loading
+        change_pwd_url = f"{self.live_server_url}/auth/change_password/"
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_to_be(change_pwd_url))
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        legal_link = self.selenium.find_element_by_id("legal-footer")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(legal_link))
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # fill in the form
+        old_pwd_field = self.selenium.find_element_by_id("id_old_password")
+        actions.click(old_pwd_field)
+        actions.send_keys("TopSecret")
+        new_pwd_field1 = self.selenium.find_element_by_id("id_new_password1")
+        actions.click(new_pwd_field1)
+        actions.send_keys("TopSecret123")
+        new_pwd_field2 = self.selenium.find_element_by_id("id_new_password2")
+        actions.click(new_pwd_field2)
+        actions.send_keys("TopSecret456")  # different from the password #1
+        # submit the form
+        pwd_submit = self.selenium.find_element_by_id("pwd_submit")
+        actions.click(pwd_submit)
+        # wait for seeing the error message
+        actions.pause(1)
+        # compile chained actions
+        actions.perform()
+        # get an error message: True or False?
+        error_message = self.selenium.find_element_by_class_name("text-danger")
+        msg = "Les deux mots de passe ne correspondent pas."
+        expected_error = (error_message.text == msg)
+        # stay on current page: True or False?
+        current_page = (
+            self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
+        )
+        self.assertTrue(expected_error and current_page)
