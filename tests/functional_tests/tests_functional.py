@@ -1488,7 +1488,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         msg = _(
             "Your old password was entered incorrectly. Please enter it again."
         )
-        expected_error = (error_message.text == msg)
+        expected_error = (_(error_message.text) == msg)
         # stay on current page: True or False?
         current_page = (
             self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
@@ -1559,7 +1559,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         msg = _(
             "The two password fields didn’t match."
         )
-        expected_error = (error_message.text == msg)
+        expected_error = (_(error_message.text) == msg)
         # stay on current page: True or False?
         current_page = (
             self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
