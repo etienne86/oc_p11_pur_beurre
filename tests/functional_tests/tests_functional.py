@@ -1489,6 +1489,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         current_page = (
             self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
         )
+        print(self.selenium.current_url)
         self.assertTrue(expected_error and current_page)
 
     def test_change_password_failure_different_new_passwords(self):
@@ -1557,4 +1558,5 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         current_page = (
             self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
         )
+        print(self.selenium.current_url)
         self.assertTrue(expected_error and current_page)
