@@ -7,6 +7,7 @@ This module contains the functional tests for the project, using two classes:
 import os
 import random
 
+from django.utils.translation import gettext_lazy as _
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import selenium
 from selenium.webdriver.firefox.webdriver import WebDriver
@@ -1483,17 +1484,15 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         actions.perform()
         # get an error message: True or False?
         error_message = self.selenium.find_element_by_class_name("text-danger")
-        msg = "Votre ancien mot de passe est incorrect. Veuillez le rectifier."
+        # msg = "Votre ancien mot de passe est incorrect. Veuillez le rectifier."
+        msg = _(
+            "Your old password was entered incorrectly. Please enter it again."
+        )
         expected_error = (error_message.text == msg)
-        print("\n")
-        print(error_message.text)
         # stay on current page: True or False?
         current_page = (
             self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
         )
-        print("\n")
-        print(f"{self.live_server_url}/auth/change_password/")
-        print(self.selenium.current_url)
         self.assertTrue(expected_error and current_page)
 
     def test_change_password_failure_different_new_passwords(self):
@@ -1556,15 +1555,13 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         actions.perform()
         # get an error message: True or False?
         error_message = self.selenium.find_element_by_class_name("text-danger")
-        msg = "Les deux mots de passe ne correspondent pas."
+        # msg = "Les deux mots de passe ne correspondent pas."
+        msg = _(
+            "The two password fields didn’t match."
+        )
         expected_error = (error_message.text == msg)
-        print("\n")
-        print(error_message.text)
         # stay on current page: True or False?
         current_page = (
             self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
         )
-        print("\n")
-        print(f"{self.live_server_url}/auth/change_password/")
-        print(self.selenium.current_url)
         self.assertTrue(expected_error and current_page)
