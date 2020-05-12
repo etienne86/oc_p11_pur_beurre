@@ -1485,10 +1485,14 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         error_message = self.selenium.find_element_by_class_name("text-danger")
         msg = "Votre ancien mot de passe est incorrect. Veuillez le rectifier."
         expected_error = (error_message.text == msg)
+        print("\n")
+        print(error_message.text)
         # stay on current page: True or False?
         current_page = (
             self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
         )
+        print("\n")
+        print(f"{self.live_server_url}/auth/change_password/")
         print(self.selenium.current_url)
         self.assertTrue(expected_error and current_page)
 
@@ -1554,9 +1558,13 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         error_message = self.selenium.find_element_by_class_name("text-danger")
         msg = "Les deux mots de passe ne correspondent pas."
         expected_error = (error_message.text == msg)
+        print("\n")
+        print(error_message.text)
         # stay on current page: True or False?
         current_page = (
             self.selenium.current_url == f"{self.live_server_url}/auth/change_password/"
         )
+        print("\n")
+        print(f"{self.live_server_url}/auth/change_password/")
         print(self.selenium.current_url)
         self.assertTrue(expected_error and current_page)
