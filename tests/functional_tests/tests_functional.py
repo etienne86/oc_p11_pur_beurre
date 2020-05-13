@@ -5,9 +5,12 @@ This module contains the functional tests for the project, using two classes:
 """
 
 import random
+import re
 
+from django.contrib.sites.models import Site
 from django.utils.translation import gettext_lazy as _
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.core import mail
 import selenium
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.common.action_chains import ActionChains
@@ -20,6 +23,7 @@ from seleniumlogin import force_login
 
 from auth.models import MyUser
 from off_sub.models import Product, Category
+import pur_beurre.settings as settings
 
 
 class TestWithAnonymousUser(StaticLiveServerTestCase):
@@ -754,6 +758,322 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
             authenticated = True
         self.assertTrue(redirection_to_results and authenticated)
 
+    def test_reset_password_success(self):
+        """
+        Test for User Story US14: scenario #1.
+        Standard process:
+        1. click on "forgotten password" link
+        2. fill in the form with no error (provide email)
+        3. check the received email
+        4. enter the given link to the web browser
+        5. fill in the form with no error (provide new password)
+        """
+        # start from sign page
+        start_url = f"{self.live_server_url}/auth/sign/"
+        self.selenium.get(start_url)
+        #########################################
+        # 1. click on "forgotten password" link #
+        #########################################
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        reset_pwd_button = self.selenium.find_element_by_id("forgotten_pwd")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(reset_pwd_button))
+        # click on "forgotten password" link
+        reset_pwd_button.click()
+        #####################################################
+        # 2. fill in the form with no error (provide email) #
+        #####################################################
+        # wait for page loading
+        reset_pwd_url = f"{self.live_server_url}/auth/reset_password/"
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_to_be(reset_pwd_url))
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        email_field = self.selenium.find_element_by_id("id_email")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(email_field))
+        # change the site in the email
+        site = Site.objects.get(id=settings.SITE_ID)
+        site.domain = self.live_server_url
+        site.name = self.live_server_url
+        site.save()
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # click on field "Courriel"
+        actions.click(email_field)
+        # enter the mail address
+        actions.send_keys("toto@mail.com")
+        # press "Return" key
+        actions.send_keys(Keys.RETURN)
+        # compile chained actions
+        actions.perform()
+        ###############################
+        # 3. check the received email #
+        ###############################
+        # wait for email receiving
+        actions = ActionChains(self.selenium)
+        actions.pause(1)
+        actions.perform()
+        # test that one message has been sent
+        email_received = (len(mail.outbox) == 1)
+        # get the mail content
+        mail_content = mail.outbox[0].body
+        # extract "reset password link"
+        match = re.search(
+            "choisir un nouveau mot de passe :\n(.*)\nPour mémoire",
+            mail_content
+        )
+        if not match:
+            password_reset_ok = False
+        else:
+            reset_pwd_link = match.group(1)
+            ##############################################
+            # 4. enter the given link to the web browser #
+            ##############################################
+            self.selenium.get(reset_pwd_link)
+            ############################################################
+            # 5. fill in the form with no error (provide new password) #
+            ############################################################
+            edit_new_pwd_url = self.selenium.current_url
+            # start chained actions
+            actions = ActionChains(self.selenium)
+            # click on field "Nouveau mot de passe"
+            new_pwd_field1 = self.selenium.find_element_by_id(
+                "id_new_password1"
+            )
+            actions.click(new_pwd_field1)
+            # enter the new password
+            actions.send_keys("TopSecret123")
+            # click on field "Confirmation du nouveau mot de passe"
+            new_pwd_field2 = self.selenium.find_element_by_id(
+                "id_new_password2"
+            )
+            actions.click(new_pwd_field2)
+            # enter the new password
+            actions.send_keys("TopSecret123")
+            # press "Return" key
+            actions.send_keys(Keys.RETURN)
+            # compile chained actions
+            actions.perform()
+            # wait for page loading
+            WebDriverWait(
+                self.selenium,
+                timeout=2
+            ).until(url_changes(edit_new_pwd_url))
+            # check final url
+            ok_url = f"{self.live_server_url}/auth/reset_password_complete/"
+            password_reset_ok = (self.selenium.current_url == ok_url)
+        self.assertTrue(email_received and password_reset_ok)
+
+    def test_reset_password_failure_wrong_email(self):
+        """
+        Test for User Story US14: scenario #2.
+        Alternative process:
+        1. click on "forgotten password" link
+        2. fill in the form with an error: unrecognized email
+        3. no email is received
+        """
+        # start from sign page
+        start_url = f"{self.live_server_url}/auth/sign/"
+        self.selenium.get(start_url)
+        #########################################
+        # 1. click on "forgotten password" link #
+        #########################################
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        reset_pwd_button = self.selenium.find_element_by_id("forgotten_pwd")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(reset_pwd_button))
+        # click on "forgotten password" link
+        reset_pwd_button.click()
+        #########################################################
+        # 2. fill in the form with an error: unrecognized email #
+        #########################################################
+        # wait for page loading
+        reset_pwd_url = f"{self.live_server_url}/auth/reset_password/"
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_to_be(reset_pwd_url))
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        email_field = self.selenium.find_element_by_id("id_email")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(email_field))
+        # change the site in the email
+        site = Site.objects.get(id=settings.SITE_ID)
+        site.domain = self.live_server_url
+        site.name = self.live_server_url
+        site.save()
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # click on field "Courriel"
+        actions.click(email_field)
+        # enter the mail address
+        actions.send_keys("error@mail.com")
+        # press "Return" key
+        actions.send_keys(Keys.RETURN)
+        # compile chained actions
+        actions.perform()
+        ###########################
+        # 3. no email is received #
+        ###########################
+        # wait for email receiving
+        actions = ActionChains(self.selenium)
+        actions.pause(1)
+        actions.perform()
+        # test that no message has been sent
+        email_received = (len(mail.outbox) == 0)
+        self.assertTrue(email_received)
+
+    def test_reset_password_failure_different_new_passwords(self):
+        """
+        Test for User Story US14: scenario #2.
+        Alternative process:
+        1. click on "forgotten password" link
+        2. fill in the form with no error (provide email)
+        3. check the received email
+        4. enter the given link to the web browser
+        5. fill in the form with an error: different two passwords
+        """
+        # start from sign page
+        start_url = f"{self.live_server_url}/auth/sign/"
+        self.selenium.get(start_url)
+        #########################################
+        # 1. click on "forgotten password" link #
+        #########################################
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        reset_pwd_button = self.selenium.find_element_by_id("forgotten_pwd")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(reset_pwd_button))
+        # click on "forgotten password" link
+        reset_pwd_button.click()
+        #####################################################
+        # 2. fill in the form with no error (provide email) #
+        #####################################################
+        # wait for page loading
+        reset_pwd_url = f"{self.live_server_url}/auth/reset_password/"
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(url_to_be(reset_pwd_url))
+        # scroll down
+        self.selenium.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);"
+        )
+        # wait for scrolling
+        email_field = self.selenium.find_element_by_id("id_email")
+        WebDriverWait(
+            self.selenium,
+            timeout=2
+        ).until(visibility_of(email_field))
+        # change the site in the email
+        site = Site.objects.get(id=settings.SITE_ID)
+        site.domain = self.live_server_url
+        site.name = self.live_server_url
+        site.save()
+        # start chained actions
+        actions = ActionChains(self.selenium)
+        # click on field "Courriel"
+        actions.click(email_field)
+        # enter the mail address
+        actions.send_keys("toto@mail.com")
+        # press "Return" key
+        actions.send_keys(Keys.RETURN)
+        # compile chained actions
+        actions.perform()
+        ###############################
+        # 3. check the received email #
+        ###############################
+        # wait for email receiving
+        actions = ActionChains(self.selenium)
+        actions.pause(1)
+        actions.perform()
+        # test that one message has been sent
+        email_received = (len(mail.outbox) == 1)
+        # get the mail content
+        mail_content = mail.outbox[0].body
+        # extract "reset password link"
+        match = re.search(
+            "choisir un nouveau mot de passe :\n(.*)\nPour mémoire",
+            mail_content
+        )
+        if not match:
+            password_reset_ok = False
+        else:
+            reset_pwd_link = match.group(1)
+            ##############################################
+            # 4. enter the given link to the web browser #
+            ##############################################
+            self.selenium.get(reset_pwd_link)
+            ##############################################################
+            # 5. fill in the form with an error: different two passwords #
+            ##############################################################
+            edit_new_pwd_url = self.selenium.current_url
+            # start chained actions
+            actions = ActionChains(self.selenium)
+            # click on field "Nouveau mot de passe"
+            new_pwd_field1 = self.selenium.find_element_by_id(
+                "id_new_password1"
+            )
+            actions.click(new_pwd_field1)
+            # enter the new password
+            actions.send_keys("TopSecret123")
+            # click on field "Confirmation du nouveau mot de passe"
+            new_pwd_field2 = self.selenium.find_element_by_id(
+                "id_new_password2"
+            )
+            actions.click(new_pwd_field2)
+            # enter the new password
+            actions.send_keys("TopSecret456")  # different from password #1
+            # press "Return" key
+            actions.send_keys(Keys.RETURN)
+            # wait for seeing the error message
+            actions.pause(1)
+            # compile chained actions
+            actions.perform()
+            # get an error message: True or False?
+            error_message = self.selenium.find_element_by_class_name(
+                "text-danger"
+            )
+            # msg = "Les deux mots de passe ne correspondent pas."
+            msg = _(
+                "The two password fields didn’t match."
+            )
+            expected_error = (_(error_message.text) == msg)
+            # stay on current page: True or False?
+            current_page = (self.selenium.current_url == edit_new_pwd_url)
+        self.assertTrue(email_received and expected_error and current_page)
+
 
 class TestWithAuthenticatedUser(StaticLiveServerTestCase):
     """
@@ -1381,13 +1701,12 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             "window.scrollTo(0, document.body.scrollHeight);"
         )
         # wait for scrolling
-        legal_link = self.selenium.find_element_by_id("legal-footer")
+        change_pwd_btn = self.selenium.find_element_by_id("change_pwd_btn")
         WebDriverWait(
             self.selenium,
             timeout=2
-        ).until(visibility_of(legal_link))
+        ).until(visibility_of(change_pwd_btn))
         # click on the "change pawword" button
-        change_pwd_btn = self.selenium.find_element_by_id("change_pwd_btn")
         change_pwd_btn.click()
         # wait for page loading
         change_pwd_url = f"{self.live_server_url}/auth/change_password/"
@@ -1438,13 +1757,12 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             "window.scrollTo(0, document.body.scrollHeight);"
         )
         # wait for scrolling
-        legal_link = self.selenium.find_element_by_id("legal-footer")
+        change_pwd_btn = self.selenium.find_element_by_id("change_pwd_btn")
         WebDriverWait(
             self.selenium,
             timeout=2
-        ).until(visibility_of(legal_link))
+        ).until(visibility_of(change_pwd_btn))
         # click on the "change pawword" button
-        change_pwd_btn = self.selenium.find_element_by_id("change_pwd_btn")
         change_pwd_btn.click()
         # wait for page loading
         change_pwd_url = f"{self.live_server_url}/auth/change_password/"
@@ -1512,13 +1830,12 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
             "window.scrollTo(0, document.body.scrollHeight);"
         )
         # wait for scrolling
-        legal_link = self.selenium.find_element_by_id("legal-footer")
+        change_pwd_btn = self.selenium.find_element_by_id("change_pwd_btn")
         WebDriverWait(
             self.selenium,
             timeout=2
-        ).until(visibility_of(legal_link))
+        ).until(visibility_of(change_pwd_btn))
         # click on the "change pawword" button
-        change_pwd_btn = self.selenium.find_element_by_id("change_pwd_btn")
         change_pwd_btn.click()
         # wait for page loading
         change_pwd_url = f"{self.live_server_url}/auth/change_password/"
@@ -1547,7 +1864,7 @@ class TestWithAuthenticatedUser(StaticLiveServerTestCase):
         actions.send_keys("TopSecret123")
         new_pwd_field2 = self.selenium.find_element_by_id("id_new_password2")
         actions.click(new_pwd_field2)
-        actions.send_keys("TopSecret456")  # different from the password #1
+        actions.send_keys("TopSecret456")  # different from password #1
         # submit the form
         pwd_submit = self.selenium.find_element_by_id("pwd_submit")
         actions.click(pwd_submit)

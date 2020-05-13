@@ -94,6 +94,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
+# Site config
 SITE_ID = 1
 
 # Database
@@ -117,6 +118,7 @@ AUTH_USER_MODEL = 'my_auth.MyUser'
 LOGIN_URL = reverse_lazy('auth:sign')
 
 
+# Email sending parameters
 if os.environ.get('ENV') == 'PRODUCTION':
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
