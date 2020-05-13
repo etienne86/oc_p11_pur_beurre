@@ -848,12 +848,21 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
             # 5. fill in the form with no error (provide new password) #
             ############################################################
             edit_new_pwd_url = self.selenium.current_url
-            # start chained actions
-            actions = ActionChains(self.selenium)
-            # click on field "Nouveau mot de passe"
+            # scroll down
+            self.selenium.execute_script(
+                "window.scrollTo(0, document.body.scrollHeight);"
+            )
+            # wait for scrolling
             new_pwd_field1 = self.selenium.find_element_by_id(
                 "id_new_password1"
             )
+            WebDriverWait(
+                self.selenium,
+                timeout=2
+            ).until(visibility_of(new_pwd_field1))
+            # start chained actions
+            actions = ActionChains(self.selenium)
+            # click on field "Nouveau mot de passe"
             actions.click(new_pwd_field1)
             # enter the new password
             actions.send_keys("TopSecret123")
@@ -1039,12 +1048,21 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
             # 5. fill in the form with an error: different two passwords #
             ##############################################################
             edit_new_pwd_url = self.selenium.current_url
-            # start chained actions
-            actions = ActionChains(self.selenium)
-            # click on field "Nouveau mot de passe"
+            # scroll down
+            self.selenium.execute_script(
+                "window.scrollTo(0, document.body.scrollHeight);"
+            )
+            # wait for scrolling
             new_pwd_field1 = self.selenium.find_element_by_id(
                 "id_new_password1"
             )
+            WebDriverWait(
+                self.selenium,
+                timeout=2
+            ).until(visibility_of(new_pwd_field1))
+            # start chained actions
+            actions = ActionChains(self.selenium)
+            # click on field "Nouveau mot de passe"
             actions.click(new_pwd_field1)
             # enter the new password
             actions.send_keys("TopSecret123")
