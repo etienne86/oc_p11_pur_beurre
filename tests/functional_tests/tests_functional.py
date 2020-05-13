@@ -1037,7 +1037,7 @@ class TestWithAnonymousUser(StaticLiveServerTestCase):
             mail_content
         )
         if not match:
-            password_reset_ok = False
+            self.assertTrue(False)
         else:
             reset_pwd_link = match.group(1)
             ##############################################

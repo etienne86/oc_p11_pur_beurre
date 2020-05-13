@@ -1,5 +1,6 @@
 """
 This module contains the unit tests related to the 'reset password' feature.
+This is widely inspired from the django documentation.
 """
 
 from django.core import mail
@@ -11,14 +12,17 @@ from pur_beurre.settings import ALLOWED_HOSTS
 class EmailTest(TestCase):
     def test_send_email(self):
         user_mail = 'mon.adresse@mail.com'
-                
+
         # Define message.
         message = f"""
             Bonjour,
 
-            Vous recevez ce courriel parce que vous avez demandé la réinitialisation du mot de passe de votre compte sur {ALLOWED_HOSTS[0]}.
+            Vous recevez ce courriel parce que vous avez demandé la
+            réinitialisation du mot de passe de votre compte sur
+            {ALLOWED_HOSTS[0]}.
 
-            Merci d'aller sur la page suivante pour choisir un nouveau mot de passe :
+            Merci d'aller sur la page suivante pour
+            choisir un nouveau mot de passe :
             http://lien-vers-la-page-de-reinitialisation-du-mot-de-passe.com
             Pour mémoire, votre identifiant est votre courriel : {user_mail}
 
@@ -26,7 +30,7 @@ class EmailTest(TestCase):
 
             L'équipe Pur Beurre
         """
-        
+
         # Send message.
         mail.send_mail(
             f'Password reset on {ALLOWED_HOSTS[0]}',
