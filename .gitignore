@@ -1,6 +1,7 @@
 various/
 .vscode/
 sent_emails/
+coverage_html_report/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
