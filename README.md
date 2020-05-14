@@ -12,6 +12,10 @@ Based on the [project #08](https://github.com/etienne86/oc_p08_pur_beurre), the 
 
 Please click on the following [link](https://purbeurre-etienne86.herokuapp.com/).
 
-## Test report
+## New feature
 
-Section to be completed.
+The user can change or reset his/her password.
+
+## Tests report
+
+The tests report has been completed. This is available [here](https://github.com/etienne86/oc_p11_pur_beurre/blob/master/deliverables/P11_02_rapport_de_tests_complet.pdf).
